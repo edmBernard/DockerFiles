@@ -104,8 +104,6 @@ RUN cd /opencv && mkdir build && cd build && \
     -D BUILD_EXAMPLES=ON \
     -D WITH_IPP=ON ..
 
-# on est obligé de tricher en mettant en dur le chemin des library python la detection ne se fait pas correctement dans le dockerfile
-
 # install opencv3
 WORKDIR "/opencv/build"
 RUN make -j$(nproc)
