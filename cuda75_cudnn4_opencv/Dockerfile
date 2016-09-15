@@ -112,9 +112,9 @@ RUN /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
 RUN ldconfig
 
 # link opencv3 in python3
-# RUN ln -s /opencv-3.1.0/build/lib/python3/cv2.cpython-34m.so /usr/local/lib/python3.4/dist-packages/cv2.so
-# RUN ln -s /opencv-3.1.0/build/lib/cv2.so /usr/local/lib/python2.7/dist-packages/cv2.so
-RUN ln -s /opencv-3.1.0/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a /usr/local/lib/libippicv.a
+# RUN ln -s /opencv/build/lib/python3/cv2.cpython-34m.so /usr/local/lib/python3.4/dist-packages/cv2.so
+# RUN ln -s /opencv/build/lib/cv2.so /usr/local/lib/python2.7/dist-packages/cv2.so
+RUN ln -s /opencv/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a /usr/local/lib/libippicv.a
 
 WORKDIR "/shared"
 
