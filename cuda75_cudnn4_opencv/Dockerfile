@@ -1,0 +1,125 @@
+from nvidia/cuda:7.5-cudnn4-devel
+
+# Pick up some dependencies
+RUN apt-get update && apt-get install -y \
+        build-essential cmake git nano \
+        curl wget \
+        libfreetype6-dev \
+        libpng-dev \
+        libzmq3-dev \
+        libavutil-dev \
+        libjpeg8-dev \
+        libtiff-dev \
+        libjasper-dev \
+        libgtk2.0-dev \
+        libavcodec-dev \
+        libavformat-dev \
+        libswscale-dev \
+        libv4l-dev \
+        libatlas-base-dev \
+        pkg-config \
+        python \
+        python-dev \
+        python2.7 \
+        python2.7-dev \
+        python-numpy \
+        python-scipy \
+        python3 \
+        python3-dev \
+        python3.4 \
+        python3.4-dev \
+        python3-numpy \
+        python3-scipy \
+        rsync \
+        unzip \
+        python-setuptools \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# install pip for python2 and 3
+RUN wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate && \
+    python get-pip.py && \
+    python3 get-pip.py && \
+    rm get-pip.py
+
+# install python2 tools
+RUN pip2 --no-cache-dir install \
+        numpy \
+        ipython \
+        ipykernel \
+        jupyter \
+        matplotlib \
+        scipy \
+        scikit-image \
+        docopt \
+        path.py \
+        && \
+    python2 -m ipykernel install
+
+# install python3 tools
+RUN pip3 --no-cache-dir install \
+        numpy \
+        ipython \
+        ipykernel \
+        jupyter \
+        matplotlib \
+        scipy \
+        scikit-image \
+        docopt \
+        path.py \
+        && \
+    python3 -m ipykernel install
+
+# install numba
+RUN apt-get install zlib1g zlib1g-dev libedit libedit-dev llvm-3.5 llvm-3.5-dev llvm-dev
+RUN pip2 install enum34 funcsigs
+RUN pip3 install enum34 funcsigs
+RUN LLVM_CONFIG=/usr/bin/llvm-config-3.5 pip2 install llvmlite
+RUN LLVM_CONFIG=/usr/bin/llvm-config-3.5 pip2 install numba
+RUN LLVM_CONFIG=/usr/bin/llvm-config-3.5 pip3 install llvmlite
+RUN LLVM_CONFIG=/usr/bin/llvm-config-3.5 pip3 install numba
+
+RUN ldconfig
+
+# download opencv3
+WORKDIR "/"
+RUN cd / && \
+    git clone https://github.com/opencv/opencv.git
+
+# download opencv3 contrib
+RUN cd / && \
+    git clone https://github.com/opencv/opencv_contrib.git
+
+# build opencv3
+RUN cd /opencv && mkdir build && cd build && \
+    cmake -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_LIBRARY_PATH=/usr/local/cuda/lib64/stubs \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D PYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so \
+    -D PYTHON3_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.4m.so \
+    -D INSTALL_C_EXAMPLES=OFF \
+    -D INSTALL_PYTHON_EXAMPLES=ON \
+    -D OPENCV_EXTRA_MODULES_PATH=/opencv_contrib/modules \
+    -D BUILD_EXAMPLES=ON \
+    -D WITH_IPP=ON ..
+
+# on est obligé de tricher en mettant en dur le chemin des library python la detection ne se fait pas correctement dans le dockerfile
+
+# install opencv3
+WORKDIR "/opencv/build"
+RUN make -j$(nproc)
+RUN make install
+RUN /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
+RUN ldconfig
+
+# link opencv3 in python3
+# RUN ln -s /opencv-3.1.0/build/lib/python3/cv2.cpython-34m.so /usr/local/lib/python3.4/dist-packages/cv2.so
+# RUN ln -s /opencv-3.1.0/build/lib/cv2.so /usr/local/lib/python2.7/dist-packages/cv2.so
+RUN ln -s /opencv-3.1.0/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a /usr/local/lib/libippicv.a
+
+WORKDIR "/shared"
+
+CMD ["/bin/bash"]
+
+
