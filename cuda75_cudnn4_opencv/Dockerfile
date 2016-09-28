@@ -33,6 +33,7 @@ RUN apt-get update && apt-get install -y \
         rsync \
         unzip \
         python-setuptools \
+        libboost-all-dev \
         && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
