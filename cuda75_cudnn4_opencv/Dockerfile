@@ -72,7 +72,7 @@ RUN pip3 --no-cache-dir install \
         && \
     python3 -m ipykernel install
 
-# install numba
+# install numba a JIT compiler for python
 RUN apt-get install zlib1g zlib1g-dev libedit libedit-dev llvm-3.5 llvm-3.5-dev llvm-dev
 RUN pip2 install enum34 funcsigs
 RUN pip3 install enum34 funcsigs

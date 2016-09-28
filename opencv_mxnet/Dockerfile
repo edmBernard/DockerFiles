@@ -1,6 +1,5 @@
 # Start with cuDNN base image
 FROM cuda75_cudnn5_opencv3:latest
-# i’m inspired by dockerfile Kai Arulkumaran <design@kaixhin.com> 
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
