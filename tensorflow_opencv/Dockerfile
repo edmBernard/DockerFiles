@@ -23,8 +23,6 @@ RUN apt-get update && apt-get install -y \
         python-scipy \
         python3 \
         python3-dev \
-        python3.4 \
-        python3.4-dev \
         python3-numpy \
         python3-scipy \
         rsync \
@@ -36,7 +34,7 @@ RUN apt-get update && apt-get install -y \
 
 # install pip for python2 and 3
 RUN wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate && \
-    python get-pip.py && \
+    python2 get-pip.py && \
     python3 get-pip.py && \
     rm get-pip.py
 
@@ -89,8 +87,6 @@ RUN cd /opencv && mkdir build && cd build && \
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_LIBRARY_PATH=/usr/local/cuda/lib64/stubs \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
-    -D PYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so \
-    -D PYTHON3_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.4m.so \
     -D INSTALL_C_EXAMPLES=OFF \
     -D INSTALL_PYTHON_EXAMPLES=ON \
     -D OPENCV_EXTRA_MODULES_PATH=/opencv_contrib/modules \
