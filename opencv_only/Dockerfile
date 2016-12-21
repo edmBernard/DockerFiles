@@ -1,4 +1,5 @@
-from ubuntu:16.04
+FROM ubuntu:16.04
+MAINTAINER Erwan BERNARD
 
 # Pick up some dependencies
 RUN apt-get update && apt-get install -y \
@@ -78,6 +79,7 @@ RUN cd / && \
     git clone https://github.com/opencv/opencv_contrib.git
 
 # build opencv3
+# warning if we set BUILD_EXAMPLES=OFF cmake don't find IPP anymore (strange)
 RUN cd /opencv && mkdir build && cd build && \
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_INSTALL_PREFIX=/usr/local \

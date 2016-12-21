@@ -58,9 +58,9 @@ image_name:latest               # Image name to use for container creation
 sudo docker exec -it container_name /bin/bash
 ```
 
-### Issues
+### Some strange bug I encounter that disappear alone
 
-* ##### Sometimes Cudnn was unlink 
+* Sometimes Cudnn was unlink
 
     if you got this error
 
@@ -73,3 +73,11 @@ sudo docker exec -it container_name /bin/bash
     rm /usr/lib/x86_64-linux-gnu/libcudnn.so
     ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so.4 /usr/lib/x86_64-linux-gnu/libcudnn.so
     ```
+
+* IPPICV
+
+    if you got `incorrect hash` in cmake `ippicv` when installing [like this issue][1]
+
+    [1]: https://github.com/opencv/opencv/issues/5973
+
+    just try again ^^

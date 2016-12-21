@@ -1,4 +1,5 @@
-from nvidia/cuda:7.5-cudnn4-devel
+FROM nvidia/cuda:7.5-cudnn4-devel
+MAINTAINER Erwan BERNARD
 
 # Pick up some dependencies
 RUN apt-get update && apt-get install -y \
@@ -82,6 +83,7 @@ RUN cd / && \
     git clone https://github.com/opencv/opencv_contrib.git
 
 # build opencv3
+# warning if we set BUILD_EXAMPLES=OFF cmake don't find IPP anymore (strange)
 RUN cd /opencv && mkdir build && cd build && \
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_LIBRARY_PATH=/usr/local/cuda/lib64/stubs \
@@ -89,7 +91,7 @@ RUN cd /opencv && mkdir build && cd build && \
     -D INSTALL_C_EXAMPLES=OFF \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
     -D OPENCV_EXTRA_MODULES_PATH=/opencv_contrib/modules \
-    -D BUILD_EXAMPLES=OFF \
+    -D BUILD_EXAMPLES=ON \
     -D WITH_IPP=ON ..
 
 # install opencv3
