@@ -6,7 +6,7 @@ Command to add in .bashrc
 
 ```bash
 function newbox () {
-    docker run --name $1 -it --rm -v /home/user:/home/dev/host -e BOX_NAME=$1 -e force_color_prompt=yes opencv_numba:latest
+    docker run --name $1 -it --rm -v /home/user:/home/dev/host -e BOX_NAME=$1 opencv_numba:latest
 }
 ```
 
