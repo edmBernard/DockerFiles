@@ -50,6 +50,7 @@ RUN pip2 --no-cache-dir install \
         scikit-image \
         docopt \
         path.py \
+        bokeh \
         && \
     python2 -m ipykernel install
 
@@ -64,6 +65,7 @@ RUN pip3 --no-cache-dir install \
         scikit-image \
         docopt \
         path.py \
+        bokeh \
         && \
     python3 -m ipykernel install
 
@@ -79,14 +81,13 @@ RUN cd / && \
     git clone https://github.com/opencv/opencv_contrib.git
 
 # build opencv3
-# warning if we set BUILD_EXAMPLES=OFF cmake don't find IPP anymore (strange)
 RUN cd /opencv && mkdir build && cd build && \
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
     -D INSTALL_C_EXAMPLES=OFF \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
     -D OPENCV_EXTRA_MODULES_PATH=/opencv_contrib/modules \
-    -D BUILD_EXAMPLES=ON \
+    -D BUILD_EXAMPLES=OFF \
     -D WITH_IPP=ON ..
 
 # install opencv3
@@ -99,7 +100,10 @@ RUN ldconfig
 # link ippicv
 RUN ln -s /opencv/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a /usr/local/lib/libippicv.a
 
-WORKDIR "/shared"
+# configuration
+RUN mkdir /home/dev
+WORKDIR /home/dev/host
+ENV HOME /home/dev
 
 CMD ["/bin/bash"]
 

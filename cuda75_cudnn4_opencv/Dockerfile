@@ -54,6 +54,7 @@ RUN pip2 --no-cache-dir install \
         scikit-image \
         docopt \
         path.py \
+        bokeh \
         && \
     python2 -m ipykernel install
 
@@ -68,6 +69,7 @@ RUN pip3 --no-cache-dir install \
         scikit-image \
         docopt \
         path.py \
+        bokeh \
         && \
     python3 -m ipykernel install
 
