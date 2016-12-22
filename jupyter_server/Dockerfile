@@ -1,4 +1,4 @@
-FROM ubuntu:opencv_numba:latest
+FROM opencv_numba:latest
 MAINTAINER Erwan BERNARD
 
 # configure bash

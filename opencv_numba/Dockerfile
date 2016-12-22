@@ -1,4 +1,4 @@
-FROM ubuntu:opencv_only:latest
+FROM opencv_only:latest
 MAINTAINER Erwan BERNARD
 
 # install numba (JIT compiler for python)
