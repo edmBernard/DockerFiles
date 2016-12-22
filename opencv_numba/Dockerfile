@@ -8,13 +8,6 @@ RUN apt-get update && \
     pip2 install llvmlite numba && \
     pip3 install llvmlite numba
 
-# configuration
-RUN mkdir /home/dev
-WORKDIR /home/dev/host
-ENV HOME /home/dev
-# RUN useradd dev && chown -R dev: /home/dev
-# USER dev
-
 # configure bash
 RUN ln -snf /bin/bash /bin/sh
 RUN echo 'force_color_prompt=yes' >> /home/dev/.bashrc && \

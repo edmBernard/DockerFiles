@@ -104,5 +104,7 @@ RUN ln -s /opencv/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a /usr
 RUN mkdir /home/dev
 WORKDIR /home/dev/host
 ENV HOME /home/dev
+# RUN useradd dev && chown -R dev: /home/dev
+# USER dev
 
 CMD ["/bin/bash"]
