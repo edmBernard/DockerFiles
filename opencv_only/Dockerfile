@@ -106,5 +106,3 @@ WORKDIR /home/dev/host
 ENV HOME /home/dev
 
 CMD ["/bin/bash"]
-
-

@@ -108,5 +108,3 @@ RUN ln -s /opencv/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a /usr
 WORKDIR "/shared"
 
 CMD ["/bin/bash"]
-
-
