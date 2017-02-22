@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 # install python2 tools
 RUN pip2 --no-cache-dir install -U \
     scikit-image \
-    easydict \
+    easydict
 
 # install python3 tools
 RUN pip3 --no-cache-dir install -U \

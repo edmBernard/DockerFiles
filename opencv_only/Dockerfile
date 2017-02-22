@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
         libpng-dev \
         libzmq3-dev \
         libavutil-dev \
+        libjpeg-dev \
         libjpeg8-dev \
         libtiff-dev \
         libjasper-dev \
