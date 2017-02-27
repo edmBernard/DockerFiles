@@ -32,3 +32,7 @@ RUN pip3.6 --no-cache-dir install \
         redis
 
 WORKDIR /root
+
+# don't forget --login to have file load at start
+# eg. sudo docker run --rm -it alpine-python3.6 /bin/sh --login
+RUN echo "PS1='\[\033[1;36m\]alpine\[\033[00m\] \[\033[34m\]\u@\h\[\033[00m\]:\[\033[36m\]\w\[\033[00m\]$ '" > /etc/profile.d/shrc.sh
