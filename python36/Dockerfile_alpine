@@ -2,8 +2,23 @@ FROM alpine:edge
 MAINTAINER Erwan BERNARD
 
 RUN apk update && apk --no-cache add \
-        nano wget gcc\
-        python3
+        linux-headers \
+        nano wget \
+        gcc \
+        make \
+        musl-dev \
+        tar \
+        python3 \
+        py-numpy
+
+# install redis
+RUN cd /root && \
+        wget http://download.redis.io/redis-stable.tar.gz && \
+        tar xvzf redis-stable.tar.gz && \
+        rm redis-stable.tar.gz
+
+RUN cd /root/redis-stable && \
+        make
 
 # install pip for python3
 RUN wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate && \
@@ -11,15 +26,9 @@ RUN wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate && \
     rm get-pip.py
 
 RUN pip3.6 --no-cache-dir install \
-        numpy \
-        matplotlib \
-        scipy \
         docopt \
         schema \
         path.py \
-        redis \
-        line_profiler \
-        jupyter \
-        ipython \
-        && \
-    python3 -m ipykernel install
+        redis
+
+WORKDIR /root
