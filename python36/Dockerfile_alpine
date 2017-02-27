@@ -1,8 +1,8 @@
-FROM alpine:adge
+FROM alpine:edge
 MAINTAINER Erwan BERNARD
 
 RUN apk update && apk --no-cache add \
-        nano wget \
+        nano wget gcc\
         python3
 
 # install pip for python3
