@@ -2,7 +2,7 @@
 .PHONY: all cuda mxnet opencv numba jupyter python36
 
 cuda:
-	docker build -t cuda80_cudnn5_opencv3 -f cuda80_cudnn5_opencv3/Dockerfile cuda80_cudnn5_opencv3
+	docker build -t cuda80_cudnn5_opencv3 -f cuda80_cudnn5_opencv/Dockerfile cuda80_cudnn5_opencv
 
 mxnet: cuda
 	docker build -t opencv_mxnet -f opencv_mxnet/Dockerfile opencv_mxnet
