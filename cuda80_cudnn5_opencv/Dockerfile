@@ -1,4 +1,4 @@
-FROM nvidia/cuda:7.5-cudnn4-devel
+FROM nvidia/cuda:8.0-cudnn5-devel-ubuntu16.04
 MAINTAINER Erwan BERNARD
 
 # Pick up some dependencies
@@ -54,7 +54,6 @@ RUN pip2 --no-cache-dir install \
         scikit-image \
         docopt \
         path.py \
-        bokeh \
         && \
     python2 -m ipykernel install
 
@@ -69,7 +68,6 @@ RUN pip3 --no-cache-dir install \
         scikit-image \
         docopt \
         path.py \
-        bokeh \
         && \
     python3 -m ipykernel install
 
@@ -103,8 +101,11 @@ RUN make install
 RUN /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
 RUN ldconfig
 
+# link libippicv
 RUN ln -s /opencv/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a /usr/local/lib/libippicv.a
 
 WORKDIR "/shared"
 
 CMD ["/bin/bash"]
+
+

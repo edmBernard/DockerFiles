@@ -1,5 +1,5 @@
 # Start with cuDNN base image
-FROM cuda75_cudnn5_opencv3:latest
+FROM cuda80_cudnn5_opencv3:latest
 MAINTAINER Erwan BERNARD
 
 # Install git and other dependencies
@@ -31,7 +31,8 @@ RUN cd /root && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet 
     make -j"$(nproc)"
 
 # Install Python package
-RUN cd /root/mxnet/python && python setup.py install
+RUN cd /root/mxnet/python && python2 setup.py install
+RUN cd /root/mxnet/python && python3 setup.py install
 
 # Jupyter
 EXPOSE 8888
