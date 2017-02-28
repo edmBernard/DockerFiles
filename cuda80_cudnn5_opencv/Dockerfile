@@ -108,7 +108,7 @@ RUN /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
 RUN ldconfig
 
 # link libippicv
-RUN ln -s /opencv/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a /usr/local/lib/libippicv.a
+RUN ln -s /opencv-master/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a /usr/local/lib/libippicv.a
 
 WORKDIR "/shared"
 
