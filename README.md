@@ -21,6 +21,12 @@ sudo nvidia-docker build -t image_name -f dockerfile_name .
 sudo docker build -t image_name -f folder_name/Dockerfile folder_name
 ```
 
+## Build all images
+
+```bash
+make all
+```
+
 ## Create container
 
 ```bash
