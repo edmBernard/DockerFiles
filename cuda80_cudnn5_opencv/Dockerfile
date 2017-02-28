@@ -76,11 +76,17 @@ RUN ldconfig
 # download opencv3
 WORKDIR "/"
 RUN cd / && \
-    git clone https://github.com/opencv/opencv.git
+    wget https://github.com/opencv/opencv/archive/master.zip && \
+    unzip master.zip && \
+    rm master.zip
+    # git clone https://github.com/opencv/opencv.git  <-- don't work anymore : GnuTLS recv error
 
 # download opencv3 contrib
 RUN cd / && \
-    git clone https://github.com/opencv/opencv_contrib.git
+    wget https://github.com/opencv/opencv_contrib/archive/master.zip && \
+    unzip master.zip && \
+    rm master.zip
+    # git clone https://github.com/opencv/opencv_contrib.git  <-- don't work anymore : GnuTLS recv error
 
 # build opencv3
 # warning if we set BUILD_EXAMPLES=OFF cmake don't find IPP anymore (strange)
