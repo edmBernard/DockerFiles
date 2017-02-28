@@ -97,11 +97,11 @@ RUN cd /opencv-master && mkdir build && cd build && \
     -D INSTALL_C_EXAMPLES=OFF \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
     -D OPENCV_EXTRA_MODULES_PATH=/opencv_contrib-master/modules \
-    -D BUILD_EXAMPLES=ON \
+    -D BUILD_EXAMPLES=OFF \
     -D WITH_IPP=ON ..
 
 # install opencv3
-WORKDIR "/opencv/build"
+WORKDIR "/opencv-master/build"
 RUN make -j$(nproc)
 RUN make install
 RUN /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
