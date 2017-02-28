@@ -90,13 +90,13 @@ RUN cd / && \
 
 # build opencv3
 # warning if we set BUILD_EXAMPLES=OFF cmake don't find IPP anymore (strange)
-RUN cd /opencv && mkdir build && cd build && \
+RUN cd /opencv-master && mkdir build && cd build && \
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_LIBRARY_PATH=/usr/local/cuda/lib64/stubs \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
     -D INSTALL_C_EXAMPLES=OFF \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
-    -D OPENCV_EXTRA_MODULES_PATH=/opencv_contrib/modules \
+    -D OPENCV_EXTRA_MODULES_PATH=/opencv_contrib-master/modules \
     -D BUILD_EXAMPLES=ON \
     -D WITH_IPP=ON ..
 
