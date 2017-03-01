@@ -69,9 +69,8 @@ RUN pip3 --no-cache-dir install \
 RUN ldconfig
 
 # install ffmpeg
-RUN add-apt-repository ppa:mc3man/trusty-media && \
-    apt-get update && \
-    apt-get install ffmpeg
+RUN apt-get update &&\
+    apt-get install -y ffmpeg
 
 # download opencv3
 WORKDIR "/"

@@ -17,7 +17,7 @@ jupyter: numba
 	docker build -t jupyter_server -f jupyter_server/Dockerfile jupyter_server
 
 tensorflow:
-	docker build -t tensorflow_opencv -f tensorflow_opencv/Dockerfile_alpine tensorflow_opencv
+	docker build -t tensorflow_opencv -f tensorflow_opencv/Dockerfile tensorflow_opencv
 
 python36:
 	docker build -t alpine_python3.6 -f python36/Dockerfile_alpine python36
