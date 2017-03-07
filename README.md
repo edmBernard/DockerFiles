@@ -88,8 +88,6 @@ sudo docker exec -it container_name /bin/bash
 
 * IPPICV
 
-    if you got `incorrect hash` in cmake `ippicv` when installing [like this issue][1]
-
-    [1]: https://github.com/opencv/opencv/issues/5973
+    if you got `incorrect hash` in cmake `ippicv` when installing [like this issue](https://github.com/opencv/opencv/issues/5973)
 
     just try again ^^
