@@ -11,25 +11,43 @@ Most of these docker use the [Nvidia-docker][1] plugin for [Docker][2]
 
 ## Building images
 
+### With docker api
+
 ```bash
 sudo nvidia-docker build -t image_name -f dockerfile_name .
 ```
 
-## Building images from racine repos
+### With Make
 
 ```bash
-sudo docker build -t image_name -f folder_name/Dockerfile folder_name
+make <IMAGE_NAME>
 ```
 
-## Build all images
+<IMAGE_NAME> choice : 
+| <IMAGE_NAME> | Description | Images depend from each other* |  
+|:-- |:-- |:-- |
+| `all` | all cpu images | `python_lib ffmpeg opencv redis mxnet numba jupyter`| 
+| `python_lib` | my standard conf | |
+| `ffmpeg` | with [ffmpeg](https://ffmpeg.org/) | `python_lib` |
+| `opencv` | with [opencv](http://opencv.org/) | `python_lib ffmpeg` |
+| `redis` | with [redis](https://redis.io/)| `python_lib ffmpeg opencv` |
+| `mxnet` | with [mxnet](http://mxnet.io/)| `python_lib ffmpeg opencv redis` |
+| `numba` | with [numba](http://numba.pydata.org/) | `python_lib ffmpeg opencv redis mxnet` |
+| `jupyter` | a [jupyter](http://jupyter.org/) server with `pass` as password | `python_lib ffmpeg opencv redis mxnet numba` |
+| `gpu_all` | all gpu images |  `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter`|
+| `gpu_python_lib`  | my standard conf | |
+| `gpu_ffmpeg`  | with [ffmpeg](https://ffmpeg.org/) | `gpu_python_lib` |
+| `gpu_opencv`  | with [opencv](http://opencv.org/) | `gpu_python_lib gpu_ffmpeg` |
+| `gpu_redis`  | with [redis](https://redis.io/)| `gpu_python_lib gpu_ffmpeg gpu_opencv` |
+| `gpu_mxnet`  | with [mxnet](http://mxnet.io/)| `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis` |
+| `gpu_numba` | with [numba](http://numba.pydata.org/) | `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet` |
+| `gpu_jupyter`  | a [jupyter](http://jupyter.org/) server with `pass` as password | `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba` |
 
-```bash
-make all
-```
+\* `make` automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv`)
 
 ## Create container
 
-```bash
+```
 sudo docker run -it --name container_name -p 0.0.0.0:6000:7000 -p 0.0.0.0:8000:9000 -v shared/path/on/host:/shared/path/in/container image_name:latest /bin/bash
 ```
 
@@ -47,7 +65,7 @@ image_name:latest               # Image name to use for container creation
 
 ## Create container (with GPU support)
 
-```bash
+```
 NV_GPU='0' sudo nvidia-docker run -it --name container_name -p 0.0.0.0:6000:7000 -p 0.0.0.0:8000:9000 -v shared/path/on/host:/shared/path/in/container image_name:latest /bin/bash
 ```
 
@@ -64,12 +82,6 @@ image_name:latest               # Image name to use for container creation
 /bin/bash                       # Command to execute
 ```
 
-## Image dependency 
-
-These images depend from each other. The `make` command take care of this order. As a reminder here a graph with dependency : 
-* `ubuntu:16.04 > python_lib > ffmpeg > opencv > redis > mxnet > numba > jupyter`
-* `nvidia/cuda:8.0-cudnn5-devel-ubuntu16.04 > gpu_python_lib > gpu_ffmpeg > gpu_opencv > gpu_redis > gpu_mxnet > gpu_numba > gpu_jupyter`
-
 ## Advance use
 
 ### Open new terminal in existing container
@@ -78,28 +90,23 @@ These images depend from each other. The `make` command take care of this order.
 sudo docker exec -it container_name /bin/bash
 ```
 
-### Create Jupyter server
+### Alias to create Jupyter server
 #### CPU version
 
 ```bash
-function jupserver () {
-    docker run --name $1 -it --rm -p 0.0.0.0:5000:8888 -v /home/user:/home/dev/host -e BOX_NAME=$1 jupyter:latest
+    alias jupserver='docker run -it -d -p 0.0.0.0:5000:8888 -v $PWD:/home/dev/host jupyter:latest'
 }
 ```
 
 #### GPU version
 
 ```bash
-function jupserver () {
-    docker run --name $1 -it --rm -p 0.0.0.0:5000:8888 -v /home/user:/home/dev/host -e BOX_NAME=$1 gpu_jupyter:latest
-}
+    alias jupserver='docker run -it -d -p 0.0.0.0:5000:8888 -v $PWD:/home/dev/host gpu_jupyter:latest'
 ```
 
-### Create a isolated devbox
+### Alias to create a isolated devbox
 ```bash
-function newbox () {
-    docker run -it --rm -v $PWD:/home/dev/host numba:latest
-}
+    alias devbox='docker run -it --rm -v $PWD:/home/dev/host numba:latest'
 ```
 
 ### Some strange bug I encounter that disappear alone
