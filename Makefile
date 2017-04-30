@@ -54,5 +54,7 @@ gpu_jupyter: gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba 
 
 gpu_all: gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter 
 
-# python36:
-# 	docker build -t alpine_python3.6 -f python36/Dockerfile_alpine python36
+
+# build small image with python3.6
+python36:
+	docker build -t alpine_python3.6 -f python36/Dockerfile_alpine python36

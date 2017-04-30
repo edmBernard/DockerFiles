@@ -18,7 +18,8 @@ RUN cd /root && \
         rm redis-stable.tar.gz
 
 RUN cd /root/redis-stable && \
-        make
+        make && \
+        make install
 
 # install pip for python3
 RUN wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate && \
@@ -29,9 +30,12 @@ RUN pip3.6 --no-cache-dir install \
         docopt \
         schema \
         path.py \
-        redis
+        redis \ 
+        bottle \
+        tornado
 
 WORKDIR /root
 
 RUN echo "PS1='\[\033[1;36m\]alpine\[\033[00m\] \[\033[34m\]\u@\h\[\033[00m\]:\[\033[36m\]\w\[\033[00m\]$ '" > /etc/profile.d/shrc.sh
+
 CMD ["/bin/sh","--login"]

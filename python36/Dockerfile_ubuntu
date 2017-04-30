@@ -104,8 +104,7 @@ RUN echo 'force_color_prompt=yes' >> /home/dev/.bashrc && \
     cat /root/.bashrc >> /home/dev/.bashrc && \
     echo 'PS1="\[\033[31;1m\]$BOX_NAME\[\033[00m\] $PS1" ' >> /home/dev/.bashrc
 
-CMD ["/bin/bash"]
-
-
 RUN echo "alias python='/usr/bin/python3.6'" >> /home/dev/.bashrc
 RUN echo "alias python3='/usr/bin/python3.6'" >> /home/dev/.bashrc
+
+CMD ["/bin/bash"]
