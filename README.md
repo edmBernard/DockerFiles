@@ -67,13 +67,39 @@ image_name:latest               # Image name to use for container creation
 ## Image dependency 
 
 These images depend from each other. The `make` command take care of this order. As a reminder here a graph with dependency : 
-* `ubuntu:16.04 > python_lib > ffmpeg > opencv > mxnet > redis > numba > jupyter`
-* `nvidia/cuda:8.0-cudnn5-devel-ubuntu16.04 > gpu_python_lib > gpu_ffmpeg > gpu_opencv > gpu_mxnet > gpu_redis > gpu_numba > gpu_jupyter`
+* `ubuntu:16.04 > python_lib > ffmpeg > opencv > redis > mxnet > numba > jupyter`
+* `nvidia/cuda:8.0-cudnn5-devel-ubuntu16.04 > gpu_python_lib > gpu_ffmpeg > gpu_opencv > gpu_redis > gpu_mxnet > gpu_numba > gpu_jupyter`
 
-## Open terminal in container
+## Advance use
+
+### Open new terminal in existing container
 
 ```bash
 sudo docker exec -it container_name /bin/bash
+```
+
+### Create Jupyter server
+#### CPU version
+
+```bash
+function jupserver () {
+    docker run --name $1 -it --rm -p 0.0.0.0:5000:8888 -v /home/user:/home/dev/host -e BOX_NAME=$1 jupyter:latest
+}
+```
+
+#### GPU version
+
+```bash
+function jupserver () {
+    docker run --name $1 -it --rm -p 0.0.0.0:5000:8888 -v /home/user:/home/dev/host -e BOX_NAME=$1 gpu_jupyter:latest
+}
+```
+
+### Create a isolated devbox
+```bash
+function newbox () {
+    docker run -it --rm -v $PWD:/home/dev/host numba:latest
+}
 ```
 
 ### Some strange bug I encounter that disappear alone
