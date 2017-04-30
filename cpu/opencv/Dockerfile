@@ -10,7 +10,6 @@ RUN mkdir -p "/home/dev/lib/opencv"
 ENV OPENCV_DIR "/home/dev/lib/opencv"
 
 # download opencv3
-WORKDIR "/"
 RUN cd $OPENCV_DIR && \
     wget https://github.com/opencv/opencv/archive/master.zip && \
     unzip master.zip && \
@@ -33,11 +32,7 @@ RUN cd $OPENCV_DIR/opencv-master && mkdir build && cd build && \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
     -D OPENCV_EXTRA_MODULES_PATH=$OPENCV_DIR/opencv_contrib-master/modules \
     -D BUILD_EXAMPLES=OFF \
-    -D WITH_IPP=ON ..
-
-# install opencv3
-WORKDIR "$OPENCV_DIR/opencv-master/build"
-RUN cd "$OPENCV_DIR/opencv-master/build" && \
+    -D WITH_IPP=ON .. && \
     make -j$(nproc) && \
     make install && \
     /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf' && \
@@ -45,5 +40,3 @@ RUN cd "$OPENCV_DIR/opencv-master/build" && \
 
 # link ippicv
 RUN ln -s $OPENCV_DIR/opencv-master/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a /usr/local/lib/libippicv.a
-
-CMD ["/bin/bash"]

@@ -83,12 +83,19 @@ RUN cd $FFMPEG_DIR/ffmpeg_sources && \
         --enable-libx264 \
         --enable-libx265 \
         --enable-nonfree \
+        --enable-shared \ 
         && \
     PATH="$FFMPEG_DIR/bin:$PATH" make -j"$(nproc)" && \
     make install && \
     hash -r
 
-RUN echo 'export PATH="$FFMPEG_DIR/bin:$PATH"' >> ~/.bashrc
-RUN echo 'export PKG_CONFIG_PATH="$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig:$PKG_CONFIG_PATH"' >> ~/.bashrc
+RUN /bin/bash -c 'echo "$FFMPEG_DIR/ffmpeg_build/lib" > /etc/ld.so.conf.d/ffmpeg.conf'
+RUN ldconfig
 
-CMD ["/bin/bash"]
+ENV PATH "$FFMPEG_DIR/bin:${PATH}"
+ENV PKG_CONFIG_PATH "$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig:${PKG_CONFIG_PATH}"
+
+# don't work in dockerfile as docker file don't use bashrc
+# RUN echo 'export PATH="$FFMPEG_DIR/bin:$PATH"' >> ~/.bashrc
+# RUN echo 'export PKG_CONFIG_PATH="$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig:$PKG_CONFIG_PATH"' >> ~/.bashrc
+# RUN /bin/bash -c "source ~/.bashrc"

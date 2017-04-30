@@ -19,5 +19,3 @@ RUN pip2 --no-cache-dir install \
 # install python3 tools
 RUN pip3 --no-cache-dir install \
         redis
-
-CMD ["/bin/bash"]

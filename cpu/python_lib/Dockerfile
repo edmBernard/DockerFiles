@@ -88,6 +88,7 @@ WORKDIR /home/dev/host
 ENV HOME /home/dev
 # RUN useradd dev && chown -R dev: /home/dev
 # USER dev
+
 RUN ln -snf /bin/bash /bin/sh
 RUN cp /root/.bashrc /home/dev/.bashrc && \
     sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' ~/.bashrc
