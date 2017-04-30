@@ -88,8 +88,7 @@ RUN cd $FFMPEG_DIR/ffmpeg_sources && \
     make install && \
     hash -r
 
-# RUN echo 'export PATH="$FFMPEG_DIR/bin:$PATH"' >> ~/.bashrc
-# RUN echo 'export LD_LIBRARY_PATH="$FFMPEG_DIR/ffmpeg_build/lib:$LD_LIBRARY_PATH"'
-# RUN echo 'export PKG_CONFIG_PATH="$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig:$PKG_CONFIG_PATH"' >> ~/.bashrc
+RUN echo 'export PATH="$FFMPEG_DIR/bin:$PATH"' >> ~/.bashrc
+RUN echo 'export PKG_CONFIG_PATH="$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig:$PKG_CONFIG_PATH"' >> ~/.bashrc
 
 CMD ["/bin/bash"]

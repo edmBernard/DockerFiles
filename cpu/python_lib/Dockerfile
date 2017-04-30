@@ -18,7 +18,9 @@ RUN apt-get update && apt-get upgrade -y && \
         libtiff-dev \
         libjasper-dev \
         # library for video format convertion YUV ...
-        libv4l-dev \
+        libv4l-dev v4l-utils \
+        # camera control
+        libdc1394-22 libdc1394-22-dev \
         # Lapack
         libatlas-base-dev \
         # python
