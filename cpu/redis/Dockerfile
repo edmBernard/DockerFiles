@@ -9,7 +9,7 @@ RUN cd /home/dev/lib && \
     wget http://download.redis.io/redis-stable.tar.gz && \
     tar xvzf redis-stable.tar.gz && \
     cd redis-stable && \
-    make -j"$(nproc)" \
+    make -j"$(nproc)" && \
     make install
 
 # install python2 tools

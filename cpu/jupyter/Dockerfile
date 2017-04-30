@@ -3,7 +3,7 @@ MAINTAINER Erwan BERNARD
 
 # configure jupyter
 # the default for this hash is "pass" 
-RUN jupyter notebook --generate-config && \
+RUN jupyter notebook --generate-config --allow-root && \
     echo "c.NotebookApp.password = u'sha1:eb9f67ab8656:cb5ee4b6bfd15a0fa315e395e37585283cf985e7'" >> ~/.jupyter/jupyter_notebook_config.py && \
     echo "alias jup='jupyter notebook --port=8888 --no-browser --ip=0.0.0.0'" >> /home/dev/.bashrc
 EXPOSE 8888
