@@ -24,6 +24,7 @@ make <IMAGE_NAME>
 ```
 
 <IMAGE_NAME> choice : 
+
 | <IMAGE_NAME> | Description | Images depend from each other* |  
 |:-- |:-- |:-- |
 | `all` | all cpu images | `python_lib ffmpeg opencv redis mxnet numba jupyter`| 
@@ -95,7 +96,6 @@ sudo docker exec -it container_name /bin/bash
 
 ```bash
     alias jupserver='docker run -it -d -p 0.0.0.0:5000:8888 -v $PWD:/home/dev/host jupyter:latest'
-}
 ```
 
 #### GPU version
