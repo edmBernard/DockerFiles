@@ -43,6 +43,7 @@ make <IMAGE_NAME>
 | `gpu_mxnet`  | with [mxnet](http://mxnet.io/)| `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis` |
 | `gpu_numba` | with [numba](http://numba.pydata.org/) | `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet` |
 | `gpu_jupyter`  | a [jupyter](http://jupyter.org/) server with `pass` as password | `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba` |
+| `python36` | [alpine](https://alpinelinux.org/) with python 3.6 | |
 
 \* `make` automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv`)
 
