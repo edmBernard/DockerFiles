@@ -64,6 +64,12 @@ image_name:latest               # Image name to use for container creation
 /bin/bash                       # Command to execute
 ```
 
+## Image dependency 
+
+These images depend from each other. The `make` command take care of this order. As a reminder here a graph with dependency : 
+* `ubuntu:16.04 > python_lib > ffmpeg > opencv > mxnet > redis > numba > jupyter`
+* `nvidia/cuda:8.0-cudnn5-devel-ubuntu16.04 > gpu_python_lib > gpu_ffmpeg > gpu_opencv > gpu_mxnet > gpu_redis > gpu_numba > gpu_jupyter`
+
 ## Open terminal in container
 
 ```bash
