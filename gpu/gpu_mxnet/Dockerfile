@@ -14,7 +14,7 @@ RUN pip3 --no-cache-dir install -U \
     easydict
 
 # Clone MXNet repo and move into it
-RUN cd /root && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
+RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
 # Copy config.mk
     cp make/config.mk config.mk && \
 # Set OpenBLAS
@@ -28,5 +28,5 @@ RUN cd /root && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet 
     make -j"$(nproc)"
 
 # Install Python package
-RUN cd /root/mxnet/python && python2 setup.py install
-RUN cd /root/mxnet/python && python3 setup.py install
+RUN cd /home/dev/lib/mxnet/python && python2 setup.py install
+RUN cd /home/dev/lib/mxnet/python && python3 setup.py install
