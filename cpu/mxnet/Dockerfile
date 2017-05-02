@@ -1,6 +1,8 @@
 FROM redis:latest
 MAINTAINER Erwan BERNARD
 
+RUN mkdir -p "/home/dev/lib"
+
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
   libopenblas-dev
