@@ -3,6 +3,10 @@ define create_image
 	docker build -t $(1) -f $(2)/$(1)/Dockerfile $(2)/$(1)
 endef
 
+define create_image_gpu
+        nvidia-docker build -t $(1) -f $(2)/$(1)/Dockerfile $(2)/$(1)
+endef
+
 .PHONY: all python_lib ffmpeg opencv redis mxnet numba jupyter gpu_all gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter 
 
 # build CPU images
@@ -32,25 +36,25 @@ all: python_lib ffmpeg opencv redis mxnet numba jupyter
 
 # build GPU images
 gpu_python_lib:
-	$(call create_image,$@,gpu)
+	$(call create_image_gpu,$@,gpu)
 
 gpu_ffmpeg: gpu_python_lib 
-	$(call create_image,$@,gpu)
+	$(call create_image_gpu,$@,gpu)
 
 gpu_opencv: gpu_python_lib gpu_ffmpeg
-	$(call create_image,$@,gpu)
+	$(call create_image_gpu,$@,gpu)
 
 gpu_redis: gpu_python_lib gpu_ffmpeg gpu_opencv 
-	$(call create_image,$@,gpu)
+	$(call create_image_gpu,$@,gpu)
 
 gpu_mxnet: gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis 
-	$(call create_image,$@,gpu)
+	$(call create_image_gpu,$@,gpu)
 
 gpu_numba: gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet 
-	$(call create_image,$@,gpu)
+	$(call create_image_gpu,$@,gpu)
 
 gpu_jupyter: gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter 
-	$(call create_image,$@,gpu)
+	$(call create_image_gpu,$@,gpu)
 
 gpu_all: gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter 
 
