@@ -7,7 +7,9 @@ define create_image_gpu
         nvidia-docker build -t $(1) -f $(2)/$(1)/Dockerfile $(2)/$(1)
 endef
 
-.PHONY: all python_lib ffmpeg opencv redis mxnet numba jupyter gpu_all gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter 
+.PHONY: all python_lib ffmpeg opencv redis mxnet nnpack_mxnet numba jupyter gpu_all gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter
+
+all: mxnet nnpack_mxnet jupyter
 
 # build CPU images
 python_lib:
@@ -16,22 +18,23 @@ python_lib:
 ffmpeg: python_lib
 	$(call create_image,$@,cpu)
 
-opencv: python_lib ffmpeg
+opencv: ffmpeg
 	$(call create_image,$@,cpu)
 
-redis: python_lib ffmpeg opencv
+redis: opencv
 	$(call create_image,$@,cpu)
 
-mxnet: python_lib ffmpeg opencv redis
+mxnet: redis
 	$(call create_image,$@,cpu)
 
-numba: python_lib ffmpeg opencv redis mxnet
+nnpack_mxnet: redis
 	$(call create_image,$@,cpu)
 
-jupyter: python_lib ffmpeg opencv redis mxnet numba
+numba: mxnet
 	$(call create_image,$@,cpu)
 
-all: python_lib ffmpeg opencv redis mxnet numba jupyter
+jupyter: numba
+	$(call create_image,$@,cpu)
 
 clean:
 	docker rmi jupyter numba mxnet redis opencv ffmpeg python_lib
