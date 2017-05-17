@@ -33,7 +33,9 @@ RUN cd /home/dev/lib && git clone --recursive https://github.com/Maratyszcza/NNP
     python ./configure.py --enable-shared && \
     ninja
 
-ENV LD_LIBRARY_PATH "/home/dev/lib/NNPACK/lib:${LD_LIBRARY_PATH}"
+# ENV LD_LIBRARY_PATH "/home/dev/lib/NNPACK/lib:${LD_LIBRARY_PATH}"
+RUN /bin/bash -c 'echo "/home/dev/lib/NNPACK/lib" > /etc/ld.so.conf.d/nnpack.conf'
+RUN ldconfig
 
 # Clone MXNet repo and move into it
 RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
@@ -43,6 +45,7 @@ RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && c
     sed -i 's/USE_BLAS = atlas/USE_BLAS = openblas/g' config.mk && \
 # Set NNPACK 
     sed -i 's/ADD_CFLAGS =/ADD_CFLAGS = -I\/home\/dev\/lib\/NNPACK\/include\/ -I\/home\/dev\/lib\/NNPACK\/third-party\/pthreadpool\/include\//g' config.mk && \
+    sed -i 's/ADD_LDFLAGS =/ADD_LDFLAGS = -L\/home\/dev\/lib\/NNPACK\/lib/g' config.mk && \
     sed -i 's/USE_NNPACK = 0/USE_NNPACK = 1/g' config.mk && \
 # Make
     make -j"$(nproc)"

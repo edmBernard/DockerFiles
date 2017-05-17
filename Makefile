@@ -43,25 +43,25 @@ clean:
 gpu_python_lib:
 	$(call create_image_gpu,$@,gpu)
 
-gpu_ffmpeg: gpu_python_lib 
+gpu_ffmpeg: gpu_python_lib
 	$(call create_image_gpu,$@,gpu)
 
-gpu_opencv: gpu_python_lib gpu_ffmpeg
+gpu_opencv: gpu_ffmpeg
 	$(call create_image_gpu,$@,gpu)
 
-gpu_redis: gpu_python_lib gpu_ffmpeg gpu_opencv 
+gpu_redis: gpu_opencv
 	$(call create_image_gpu,$@,gpu)
 
-gpu_mxnet: gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis 
+gpu_mxnet: gpu_redis
 	$(call create_image_gpu,$@,gpu)
 
-gpu_numba: gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet 
+gpu_numba: gpu_mxnet
 	$(call create_image_gpu,$@,gpu)
 
-gpu_jupyter: gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter 
+gpu_jupyter: gpu_numba
 	$(call create_image_gpu,$@,gpu)
 
-gpu_all: gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter 
+gpu_all: gpu_mxnet gpu_jupyter
 
 clean_gpu:
 	docker rmi gpu_jupyter gpu_numba gpu_mxnet gpu_redis gpu_opencv gpu_ffmpeg gpu_python_lib
