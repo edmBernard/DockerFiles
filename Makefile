@@ -33,6 +33,8 @@ jupyter: python_lib ffmpeg opencv redis mxnet numba
 
 all: python_lib ffmpeg opencv redis mxnet numba jupyter
 
+clean:
+	docker rmi jupyter numba mxnet redis opencv ffmpeg python_lib
 
 # build GPU images
 gpu_python_lib:
@@ -58,6 +60,8 @@ gpu_jupyter: gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba 
 
 gpu_all: gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter 
 
+clean_gpu:
+	docker rmi gpu_jupyter gpu_numba gpu_mxnet gpu_redis gpu_opencv gpu_ffmpeg gpu_python_lib
 
 # build small image with python3.6
 python36:
