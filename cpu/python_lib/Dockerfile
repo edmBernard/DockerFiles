@@ -28,10 +28,12 @@ RUN apt-get update && apt-get upgrade -y && \
         python-dev \
         python-numpy \
         python-scipy \
+        python-tk \
         python3 \
         python3-dev \
         python3-numpy \
         python3-scipy \
+        python3-tk \
         python-setuptools \
         && \
     apt-get clean && \
