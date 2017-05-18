@@ -6,13 +6,12 @@ RUN mkdir -p "/home/dev/lib"
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
-  libopenblas-dev \
-  ninja-build
+  libopenblas-dev
 
 # install python2 tools
 RUN pip2 --no-cache-dir install -U \
     easydict \
-    confu
+    ninja_syntax
 
 # install python3 tools
 RUN pip3 --no-cache-dir install -U \
@@ -35,7 +34,7 @@ RUN cd /home/dev/lib && git clone --recursive https://github.com/Maratyszcza/NNP
     git reset --hard 9c6747d7b80051b40e6f92d6828e2ed997529cd2 && \
     git submodule init && git submodule update --recursive && \
     python ./configure.py --enable-shared && \
-    ~/lib/ninja/./ninja
+    /home/dev/lib/ninja/./ninja
 
 # ENV LD_LIBRARY_PATH "/home/dev/lib/NNPACK/lib:${LD_LIBRARY_PATH}"
 RUN /bin/bash -c 'echo "/home/dev/lib/NNPACK/lib" > /etc/ld.so.conf.d/nnpack.conf'
