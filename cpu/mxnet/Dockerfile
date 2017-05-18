@@ -20,7 +20,7 @@ RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && c
 # The last mxnet version (18/05/2017) don't compile and crash with ssd so go back to the last stable version
     git fetch --tags && \
     git checkout tags/v0.9.5 && \
-    git submodule update --recursive
+    git submodule update --init --recursive && \
 # Copy config.mk
     cp make/config.mk config.mk && \
 # Set OpenBLAS

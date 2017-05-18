@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
 # install python2 tools
 RUN pip2 --no-cache-dir install -U \
     easydict \
-    ninja-syntax
+    confu
 
 # install python3 tools
 RUN pip3 --no-cache-dir install -U \
@@ -24,6 +24,10 @@ RUN cd /home/dev/lib && git clone https://github.com/Maratyszcza/PeachPy.git && 
     python2 setup.py generate && \
     pip2 install --upgrade .
 
+# install ninja
+RUN cd /home/dev/lib && git clone git://github.com/ninja-build/ninja.git && cd ninja && \
+    ./configure.py --bootstrap
+
 # Build NNPack shared library
 # Latest NNPACK do not support building NNPACK as shared library using --enable-shared flag
 # Reset to commit that supports it.
@@ -31,7 +35,7 @@ RUN cd /home/dev/lib && git clone --recursive https://github.com/Maratyszcza/NNP
     git reset --hard 9c6747d7b80051b40e6f92d6828e2ed997529cd2 && \
     git submodule init && git submodule update --recursive && \
     python ./configure.py --enable-shared && \
-    ninja
+    ~/lib/ninja/./ninja
 
 # ENV LD_LIBRARY_PATH "/home/dev/lib/NNPACK/lib:${LD_LIBRARY_PATH}"
 RUN /bin/bash -c 'echo "/home/dev/lib/NNPACK/lib" > /etc/ld.so.conf.d/nnpack.conf'
@@ -40,9 +44,9 @@ RUN ldconfig
 # Clone MXNet repo and move into it
 RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
 # The last mxnet version (18/05/2017) don't compile and crash with ssd so go back to the last stable version
-#    git fetch --tags && \
-#    git checkout tags/v0.9.5 && \
-#    git submodule update --recursive
+    git fetch --tags && \
+    git checkout tags/v0.9.5 && \
+    git submodule update --init --recursive && \
 # Copy config.mk
     cp make/config.mk config.mk && \
 # Set OpenBLAS
