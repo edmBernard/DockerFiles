@@ -54,7 +54,7 @@ RUN pip2 --no-cache-dir install \
         docopt \
         schema \
         path.py \
-        request \
+        requests \
         bottle \
         tornado \
         ipython \
@@ -73,7 +73,7 @@ RUN pip3 --no-cache-dir install \
         schema \
         path.py \
         addict \
-        request \
+        requests \
         bottle \
         tornado \
         ipython \
