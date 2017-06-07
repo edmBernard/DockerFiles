@@ -8,9 +8,9 @@ RUN apt-get update && \
     apt-get install -y \
         wget \
         autoconf automake \
-        cmake mercurial \ 
+        cmake mercurial \
         build-essential \
-        libass-dev \ 
+        libass-dev \
         libfreetype6-dev \
         libsdl2-dev \
         libtheora-dev \
@@ -20,8 +20,8 @@ RUN apt-get update && \
         libvorbis-dev \
         libxcb1-dev \
         libxcb-shm0-dev \
-        libxcb-xfixes0-dev \ 
-        pkg-config \ 
+        libxcb-xfixes0-dev \
+        pkg-config \
         texinfo \
         zlib1g-dev \
         && \
@@ -34,11 +34,21 @@ ENV FFMPEG_DIR "/home/dev/lib/ffmpeg"
 # install yasm
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
     wget http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz && \
-    tar xzvf yasm-1.3.0.tar.gz && \ 
+    tar xzvf yasm-1.3.0.tar.gz && \
     rm yasm-1.3.0.tar.gz && \
     cd yasm-1.3.0 && \
     ./configure --prefix="$FFMPEG_DIR/ffmpeg_build" --bindir="$FFMPEG_DIR/bin" && \
     make -j"$(nproc)" && \
+    make install
+
+# install nasm
+RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
+    wget http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.bz2 && \
+    tar xjvf nasm-2.13.01.tar.bz2 && \
+    cd nasm-2.13.01 && \
+    ./autogen.sh && \
+    PATH="$FFMPEG_DIR/bin:$PATH" ./configure --prefix="$FFMPEG_DIR/ffmpeg_build" --bindir="$FFMPEG_DIR/bin" && \
+    PATH="$FFMPEG_DIR/bin:$PATH" make -j"$(nproc)" && \
     make install
 
 # install x264

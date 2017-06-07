@@ -41,6 +41,16 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
     make -j"$(nproc)" && \
     make install
 
+# install nasm
+RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
+    wget http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.bz2 && \
+    tar xjvf nasm-2.13.01.tar.bz2 && \
+    cd nasm-2.13.01 && \
+    ./autogen.sh && \
+    PATH="$FFMPEG_DIR/bin:$PATH" ./configure --prefix="$FFMPEG_DIR/ffmpeg_build" --bindir="$FFMPEG_DIR/bin" && \
+    PATH="$FFMPEG_DIR/bin:$PATH" make -j"$(nproc)" && \
+    make install
+
 # install x264
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
     wget http://download.videolan.org/pub/x264/snapshots/last_x264.tar.bz2 && \
