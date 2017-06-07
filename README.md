@@ -33,7 +33,6 @@ make <IMAGE_NAME>
 | `opencv` | with [opencv](http://opencv.org/) | `python_lib ffmpeg` |
 | `redis` | with [redis](https://redis.io/)| `python_lib ffmpeg opencv` |
 | `mxnet` | with [mxnet](http://mxnet.io/)| `python_lib ffmpeg opencv redis` |
-| `nnpack_mxnet` | [mxnet](http://mxnet.io/) with [NNPACK](https://github.com/Maratyszcza/NNPACK) optimization | `python_lib ffmpeg opencv redis` |
 | `numba` | with [numba](http://numba.pydata.org/) | `python_lib ffmpeg opencv redis mxnet` |
 | `jupyter` | a [jupyter](http://jupyter.org/) server with `pass` as password | `python_lib ffmpeg opencv redis mxnet numba` |
 | `gpu_all` | all gpu images |  `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter`|
@@ -47,6 +46,8 @@ make <IMAGE_NAME>
 | `python36` | [alpine](https://alpinelinux.org/) with python 3.6 | |
 
 \* `make` automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv`)
+
+*Note:* make accept `NOCACHE=ON` argument to force the rebuild of all images
 
 ## Create container
 
