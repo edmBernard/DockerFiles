@@ -4,6 +4,7 @@ MAINTAINER Erwan BERNARD
 # follow the tuto from here : https://redis.io/topics/quickstart
 
 RUN mkdir -p "/home/dev/lib"
+ENV REDIS_DIR "/home/dev/lib/redis-stable"
 
 RUN cd /home/dev/lib && \
     wget http://download.redis.io/redis-stable.tar.gz && \

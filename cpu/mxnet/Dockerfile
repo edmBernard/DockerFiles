@@ -2,6 +2,7 @@ FROM redis:latest
 MAINTAINER Erwan BERNARD
 
 RUN mkdir -p "/home/dev/lib"
+ENV MXNET_DIR /home/dev/lib/mxnet
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \

@@ -2,7 +2,8 @@ FROM redis:latest
 MAINTAINER Erwan BERNARD
 
 RUN mkdir -p "/home/dev/lib"
-#ENV NNPACK_DIR /home/dev/lib/NNPACK
+ENV NNPACK_DIR /home/dev/lib/NNPACK
+ENV MXNET_DIR /home/dev/lib/mxnet
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
