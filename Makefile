@@ -1,11 +1,19 @@
 
+NOCACHE=OFF
+
+ifeq ($(NOCACHE),ON)
+	arg_nocache=--no-cache
+else
+	arg_nocache=
+endif
+
 define create_image
-	docker build -t $(1) -f $(2)/$(1)/Dockerfile $(2)/$(1)
+$(if $(filter $(2),gpu),
+    nvidia-docker build $(arg_nocache) -t $(1) -f $(2)/$(1)/Dockerfile $(2)/$(1),
+    docker build $(arg_nocache) -t $(1) -f $(2)/$(1)/Dockerfile $(2)/$(1)
+)
 endef
 
-define create_image_gpu
-        nvidia-docker build -t $(1) -f $(2)/$(1)/Dockerfile $(2)/$(1)
-endef
 
 .PHONY: all python_lib ffmpeg opencv redis mxnet nnpack_mxnet numba jupyter gpu_all gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter
 
@@ -41,25 +49,25 @@ clean:
 
 # build GPU images
 gpu_python_lib:
-	$(call create_image_gpu,$@,gpu)
+	$(call create_image,$@,gpu)
 
 gpu_ffmpeg: gpu_python_lib
-	$(call create_image_gpu,$@,gpu)
+	$(call create_image,$@,gpu)
 
 gpu_opencv: gpu_ffmpeg
-	$(call create_image_gpu,$@,gpu)
+	$(call create_image,$@,gpu)
 
 gpu_redis: gpu_opencv
-	$(call create_image_gpu,$@,gpu)
+	$(call create_image,$@,gpu)
 
 gpu_mxnet: gpu_redis
-	$(call create_image_gpu,$@,gpu)
+	$(call create_image,$@,gpu)
 
 gpu_numba: gpu_mxnet
-	$(call create_image_gpu,$@,gpu)
+	$(call create_image,$@,gpu)
 
 gpu_jupyter: gpu_numba
-	$(call create_image_gpu,$@,gpu)
+	$(call create_image,$@,gpu)
 
 gpu_all: gpu_mxnet gpu_jupyter
 

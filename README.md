@@ -47,6 +47,8 @@ make <IMAGE_NAME>
 
 \* `make` automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv`)
 
+*Note:* make accept `NOCACHE=ON` argument to force the rebuild of all images
+
 ## Create container
 
 ```
