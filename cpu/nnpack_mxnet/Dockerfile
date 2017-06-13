@@ -44,9 +44,7 @@ RUN ldconfig
 # Clone MXNet repo and move into it
 RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
 # The last mxnet version (18/05/2017) don't compile and crash with ssd so go back to the last stable version
-    git fetch --tags && \
-    git checkout tags/v0.9.5 && \
-    git submodule update --init --recursive && \
+# mxnet messed up with the cub module, we can't easily checkout on tag 0.9.5 anymore
 # Copy config.mk
     cp make/config.mk config.mk && \
 # Set OpenBLAS

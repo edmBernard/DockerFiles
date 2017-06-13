@@ -18,9 +18,6 @@ RUN pip3 --no-cache-dir install -U \
 
 # Clone MXNet repo and move into it
 RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
-    git fetch --tags && \
-    git checkout tags/v0.9.5 && \
-    git submodule update --init --recursive && \
 # Copy config.mk
     cp make/config.mk config.mk && \
 # Set OpenBLAS
