@@ -15,7 +15,7 @@ $(if $(filter $(2),gpu),
 endef
 
 
-.PHONY: all python_lib ffmpeg opencv redis mxnet nnpack_mxnet tensorflow numba jupyter gpu_all gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_tensorflow gpu_numba gpu_jupyter
+.PHONY: all python_lib ffmpeg opencv redis mxnet nnpack_mxnet tensorflow cntk numba jupyter gpu_all gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_tensorflow gpu_cntk gpu_numba gpu_jupyter
 
 all: mxnet nnpack_mxnet jupyter
 
@@ -41,6 +41,9 @@ nnpack_mxnet: redis
 tensorflow: redis
 	$(call create_image,$@,cpu)
 
+cntk: tensorflow
+	$(call create_image,$@,cpu)
+
 numba: mxnet
 	$(call create_image,$@,cpu)
 
@@ -48,7 +51,7 @@ jupyter: numba
 	$(call create_image,$@,cpu)
 
 clean:
-	docker rmi jupyter numba tensorflow mxnet nnpack_mxnet redis opencv ffmpeg python_lib
+	docker rmi jupyter numba cntk tensorflow mxnet nnpack_mxnet redis opencv ffmpeg python_lib
 
 # build GPU images
 gpu_python_lib:
@@ -69,6 +72,9 @@ gpu_mxnet: gpu_redis
 gpu_tensorflow: gpu_redis
 	$(call create_image,$@,gpu)
 
+gpu_cntk: gpu_tensorflow
+	$(call create_image,$@,cpu)
+
 gpu_numba: gpu_mxnet
 	$(call create_image,$@,gpu)
 
@@ -78,7 +84,7 @@ gpu_jupyter: gpu_numba
 gpu_all: gpu_mxnet gpu_jupyter
 
 clean_gpu:
-	docker rmi gpu_jupyter gpu_numba gpu_tensorflow gpu_mxnet gpu_redis gpu_opencv gpu_ffmpeg gpu_python_lib
+	docker rmi gpu_jupyter gpu_numba gpu_cntk gpu_tensorflow gpu_mxnet gpu_redis gpu_opencv gpu_ffmpeg gpu_python_lib
 
 # build small image with python3.6
 python36:
