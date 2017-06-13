@@ -73,7 +73,7 @@ gpu_tensorflow: gpu_redis
 	$(call create_image,$@,gpu)
 
 gpu_cntk: gpu_tensorflow
-	$(call create_image,$@,cpu)
+	$(call create_image,$@,gpu)
 
 gpu_numba: gpu_mxnet
 	$(call create_image,$@,gpu)
