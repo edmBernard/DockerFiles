@@ -1,4 +1,4 @@
-FROM redis:latest
+FROM gpu_redis:latest
 MAINTAINER Erwan BERNARD
 
 # install python3 tools
