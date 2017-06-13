@@ -1,6 +1,13 @@
 FROM tensorflow:latest
 MAINTAINER Erwan BERNARD
 
+RUN apt-get update && \
+    apt-get install -y \
+    openmpi-bin \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # CNTK
 RUN pip3 install https://cntk.ai/PythonWheel/CPU-Only/cntk-2.0-cp35-cp35m-linux_x86_64.whl
 
