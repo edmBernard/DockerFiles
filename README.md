@@ -20,12 +20,18 @@ sudo nvidia-docker build -t image_name -f dockerfile_name .
 ### With Make
 
 ```bash
-make <IMAGE_NAME>
+make IMAGE_NAME
+
+IMAGE_NAME:
+* with CPU only:    {all, python_lib, ffmpeg, opencv, redis, mxnet, nnpack_mxnet, tensorflow, cntk, numba, jupyter}
+* with GPU support: {gpu_all, gpu_python_lib, gpu_ffmpeg, gpu_opencv, gpu_redis, gpu_mxnet, gpu_tensorflow, gpu_cntk, gpu_numba, gpu_jupyter}
+* others:           {python36}
 ```
 
-<IMAGE_NAME> choice : 
+*Note:* make accept `NOCACHE=ON` argument to force the rebuild of all images
 
-| <IMAGE_NAME> | Description | Images depend from each other* |  
+#### Images with CPU Only:
+| Image name | Description | Images depend from each other* |  
 |:-- |:-- |:-- |
 | `all` | all cpu images | `python_lib ffmpeg opencv redis mxnet numba jupyter`| 
 | `python_lib` | my standard conf | |
@@ -38,6 +44,12 @@ make <IMAGE_NAME>
 | `cntk` | with [cntk](http://cntk.ai) and [keras](https://keras.io/)| `python_lib ffmpeg opencv redis tensorflow` |
 | `numba` | with [numba](http://numba.pydata.org/) | `python_lib ffmpeg opencv redis mxnet` |
 | `jupyter` | a [jupyter](http://jupyter.org/) server with `pass` as password | `python_lib ffmpeg opencv redis mxnet numba` |
+
+\* `make` automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv`)
+
+#### Images with GPU support:
+| Image name | Description | Images depend from each other* |  
+|:-- |:-- |:-- |
 | `gpu_all` | all gpu images |  `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter`|
 | `gpu_python_lib`  | my standard conf | |
 | `gpu_ffmpeg`  | with [ffmpeg](https://ffmpeg.org/) | `gpu_python_lib` |
@@ -52,9 +64,7 @@ make <IMAGE_NAME>
 
 \* `make` automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv`)
 
-*Note:* make accept `NOCACHE=ON` argument to force the rebuild of all images
-
-## Create container
+## Create container (with CPU Only)
 
 ```
 sudo docker run -it --name container_name -p 0.0.0.0:6000:7000 -p 0.0.0.0:8000:9000 -v shared/path/on/host:/shared/path/in/container image_name:latest /bin/bash
