@@ -33,6 +33,9 @@ make <IMAGE_NAME>
 | `opencv` | with [opencv](http://opencv.org/) | `python_lib ffmpeg` |
 | `redis` | with [redis](https://redis.io/)| `python_lib ffmpeg opencv` |
 | `mxnet` | with [mxnet](http://mxnet.io/)| `python_lib ffmpeg opencv redis` |
+| `nnpack_mxnet` | with [mxnet](http://mxnet.io/) and [NNPACK](https://github.com/Maratyszcza/NNPACK)| `python_lib ffmpeg opencv redis` |
+| `tensorflow` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)| `python_lib ffmpeg opencv redis` |
+| `cntk` | with [cntk](http://cntk.ai) and [keras](https://keras.io/)| `python_lib ffmpeg opencv redis tensorflow` |
 | `numba` | with [numba](http://numba.pydata.org/) | `python_lib ffmpeg opencv redis mxnet` |
 | `jupyter` | a [jupyter](http://jupyter.org/) server with `pass` as password | `python_lib ffmpeg opencv redis mxnet numba` |
 | `gpu_all` | all gpu images |  `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter`|
@@ -41,6 +44,8 @@ make <IMAGE_NAME>
 | `gpu_opencv`  | with [opencv](http://opencv.org/) | `gpu_python_lib gpu_ffmpeg` |
 | `gpu_redis`  | with [redis](https://redis.io/)| `gpu_python_lib gpu_ffmpeg gpu_opencv` |
 | `gpu_mxnet`  | with [mxnet](http://mxnet.io/)| `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis` |
+| `gpu_tensorflow`  | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)| `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis` |
+| `gpu_cntk`  |  with [cntk](http://cntk.ai) and [keras](https://keras.io/)| `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_tensorflow` |
 | `gpu_numba` | with [numba](http://numba.pydata.org/) | `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet` |
 | `gpu_jupyter`  | a [jupyter](http://jupyter.org/) server with `pass` as password | `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba` |
 | `python36` | [alpine](https://alpinelinux.org/) with python 3.6 | |
