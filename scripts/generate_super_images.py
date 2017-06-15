@@ -10,6 +10,14 @@ def parse_command_line():
     return args
 
 
+def get_dependency(graph, key):
+    # f = lambda x, str: [x[str]] + f(x, x[str]) if str in x else []
+    if key in graph:
+        return [key] + get_dependency(graph, graph[key])
+    else:
+        return []
+
+
 def main():
     graph = {}
     folder = Path("../cpu").walkfiles("Dockerfile")
@@ -25,6 +33,9 @@ def main():
                     graph[f.splitall()[-2]] = match.group(1)
 
     print(graph)
+
+    dep = [get_dependency(graph, i) for i in graph.keys()]
+
 
 if __name__ == '__main__':
     args = parse_command_line()
