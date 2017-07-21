@@ -6,7 +6,7 @@ ENV MXNET_DIR /home/dev/lib/mxnet
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
-  libopenblas-dev
+    libopenblas-dev
 
 # install python2 tools
 RUN pip2 --no-cache-dir install -U \
@@ -24,10 +24,6 @@ RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && c
     sed -i 's/USE_BLAS = atlas/USE_BLAS = openblas/g' config.mk && \
 # Make 
     make -j"$(nproc)"
-
-# fix setup.py for gluon installation
-RUN cd /home/dev/lib/mxnet/python && \
-    sed -i "s/'mxnet._cy2', 'mxnet._cy3', 'mxnet.notebook', 'mxnet.contrib'/'mxnet._cy2', 'mxnet._cy3', 'mxnet.notebook', 'mxnet.contrib', 'mxnet.gluon', 'mxnet.gluon.nn', 'mxnet.gluon.rnn'/g" setup.py
 
 # Install Python package
 RUN cd /home/dev/lib/mxnet/python && python2 setup.py install

@@ -54,10 +54,6 @@ RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && c
 # Make
     make -j"$(nproc)"
 
-# fix setup.py for gluon installation
-RUN cd /home/dev/lib/mxnet/python && \
-    sed -i "s/'mxnet._cy2', 'mxnet._cy3', 'mxnet.notebook', 'mxnet.contrib'/'mxnet._cy2', 'mxnet._cy3', 'mxnet.notebook', 'mxnet.contrib', 'mxnet.gluon', 'mxnet.gluon.nn', 'mxnet.gluon.rnn'/g" setup.py
-
 # Install Python package
 RUN cd /home/dev/lib/mxnet/python && python2 setup.py install
 RUN cd /home/dev/lib/mxnet/python && python3 setup.py install
