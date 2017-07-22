@@ -54,7 +54,7 @@ jupyter: numba
 	$(call create_image,$@,cpu)
 
 clean:
-	docker rmi jupyter numba android_mxnet cntk tensorflow mxnet nnpack_mxnet redis opencv ffmpeg python_lib
+	docker rmi jupyter numba cntk tensorflow android_mxnet nnpack_mxnet mxnet redis opencv ffmpeg python_lib
 
 # build GPU images
 gpu_python_lib:
