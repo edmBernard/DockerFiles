@@ -3,7 +3,7 @@ MAINTAINER Erwan BERNARD
 
 RUN mkdir -p "/home/dev/lib"
 ENV NDK_TOOLCHAIN_DIR "/home/dev/lib/arm7-toolchain"
-ENV NDK_VERSION "android-ndk-r12b"
+ENV NDK_VERSION "android-ndk-r14b"
 
 RUN apt-get update && apt-get upgrade && \
     apt-get install -y \
