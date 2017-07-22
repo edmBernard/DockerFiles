@@ -1,4 +1,4 @@
-FROM gpu_numba:latest
+FROM gpu_numba:gpu
 MAINTAINER Erwan BERNARD
 
 # configure jupyter

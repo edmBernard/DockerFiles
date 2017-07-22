@@ -1,4 +1,4 @@
-FROM gpu_redis:latest
+FROM gpu_redis:gpu
 MAINTAINER Erwan BERNARD
 
 # install python3 tools

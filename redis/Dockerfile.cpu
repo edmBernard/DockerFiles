@@ -1,4 +1,4 @@
-FROM opencv:latest
+FROM opencv:cpu
 MAINTAINER Erwan BERNARD
 
 # follow the tuto from here : https://redis.io/topics/quickstart

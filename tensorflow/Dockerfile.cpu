@@ -1,4 +1,4 @@
-FROM redis:latest
+FROM redis:cpu
 MAINTAINER Erwan BERNARD
 
 # install python3 tools

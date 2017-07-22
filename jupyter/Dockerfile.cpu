@@ -1,4 +1,4 @@
-FROM numba:latest
+FROM numba:cpu
 MAINTAINER Erwan BERNARD
 
 # configure jupyter

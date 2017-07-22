@@ -1,4 +1,4 @@
-FROM gpu_ffmpeg:latest
+FROM gpu_ffmpeg:gpu
 MAINTAINER Erwan BERNARD
 
 ENV OPENCV_DIR "$LIB_DIR/opencv"

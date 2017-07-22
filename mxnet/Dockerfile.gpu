@@ -1,4 +1,4 @@
-FROM gpu_redis:latest
+FROM gpu_redis:gpu
 MAINTAINER Erwan BERNARD
 
 ENV MXNET_DIR "$LIB_DIR/mxnet"
