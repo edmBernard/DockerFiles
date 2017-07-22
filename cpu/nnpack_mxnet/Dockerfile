@@ -1,9 +1,8 @@
 FROM redis:latest
 MAINTAINER Erwan BERNARD
 
-RUN mkdir -p "/home/dev/lib"
-ENV NNPACK_DIR /home/dev/lib/NNPACK
-ENV MXNET_DIR /home/dev/lib/mxnet
+ENV NNPACK_DIR "$LIB_DIR/NNPACK"
+ENV MXNET_DIR "$LIB_DIR/mxnet"
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
@@ -19,30 +18,30 @@ RUN pip3 --no-cache-dir install -U \
     easydict
 
 # Install Peach
-RUN cd /home/dev/lib && git clone https://github.com/Maratyszcza/PeachPy.git && cd PeachPy && \
+RUN cd "$LIB_DIR" && git clone https://github.com/Maratyszcza/PeachPy.git && cd PeachPy && \
     pip2 install --upgrade -r requirements.txt && \
     python2 setup.py generate && \
     pip2 install --upgrade .
 
 # install ninja
-RUN cd /home/dev/lib && git clone git://github.com/ninja-build/ninja.git && cd ninja && \
+RUN cd "$LIB_DIR" && git clone git://github.com/ninja-build/ninja.git && cd ninja && \
     ./configure.py --bootstrap
 
 # Build NNPack shared library
 # Latest NNPACK do not support building NNPACK as shared library using --enable-shared flag
 # Reset to commit that supports it.
-RUN cd /home/dev/lib && git clone --recursive https://github.com/Maratyszcza/NNPACK.git && cd NNPACK && \
+RUN cd "$LIB_DIR" && git clone --recursive https://github.com/Maratyszcza/NNPACK.git && cd NNPACK && \
     git reset --hard 9c6747d7b80051b40e6f92d6828e2ed997529cd2 && \
     git submodule init && git submodule update --recursive && \
     python ./configure.py --enable-shared && \
-    /home/dev/lib/ninja/./ninja
+    $LIB_DIR/ninja/./ninja
 
-# ENV LD_LIBRARY_PATH "/home/dev/lib/NNPACK/lib:${LD_LIBRARY_PATH}"
-RUN /bin/bash -c 'echo "/home/dev/lib/NNPACK/lib" > /etc/ld.so.conf.d/nnpack.conf'
+# ENV LD_LIBRARY_PATH ""$LIB_DIR"/NNPACK/lib:${LD_LIBRARY_PATH}"
+RUN /bin/bash -c 'echo "$LIB_DIR/NNPACK/lib" > /etc/ld.so.conf.d/nnpack.conf'
 RUN ldconfig
 
 # Clone MXNet repo and move into it
-RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
+RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
 # Copy config.mk
     cp make/config.mk config.mk && \
 # Set OpenBLAS
@@ -55,5 +54,5 @@ RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && c
     make -j"$(nproc)"
 
 # Install Python package
-RUN cd /home/dev/lib/mxnet/python && python2 setup.py install
-RUN cd /home/dev/lib/mxnet/python && python3 setup.py install
+RUN cd "$MXNET_DIR/python" && python2 setup.py install
+RUN cd "$MXNET_DIR/python" && python3 setup.py install
