@@ -1,4 +1,4 @@
-FROM gpu_python_lib:gpu
+FROM python_lib:gpu
 MAINTAINER Erwan BERNARD
 
 # follow almost the tutoriel from : https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
