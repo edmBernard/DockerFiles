@@ -32,7 +32,7 @@ ENV CC arm-linux-androideabi-clang
 ENV CXX arm-linux-androideabi-clang++ 
 
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet/amalgamation && \
-    sed -i "s|/usr/local/opt/openblas|/home/dev/lib/OpenBLAS_build|g" Makefile && \
+    sed -i "s|/usr/local/opt/openblas|$OPENBLAS_DIR|g" Makefile && \
     sed -i '130i #define fopen64 std::fopen' amalgamation.py && \
     sed -i '1i DEFS += -DMSHADOW_USE_CUDA=0 -DMSHADOW_USE_MKL=0 -DMSHADOW_RABIT_PS=0 -DMSHADOW_DIST_PS=0 -DMSHADOW_USE_SSE=0 -DDMLC_LOG_STACK_TRACE=0 -DMSHADOW_FORCE_STREAM -DMXNET_USE_OPENCV=0 -DMXNET_PREDICT_ONLY=1 -DDISABLE_OPENMP=1' ../nnvm/amalgamation/Makefile && \
     sed -i '4i CFLAGS = -std=c++11 -Wall -O3 -Wno-unknown-pragmas -funroll-loops -Iinclude -fPIC $(DEFS)' ../nnvm/amalgamation/Makefile && \
