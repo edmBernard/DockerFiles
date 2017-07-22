@@ -19,6 +19,8 @@ sudo nvidia-docker build -t image_name -f dockerfile_name .
 
 ### With Make
 
+I made a `Makefile` to automate the build process.
+
 ```bash
 make IMAGE_NAME
 
@@ -42,6 +44,7 @@ IMAGE_NAME:
 | `nnpack_mxnet` | with [mxnet](http://mxnet.io/) and [NNPACK](https://github.com/Maratyszcza/NNPACK)| `python_lib ffmpeg opencv redis` |
 | `tensorflow` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)| `python_lib ffmpeg opencv redis` |
 | `cntk` | with [cntk](http://cntk.ai) and [keras](https://keras.io/)| `python_lib ffmpeg opencv redis tensorflow` |
+| `android_mxnet` | mxnet compiled for android | `python_lib ffmpeg opencv redis mxnet` |
 | `numba` | with [numba](http://numba.pydata.org/) | `python_lib ffmpeg opencv redis mxnet` |
 | `jupyter` | a [jupyter](http://jupyter.org/) server with `pass` as password | `python_lib ffmpeg opencv redis mxnet numba` |
 
