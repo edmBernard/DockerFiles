@@ -3,6 +3,9 @@ MAINTAINER Erwan BERNARD
 
 # follow almost the tutoriel from : https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
 
+ENV FFMPEG_DIR "$LIB_DIR/ffmpeg"
+RUN mkdir -p "$FFMPEG_DIR/ffmpeg_sources"
+
 # Pick up some dependencies
 RUN apt-get update && \
     apt-get install -y \
@@ -27,9 +30,6 @@ RUN apt-get update && \
         && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p "/home/dev/lib/ffmpeg/ffmpeg_sources"
-ENV FFMPEG_DIR "/home/dev/lib/ffmpeg"
 
 # install yasm
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
@@ -70,7 +70,7 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
     make install
 
 # install ffmpeg
-RUN cd $FFMPEG_DIR/ffmpeg_sources && \
+RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
     wget http://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2 && \
     tar xjvf ffmpeg-snapshot.tar.bz2 && \
     rm ffmpeg-snapshot.tar.bz2 && \
@@ -105,7 +105,7 @@ RUN ldconfig
 ENV PATH "$FFMPEG_DIR/bin:${PATH}"
 ENV PKG_CONFIG_PATH "$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig:${PKG_CONFIG_PATH}"
 
-# don't work in dockerfile as docker file don't use bashrc
+# define environnement variable in .bashrc don't work in dockerfile as docker file don't use .bashrc 
 # RUN echo 'export PATH="$FFMPEG_DIR/bin:$PATH"' >> ~/.bashrc
 # RUN echo 'export PKG_CONFIG_PATH="$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig:$PKG_CONFIG_PATH"' >> ~/.bashrc
 # RUN /bin/bash -c "source ~/.bashrc"

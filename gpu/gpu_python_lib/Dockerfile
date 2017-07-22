@@ -85,9 +85,13 @@ RUN pip3 --no-cache-dir install \
 RUN ldconfig
 
 # configuration
-RUN mkdir /home/dev
-WORKDIR /home/dev/host
-ENV HOME /home/dev
+ENV HOME "/home/dev"
+RUN mkdir -p "$HOME"
+
+ENV LIB_DIR "$HOME/lib"
+RUN mkdir -p "$LIB_DIR"
+
+WORKDIR $HOME/host
 # RUN useradd dev && chown -R dev: /home/dev
 # USER dev
 

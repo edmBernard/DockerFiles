@@ -1,8 +1,7 @@
 FROM gpu_redis:latest
 MAINTAINER Erwan BERNARD
 
-RUN mkdir -p "/home/dev/lib"
-ENV MXNET_DIR /home/dev/lib/mxnet
+ENV MXNET_DIR "$LIB_DIR/mxnet"
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
@@ -17,7 +16,7 @@ RUN pip3 --no-cache-dir install -U \
     easydict
 
 # Clone MXNet repo and move into it
-RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
+RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
 # Copy config.mk
     cp make/config.mk config.mk && \
 # Set OpenBLAS
@@ -31,5 +30,5 @@ RUN cd /home/dev/lib && git clone --recursive https://github.com/dmlc/mxnet && c
     make -j"$(nproc)"
 
 # Install Python package
-RUN cd /home/dev/lib/mxnet/python && python2 setup.py install
-RUN cd /home/dev/lib/mxnet/python && python3 setup.py install
+RUN cd "$MXNET_DIR/python" && python2 setup.py install
+RUN cd "$MXNET_DIR/python" && python3 setup.py install

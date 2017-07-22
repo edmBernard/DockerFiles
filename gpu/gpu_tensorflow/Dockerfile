@@ -12,5 +12,5 @@ RUN pip3 install tensorflow-gpu
 # Keras
 RUN pip3 install git+https://github.com/fchollet/keras.git
 
-# Set CNTK backend for Keras
+# Set Tensorflow backend for Keras
 ENV KERAS_BACKEND=tensorflow
