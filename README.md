@@ -1,6 +1,6 @@
 # DockerFiles
 
-Some Dockerfiles to install Opencv3 with Python2, Python3 and Deeplearning framework
+Some Dockerfiles to install Opencv3 with Python2, Python3 and Deeplearning framework. I also use them as a reminder to complicated framework installation.
 
 ## Requirement
 
@@ -27,7 +27,7 @@ make IMAGE_NAME
 The image is the concatenation of the Library name and the tag (ex: `opencv` and `_gpu` is create by `make opencv_gpu`) 
 
 *Note1:* `make` accept `NOCACHE=ON` argument to force the rebuild of all images<br>
-*Note2:* As image depends from each other `make` will automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv:cpu`)
+*Note2:* As image depends from each other, `make` will automatically build images dependency. (ex: if you build `opencv_cpu` image,  `pythonlib_cpu` and `ffmpeg_cpu` will be create as well by the command `make opencv:cpu`)
 
 #### Images with CPU Only:
 | Library | Tag | Description | 
