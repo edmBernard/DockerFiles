@@ -1,0 +1,16 @@
+FROM redis:cpu
+MAINTAINER Erwan BERNARD
+
+# install python3 tools
+RUN pip3 --no-cache-dir install -U \
+    pandas \
+    sklearn \
+    h5py
+
+RUN pip3 install tensorflow
+
+# Keras
+RUN pip3 install git+https://github.com/fchollet/keras.git
+
+# Set Tensorflow backend for Keras
+ENV KERAS_BACKEND=tensorflow

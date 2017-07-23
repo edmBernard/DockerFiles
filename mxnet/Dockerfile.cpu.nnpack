@@ -1,0 +1,58 @@
+FROM redis:cpu
+MAINTAINER Erwan BERNARD
+
+ENV NNPACK_DIR "$LIB_DIR/NNPACK"
+ENV MXNET_DIR "$LIB_DIR/mxnet"
+
+# Install git and other dependencies
+RUN apt-get update && apt-get install -y \
+  libopenblas-dev
+
+# install python2 tools
+RUN pip2 --no-cache-dir install -U \
+    easydict \
+    ninja_syntax
+
+# install python3 tools
+RUN pip3 --no-cache-dir install -U \
+    easydict
+
+# Install Peach
+RUN cd "$LIB_DIR" && git clone https://github.com/Maratyszcza/PeachPy.git && cd PeachPy && \
+    pip2 install --upgrade -r requirements.txt && \
+    python2 setup.py generate && \
+    pip2 install --upgrade .
+
+# install ninja
+RUN cd "$LIB_DIR" && git clone git://github.com/ninja-build/ninja.git && cd ninja && \
+    ./configure.py --bootstrap
+
+# Build NNPack shared library
+# Latest NNPACK do not support building NNPACK as shared library using --enable-shared flag
+# Reset to commit that supports it.
+RUN cd "$LIB_DIR" && git clone --recursive https://github.com/Maratyszcza/NNPACK.git && cd NNPACK && \
+    git reset --hard 9c6747d7b80051b40e6f92d6828e2ed997529cd2 && \
+    git submodule init && git submodule update --recursive && \
+    python ./configure.py --enable-shared && \
+    $LIB_DIR/ninja/./ninja
+
+# ENV LD_LIBRARY_PATH ""$LIB_DIR"/NNPACK/lib:${LD_LIBRARY_PATH}"
+RUN /bin/bash -c 'echo "$LIB_DIR/NNPACK/lib" > /etc/ld.so.conf.d/nnpack.conf'
+RUN ldconfig
+
+# Clone MXNet repo and move into it
+RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
+# Copy config.mk
+    cp make/config.mk config.mk && \
+# Set OpenBLAS
+    sed -i 's/USE_BLAS = atlas/USE_BLAS = openblas/g' config.mk && \
+# Set NNPACK 
+    sed -i 's/ADD_CFLAGS =/ADD_CFLAGS = -I\/home\/dev\/lib\/NNPACK\/include\/ -I\/home\/dev\/lib\/NNPACK\/third-party\/pthreadpool\/include\//g' config.mk && \
+    sed -i 's/ADD_LDFLAGS =/ADD_LDFLAGS = -L\/home\/dev\/lib\/NNPACK\/lib/g' config.mk && \
+    sed -i 's/USE_NNPACK = 0/USE_NNPACK = 1/g' config.mk && \
+# Make
+    make -j"$(nproc)"
+
+# Install Python package
+RUN cd "$MXNET_DIR/python" && python2 setup.py install
+RUN cd "$MXNET_DIR/python" && python3 setup.py install
