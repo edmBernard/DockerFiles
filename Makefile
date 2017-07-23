@@ -7,89 +7,89 @@ else
 endif
 
 
-.PHONY: all all\:cpu all\:gpu clean clean\:cpu clean\:gpu jupyter\:cpu jupyter\:gpu cntk\:cpu cntk\:gpu numba\:cpu numba\:gpu mxnet\:android mxnet\:cpu mxnet\:cpu.nnpack mxnet\:gpu tensorflow\:cpu tensorflow\:gpu redis\:cpu redis\:gpu opencv\:cpu opencv\:gpu ffmpeg\:cpu ffmpeg\:gpu python36\:alpine python36\:ubuntu python_lib\:cpu python_lib\:gpu
+.PHONY: all all_cpu all_gpu clean clean_cpu clean_gpu jupyter_cpu jupyter_gpu cntk_cpu cntk_gpu numba_cpu numba_gpu mxnet_android mxnet_cpu mxnet_cpu_nnpack mxnet_gpu tensorflow_cpu tensorflow_gpu redis_cpu redis_gpu opencv_cpu opencv_gpu ffmpeg_cpu ffmpeg_gpu python36_alpine python36_ubuntu pythonlib_cpu pythonlib_gpu
 
 
-all: all\:cpu all\:gpu
+all: all_cpu all_gpu
 
-all\:cpu: python_lib\:cpu ffmpeg\:cpu opencv\:cpu redis\:cpu tensorflow\:cpu mxnet\:cpu.nnpack mxnet\:cpu numba\:cpu cntk\:cpu jupyter\:cpu
+all_cpu: pythonlib_cpu ffmpeg_cpu opencv_cpu redis_cpu tensorflow_cpu mxnet_cpu_nnpack mxnet_cpu numba_cpu cntk_cpu jupyter_cpu
 
-all\:gpu: python_lib\:gpu ffmpeg\:gpu opencv\:gpu redis\:gpu tensorflow\:gpu mxnet\:gpu numba\:gpu cntk\:gpu jupyter\:gpu
+all_gpu: pythonlib_gpu ffmpeg_gpu opencv_gpu redis_gpu tensorflow_gpu mxnet_gpu numba_gpu cntk_gpu jupyter_gpu
 
 
 clean:
-	docker rmi jupyter\:cpu jupyter\:gpu cntk\:cpu cntk\:gpu numba\:cpu numba\:gpu mxnet\:android mxnet\:cpu mxnet\:cpu.nnpack mxnet\:gpu tensorflow\:cpu tensorflow\:gpu redis\:cpu redis\:gpu opencv\:cpu opencv\:gpu ffmpeg\:cpu ffmpeg\:gpu python36\:alpine python36\:ubuntu python_lib\:cpu python_lib\:gpu
+	docker rmi jupyter_cpu jupyter_gpu cntk_cpu cntk_gpu numba_cpu numba_gpu mxnet_android mxnet_cpu mxnet_cpu_nnpack mxnet_gpu tensorflow_cpu tensorflow_gpu redis_cpu redis_gpu opencv_cpu opencv_gpu ffmpeg_cpu ffmpeg_gpu python36_alpine python36_ubuntu pythonlib_cpu pythonlib_gpu
 
-clean\:cpu:
-	docker rmi jupyter\:cpu cntk\:cpu numba\:cpu mxnet\:cpu mxnet\:cpu.nnpack tensorflow\:cpu redis\:cpu opencv\:cpu ffmpeg\:cpu python_lib\:cpu
+clean_cpu:
+	docker rmi jupyter_cpu cntk_cpu numba_cpu mxnet_cpu mxnet_cpu_nnpack tensorflow_cpu redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
 
-clean\:gpu:
-	docker rmi jupyter\:gpu cntk\:gpu numba\:gpu mxnet\:gpu tensorflow\:gpu redis\:gpu opencv\:gpu ffmpeg\:gpu python_lib\:gpu
+clean_gpu:
+	docker rmi jupyter_gpu cntk_gpu numba_gpu mxnet_gpu tensorflow_gpu redis_gpu opencv_gpu ffmpeg_gpu pythonlib_gpu
 
 
-jupyter\:cpu: numba\:cpu mxnet\:cpu redis\:cpu opencv\:cpu ffmpeg\:cpu python_lib\:cpu
-	docker build $(arg_nocache) -t jupyter\:cpu -f jupyter/Dockerfile.cpu jupyter
+jupyter_cpu: numba_cpu mxnet_cpu redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+	docker build $(arg_nocache) -t jupyter_cpu -f jupyter/Dockerfile.cpu jupyter
 
-jupyter\:gpu: numba\:gpu mxnet\:gpu redis\:gpu opencv\:gpu ffmpeg\:gpu python_lib\:gpu
-	nvidia-docker build $(arg_nocache) -t jupyter\:gpu -f jupyter/Dockerfile.gpu jupyter
+jupyter_gpu: numba_gpu mxnet_gpu redis_gpu opencv_gpu ffmpeg_gpu pythonlib_gpu
+	nvidia-docker build $(arg_nocache) -t jupyter_gpu -f jupyter/Dockerfile.gpu jupyter
 
-cntk\:cpu: tensorflow\:cpu redis\:cpu opencv\:cpu ffmpeg\:cpu python_lib\:cpu
-	docker build $(arg_nocache) -t cntk\:cpu -f cntk/Dockerfile.cpu cntk
+cntk_cpu: tensorflow_cpu redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+	docker build $(arg_nocache) -t cntk_cpu -f cntk/Dockerfile.cpu cntk
 
-cntk\:gpu: tensorflow\:gpu redis\:gpu opencv\:gpu ffmpeg\:gpu python_lib\:gpu
-	nvidia-docker build $(arg_nocache) -t cntk\:gpu -f cntk/Dockerfile.gpu cntk
+cntk_gpu: tensorflow_gpu redis_gpu opencv_gpu ffmpeg_gpu pythonlib_gpu
+	nvidia-docker build $(arg_nocache) -t cntk_gpu -f cntk/Dockerfile.gpu cntk
 
-numba\:cpu: mxnet\:cpu redis\:cpu opencv\:cpu ffmpeg\:cpu python_lib\:cpu
-	docker build $(arg_nocache) -t numba\:cpu -f numba/Dockerfile.cpu numba
+numba_cpu: mxnet_cpu redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+	docker build $(arg_nocache) -t numba_cpu -f numba/Dockerfile.cpu numba
 
-numba\:gpu: mxnet\:gpu redis\:gpu opencv\:gpu ffmpeg\:gpu python_lib\:gpu
-	nvidia-docker build $(arg_nocache) -t numba\:gpu -f numba/Dockerfile.gpu numba
+numba_gpu: mxnet_gpu redis_gpu opencv_gpu ffmpeg_gpu pythonlib_gpu
+	nvidia-docker build $(arg_nocache) -t numba_gpu -f numba/Dockerfile.gpu numba
 
-mxnet\:android: redis\:cpu opencv\:cpu ffmpeg\:cpu python_lib\:cpu
-	docker build $(arg_nocache) -t mxnet\:android -f mxnet/Dockerfile.android mxnet
+mxnet_android: redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+	docker build $(arg_nocache) -t mxnet_android -f mxnet/Dockerfile.android mxnet
 
-mxnet\:cpu: redis\:cpu opencv\:cpu ffmpeg\:cpu python_lib\:cpu
-	docker build $(arg_nocache) -t mxnet\:cpu -f mxnet/Dockerfile.cpu mxnet
+mxnet_cpu: redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+	docker build $(arg_nocache) -t mxnet_cpu -f mxnet/Dockerfile.cpu mxnet
 
-mxnet\:cpu.nnpack: redis\:cpu opencv\:cpu ffmpeg\:cpu python_lib\:cpu
-	docker build $(arg_nocache) -t mxnet\:cpu.nnpack -f mxnet/Dockerfile.cpu.nnpack mxnet
+mxnet_cpu_nnpack: redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+	docker build $(arg_nocache) -t mxnet_cpu_nnpack -f mxnet/Dockerfile.cpu.nnpack mxnet
 
-mxnet\:gpu: redis\:gpu opencv\:gpu ffmpeg\:gpu python_lib\:gpu
-	nvidia-docker build $(arg_nocache) -t mxnet\:gpu -f mxnet/Dockerfile.gpu mxnet
+mxnet_gpu: redis_gpu opencv_gpu ffmpeg_gpu pythonlib_gpu
+	nvidia-docker build $(arg_nocache) -t mxnet_gpu -f mxnet/Dockerfile.gpu mxnet
 
-tensorflow\:cpu: redis\:cpu opencv\:cpu ffmpeg\:cpu python_lib\:cpu
-	docker build $(arg_nocache) -t tensorflow\:cpu -f tensorflow/Dockerfile.cpu tensorflow
+tensorflow_cpu: redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+	docker build $(arg_nocache) -t tensorflow_cpu -f tensorflow/Dockerfile.cpu tensorflow
 
-tensorflow\:gpu: redis\:gpu opencv\:gpu ffmpeg\:gpu python_lib\:gpu
-	nvidia-docker build $(arg_nocache) -t tensorflow\:gpu -f tensorflow/Dockerfile.gpu tensorflow
+tensorflow_gpu: redis_gpu opencv_gpu ffmpeg_gpu pythonlib_gpu
+	nvidia-docker build $(arg_nocache) -t tensorflow_gpu -f tensorflow/Dockerfile.gpu tensorflow
 
-redis\:cpu: opencv\:cpu ffmpeg\:cpu python_lib\:cpu
-	docker build $(arg_nocache) -t redis\:cpu -f redis/Dockerfile.cpu redis
+redis_cpu: opencv_cpu ffmpeg_cpu pythonlib_cpu
+	docker build $(arg_nocache) -t redis_cpu -f redis/Dockerfile.cpu redis
 
-redis\:gpu: opencv\:gpu ffmpeg\:gpu python_lib\:gpu
-	nvidia-docker build $(arg_nocache) -t redis\:gpu -f redis/Dockerfile.gpu redis
+redis_gpu: opencv_gpu ffmpeg_gpu pythonlib_gpu
+	nvidia-docker build $(arg_nocache) -t redis_gpu -f redis/Dockerfile.gpu redis
 
-opencv\:cpu: ffmpeg\:cpu python_lib\:cpu
-	docker build $(arg_nocache) -t opencv\:cpu -f opencv/Dockerfile.cpu opencv
+opencv_cpu: ffmpeg_cpu pythonlib_cpu
+	docker build $(arg_nocache) -t opencv_cpu -f opencv/Dockerfile.cpu opencv
 
-opencv\:gpu: ffmpeg\:gpu python_lib\:gpu
-	nvidia-docker build $(arg_nocache) -t opencv\:gpu -f opencv/Dockerfile.gpu opencv
+opencv_gpu: ffmpeg_gpu pythonlib_gpu
+	nvidia-docker build $(arg_nocache) -t opencv_gpu -f opencv/Dockerfile.gpu opencv
 
-ffmpeg\:cpu: python_lib\:cpu
-	docker build $(arg_nocache) -t ffmpeg\:cpu -f ffmpeg/Dockerfile.cpu ffmpeg
+ffmpeg_cpu: pythonlib_cpu
+	docker build $(arg_nocache) -t ffmpeg_cpu -f ffmpeg/Dockerfile.cpu ffmpeg
 
-ffmpeg\:gpu: python_lib\:gpu
-	nvidia-docker build $(arg_nocache) -t ffmpeg\:gpu -f ffmpeg/Dockerfile.gpu ffmpeg
+ffmpeg_gpu: pythonlib_gpu
+	nvidia-docker build $(arg_nocache) -t ffmpeg_gpu -f ffmpeg/Dockerfile.gpu ffmpeg
 
-python36\:alpine: 
-	docker build $(arg_nocache) -t python36\:alpine -f python36/Dockerfile.alpine python36
+python36_alpine: 
+	docker build $(arg_nocache) -t python36_alpine -f python36/Dockerfile.alpine python36
 
-python36\:ubuntu: 
-	docker build $(arg_nocache) -t python36\:ubuntu -f python36/Dockerfile.ubuntu python36
+python36_ubuntu: 
+	docker build $(arg_nocache) -t python36_ubuntu -f python36/Dockerfile.ubuntu python36
 
-python_lib\:cpu: 
-	docker build $(arg_nocache) -t python_lib\:cpu -f python_lib/Dockerfile.cpu python_lib
+pythonlib_cpu: 
+	docker build $(arg_nocache) -t pythonlib_cpu -f pythonlib/Dockerfile.cpu pythonlib
 
-python_lib\:gpu: 
-	nvidia-docker build $(arg_nocache) -t python_lib\:gpu -f python_lib/Dockerfile.gpu python_lib
+pythonlib_gpu: 
+	nvidia-docker build $(arg_nocache) -t pythonlib_gpu -f pythonlib/Dockerfile.gpu pythonlib
 

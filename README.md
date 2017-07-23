@@ -22,25 +22,26 @@ sudo nvidia-docker build -t image_name -f dockerfile_name .
 I made a `Makefile` to automate the build process.
 
 ```bash
-make IMAGE_NAME:TAG
+make IMAGE_NAME
 ```
+The image is the concatenation of the Library name and the tag (ex: `opencv` and `_gpu` is create by `make opencv_gpu`) 
 
 *Note:* make accept `NOCACHE=ON` argument to force the rebuild of all images
 
 #### Images with CPU Only:
-| Image name | TAG | Description | 
+| Library | Tag | Description | 
 |:-- |:-- |:-- |
-| `all` | <br> `cpu` <br> `gpu` | all images <br> all cpu images <br> all gpu images |
-| `python_lib` | `cpu` <br> `gpu` | my standard configuration |
-| `ffmpeg` | `cpu` <br> `gpu` | with [ffmpeg](https://ffmpeg.org/) compiled from source |
-| `opencv` | `cpu` <br> `gpu` | with [opencv](http://opencv.org/) compiled from source |
-| `redis` | `cpu` <br> `gpu` | with [redis](https://redis.io/) compiled from source |
-| `mxnet` | `cpu` <br> `gpu` <br> `cpu.nnpack` <br> `android`| with [mxnet](http://mxnet.io/) compiled from source <br> with [mxnet](http://mxnet.io/)  compiled from source and gpu support <br> with [mxnet](http://mxnet.io/) and [NNPACK](https://github.com/Maratyszcza/NNPACK) compiled from source  <br> [mxnet](http://mxnet.io/) amalgamation compiled for android (ndk-14b) |
-| `tensorflow` | `cpu` <br> `gpu` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)|
-| `cntk` | `cpu` <br> `gpu` | with [cntk](http://cntk.ai) and [keras](https://keras.io/)|
-| `numba` | `cpu` <br> `gpu` | with [numba](http://numba.pydata.org/) |
-| `jupyter` | `cpu` <br> `gpu` | a [jupyter](http://jupyter.org/) server with `pass` as password |
-| `python36` | `ubuntu` <br> `alpine` | regular ubuntu installation with python3.6 <br> [alpine](https://alpinelinux.org/) with python 3.6 |
+| `all` | <br> `_cpu` <br> `_gpu` | all images <br> all cpu images <br> all gpu images |
+| `pythonlib` | `_cpu` <br> `_gpu` | my standard configuration |
+| `ffmpeg` | `_cpu` <br> `_gpu` | with [ffmpeg](https://ffmpeg.org/) compiled from source |
+| `opencv` | `_cpu` <br> `_gpu` | with [opencv](http://opencv.org/) compiled from source |
+| `redis` | `_cpu` <br> `_gpu` | with [redis](https://redis.io/) compiled from source |
+| `mxnet` | `_cpu` <br> `_gpu` <br> `_cpu_nnpack` <br> `_android`| with [mxnet](http://mxnet.io/) compiled from source <br> with [mxnet](http://mxnet.io/)  compiled from source and gpu support <br> with [mxnet](http://mxnet.io/) and [NNPACK](https://github.com/Maratyszcza/NNPACK) compiled from source  <br> [mxnet](http://mxnet.io/) amalgamation compiled for android (ndk-14b) |
+| `tensorflow` | `_cpu` <br> `_gpu` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)|
+| `cntk` | `_cpu` <br> `_gpu` | with [cntk](http://cntk.ai) and [keras](https://keras.io/)|
+| `numba` | `_cpu` <br> `_gpu` | with [numba](http://numba.pydata.org/) |
+| `jupyter` | `_cpu` <br> `_gpu` | a [jupyter](http://jupyter.org/) server with `pass` as password |
+| `python36` | `_ubuntu` <br> `_alpine` | regular ubuntu installation with python3.6 <br> [alpine](https://alpinelinux.org/) with python 3.6 |
 
 \* As image depends from each other `make` will automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv:cpu`)
 

@@ -1,4 +1,4 @@
-FROM python_lib_gpu:latest
+FROM pythonlib_gpu:latest
 MAINTAINER Erwan BERNARD
 
 # follow almost the tutoriel from : https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
