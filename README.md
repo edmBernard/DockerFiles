@@ -56,12 +56,14 @@ sudo docker run -it --name container_name -p 0.0.0.0:6000:7000 -p 0.0.0.0:8000:9
 ```bash
 sudo docker run -it             # -it option allow interaction with the container
 --name container_name           # Name of the created container
--p 0.0.0.0:6000:7000            # Port redirection for Tensorboard (redirect host port 6000 to container port 7000)
--p 0.0.0.0:8000:9000            # Port redirection for Jupyter notebook (redirect host port 8000 to container port 9000)
+-p 0.0.0.0:6000:7000            # Port redirection (redirect host port 6000 to container port 7000)
+-p 0.0.0.0:8000:9000            # Port redirection (redirect host port 8000 to container port 9000)
 -v shared/path/on/host:/shared/path/in/container    # Configure a shared directory between host and container
 image_name:latest               # Image name to use for container creation
 /bin/bash                       # Command to execute
 ```
+***Note***: Don't specify ports if you don't use them. As you can't have containers listenning the same host port. (cf. "Alias to create Jupyter server" for random port assignation).
+
 
 ## Create container (with GPU support)
 
@@ -75,12 +77,14 @@ NV_GPU='0' sudo nvidia-docker run -it --name container_name -p 0.0.0.0:6000:7000
 NV_GPU='0'                      # GPU id give by nvidia-smi ('0', '1' or '0,1' for GPU0, GPU2 or both)
 sudo nvidia-docker run -it      # -it option allow interaction with the container
 --name container_name           # Name of the created container
--p 0.0.0.0:6000:7000            # Port redirection for Tensorboard (redirect host port 6000 to container port 7000)
--p 0.0.0.0:8000:9000            # Port redirection for Jupyter notebook (redirect host port 8000 to container port 9000)
+-p 0.0.0.0:6000:7000            # Port redirection (redirect host port 6000 to container port 7000)
+-p 0.0.0.0:8000:9000            # Port redirection (redirect host port 8000 to container port 9000)
 -v shared/path/on/host:/shared/path/in/container    # Configure a shared directory between host and container
 image_name:latest               # Image name to use for container creation
 /bin/bash                       # Command to execute
 ```
+***Note***: Don't specify ports if you don't use them. As you can't have containers listenning the same host port. (cf. "Alias to create Jupyter server" for random port assignation in a range).
+
 
 ## Advance use
 
@@ -94,18 +98,22 @@ sudo docker exec -it container_name /bin/bash
 #### CPU version
 
 ```bash
-    alias jupserver='docker run -it -d -p 0.0.0.0:5000:8888 -v $PWD:/home/dev/host jupyter:latest'
+    alias jupserver='docker run -it -d -p 0.0.0.0:5000-5010:8888 -v $PWD:/home/dev/host jupyter_cpu:latest'
 ```
+
+***Note***: If host port is a range of ports and container port a single one, docker will choose a random free port in the specified range.
 
 #### GPU version
 
 ```bash
-    alias jupserver='docker run -it -d -p 0.0.0.0:5000:8888 -v $PWD:/home/dev/host gpu_jupyter:latest'
+    alias jupserver='docker run -it -d -p 0.0.0.0:5000-5010:8888 -v $PWD:/home/dev/host jupyter_gpu:latest'
 ```
+
+***Note***: If host port is a range of ports and container port a single one, docker will choose a random free port in the specified range.
 
 ### Alias to create a isolated devbox
 ```bash
-    alias devbox='docker run -it --rm -v $PWD:/home/dev/host numba:latest'
+    alias devbox='docker run -it --rm -v $PWD:/home/dev/host mxnet:latest'
 ```
 
 ### Some strange bug I encounter that disappear alone
