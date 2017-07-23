@@ -3,4 +3,6 @@
 !Makefile
 !README.md
 !Dockerfile*
+!Makefile.tpl
+!generate_makefile.py
 !*/
