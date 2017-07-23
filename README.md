@@ -22,50 +22,27 @@ sudo nvidia-docker build -t image_name -f dockerfile_name .
 I made a `Makefile` to automate the build process.
 
 ```bash
-make IMAGE_NAME
-
-IMAGE_NAME:
-* with CPU only:    {all, python_lib, ffmpeg, opencv, redis, mxnet, nnpack_mxnet, tensorflow, cntk, numba, jupyter}
-* with GPU support: {gpu_all, gpu_python_lib, gpu_ffmpeg, gpu_opencv, gpu_redis, gpu_mxnet, gpu_tensorflow, gpu_cntk, gpu_numba, gpu_jupyter}
-* others:           {python36}
+make IMAGE_NAME:TAG
 ```
 
 *Note:* make accept `NOCACHE=ON` argument to force the rebuild of all images
 
 #### Images with CPU Only:
-| Image name | Description | Images depend from each other* |  
-|:-- |:-- |:-- |
-| `all` | all cpu images | `python_lib ffmpeg opencv redis mxnet numba jupyter`| 
-| `python_lib` | my standard conf | |
-| `ffmpeg` | with [ffmpeg](https://ffmpeg.org/) | `python_lib` |
-| `opencv` | with [opencv](http://opencv.org/) | `python_lib ffmpeg` |
-| `redis` | with [redis](https://redis.io/)| `python_lib ffmpeg opencv` |
-| `mxnet` | with [mxnet](http://mxnet.io/)| `python_lib ffmpeg opencv redis` |
-| `nnpack_mxnet` | with [mxnet](http://mxnet.io/) and [NNPACK](https://github.com/Maratyszcza/NNPACK)| `python_lib ffmpeg opencv redis` |
-| `tensorflow` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)| `python_lib ffmpeg opencv redis` |
-| `cntk` | with [cntk](http://cntk.ai) and [keras](https://keras.io/)| `python_lib ffmpeg opencv redis tensorflow` |
-| `android_mxnet` | mxnet compiled for android | `python_lib ffmpeg opencv redis mxnet` |
-| `numba` | with [numba](http://numba.pydata.org/) | `python_lib ffmpeg opencv redis mxnet` |
-| `jupyter` | a [jupyter](http://jupyter.org/) server with `pass` as password | `python_lib ffmpeg opencv redis mxnet numba` |
+| Image name | TAG | Description |  |  
+|:-- |:-- |:-- |:-- |
+| `all` | <br> `cpu` <br> `gpu` | all images <br> all cpu images <br> all gpu images |
+| `python_lib` | `cpu` <br> `gpu` | my standard configuration |
+| `ffmpeg` | `cpu` <br> `gpu` | with [ffmpeg](https://ffmpeg.org/) compiled from source |
+| `opencv` | `cpu` <br> `gpu` | with [opencv](http://opencv.org/) compiled from source |
+| `redis` | `cpu` <br> `gpu` | with [redis](https://redis.io/) compiled from source |
+| `mxnet` | `cpu` <br> `gpu` <br> `cpu.nnpack` <br> `android`| with [mxnet](http://mxnet.io/) compiled from source <br> with gpu support <br> with [NNPACK](https://github.com/Maratyszcza/NNPACK) <br> [mxnet](http://mxnet.io/) with amalgamation compiled for android |
+| `tensorflow` | `cpu` <br> `gpu` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)|
+| `cntk` | `cpu` <br> `gpu` | with [cntk](http://cntk.ai) and [keras](https://keras.io/)|
+| `numba` | `cpu` <br> `gpu` | with [numba](http://numba.pydata.org/) |
+| `jupyter` | `cpu` <br> `gpu` | a [jupyter](http://jupyter.org/) server with `pass` as password |
+| `python36` | `ubuntu` <br> `alpine` | regular ubuntu installation with python3.6 <br> [alpine](https://alpinelinux.org/) with python 3.6 |
 
-\* `make` automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv`)
-
-#### Images with GPU support:
-| Image name | Description | Images depend from each other* |  
-|:-- |:-- |:-- |
-| `gpu_all` | all gpu images |  `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba gpu_jupyter`|
-| `gpu_python_lib`  | my standard conf | |
-| `gpu_ffmpeg`  | with [ffmpeg](https://ffmpeg.org/) | `gpu_python_lib` |
-| `gpu_opencv`  | with [opencv](http://opencv.org/) | `gpu_python_lib gpu_ffmpeg` |
-| `gpu_redis`  | with [redis](https://redis.io/)| `gpu_python_lib gpu_ffmpeg gpu_opencv` |
-| `gpu_mxnet`  | with [mxnet](http://mxnet.io/)| `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis` |
-| `gpu_tensorflow`  | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)| `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis` |
-| `gpu_cntk`  |  with [cntk](http://cntk.ai) and [keras](https://keras.io/)| `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_tensorflow` |
-| `gpu_numba` | with [numba](http://numba.pydata.org/) | `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet` |
-| `gpu_jupyter`  | a [jupyter](http://jupyter.org/) server with `pass` as password | `gpu_python_lib gpu_ffmpeg gpu_opencv gpu_redis gpu_mxnet gpu_numba` |
-| `python36` | [alpine](https://alpinelinux.org/) with python 3.6 | |
-
-\* `make` automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv`)
+\* As image depends from each other `make` will automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv:cpu`)
 
 ## Create container (with CPU Only)
 
