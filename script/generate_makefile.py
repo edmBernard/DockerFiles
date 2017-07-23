@@ -5,8 +5,6 @@
 
 import re
 from path import Path
-from jinja2 import Environment, FileSystemLoader
-
 
 def filename_to_imgename(filename):
     """
