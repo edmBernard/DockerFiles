@@ -1,4 +1,4 @@
-FROM python_lib:cpu
+FROM python_lib_cpu:latest
 MAINTAINER Erwan BERNARD
 
 # follow almost the tutoriel from : https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu

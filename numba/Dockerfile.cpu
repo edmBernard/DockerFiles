@@ -1,4 +1,4 @@
-FROM mxnet:cpu
+FROM mxnet_cpu:latest
 MAINTAINER Erwan BERNARD
 
 # install numba (JIT compiler for python)

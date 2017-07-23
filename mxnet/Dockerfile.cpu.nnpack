@@ -1,4 +1,4 @@
-FROM redis:cpu
+FROM redis_cpu:latest
 MAINTAINER Erwan BERNARD
 
 ENV NNPACK_DIR "$LIB_DIR/NNPACK"

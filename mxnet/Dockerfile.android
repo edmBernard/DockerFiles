@@ -1,4 +1,4 @@
-FROM redis:cpu
+FROM redis_cpu:latest
 MAINTAINER Erwan BERNARD
 
 ENV NDK_VERSION "android-ndk-r14b"

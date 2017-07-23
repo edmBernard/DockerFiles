@@ -1,4 +1,4 @@
-FROM mxnet:gpu
+FROM mxnet_gpu:latest
 MAINTAINER Erwan BERNARD
 
 # install numba (JIT compiler for python)

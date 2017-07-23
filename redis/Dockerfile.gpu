@@ -1,4 +1,4 @@
-FROM opencv:gpu
+FROM opencv_gpu:latest
 MAINTAINER Erwan BERNARD
 
 # follow the tuto from here : https://redis.io/topics/quickstart
