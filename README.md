@@ -26,7 +26,8 @@ make IMAGE_NAME
 ```
 The image is the concatenation of the Library name and the tag (ex: `opencv` and `_gpu` is create by `make opencv_gpu`) 
 
-*Note:* make accept `NOCACHE=ON` argument to force the rebuild of all images
+*Note1:* `make` accept `NOCACHE=ON` argument to force the rebuild of all images<br>
+*Note2:* As image depends from each other `make` will automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv:cpu`)
 
 #### Images with CPU Only:
 | Library | Tag | Description | 
@@ -43,7 +44,6 @@ The image is the concatenation of the Library name and the tag (ex: `opencv` and
 | `jupyter` | `_cpu` <br> `_gpu` | a [jupyter](http://jupyter.org/) server with `pass` as password |
 | `python36` | `_ubuntu` <br> `_alpine` | regular ubuntu installation with python3.6 <br> [alpine](https://alpinelinux.org/) with python 3.6 |
 
-\* As image depends from each other `make` will automatically build images dependency. (ex: if you build `opencv` image,  `python_lib` and `ffmpeg` will by create as well by the command `make opencv:cpu`)
 
 ## Create container (with CPU Only)
 
