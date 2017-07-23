@@ -51,12 +51,45 @@ def main():
     deps_list = [i[1:] for i in sorted_graph]
     filename_list = [i[0].replace("\\:", "/Dockerfile.") for i in sorted_graph]
 
-    j2_env = Environment(loader=FileSystemLoader("."), trim_blocks=True)
-    j2_env.globals.update(zip=zip)
-    template = j2_env.get_template('Makefile.tpl')
+    with open("../Makefile", "w") as fl:
+        fl.write("NOCACHE=OFF\n")
+        fl.write("\n")
+        fl.write("ifeq ($(NOCACHE),ON)\n")
+        fl.write("\targ_nocache=--no-cache\n")
+        fl.write("else\n")
+        fl.write("\targ_nocache=\n")
+        fl.write("endif\n\n\n")
 
-    with open("../Makefile", "w") as f:
-        f.write(template.render(filenames=filename_list, images=image_list, deps=deps_list))
+        fl.write(".PHONY: all all\:cpu all\:gpu clean clean\:cpu clean\:gpu ") 
+        fl.write(" ".join(image_list))
+        fl.write("\n\n\n")
+
+        fl.write("all: all\:cpu all\:gpu\n\n") 
+        fl.write("all\\:cpu: ")
+        fl.write(" ".join([i for i in image_list[::-1] if "cpu" in i]))
+        fl.write("\n\n")
+        fl.write("all\\:gpu: ")
+        fl.write(" ".join([i for i in image_list[::-1] if "gpu" in i]))
+        fl.write("\n\n\n")
+
+        fl.write("clean:\n\tdocker rmi ")
+        fl.write(" ".join(image_list))
+        fl.write("\n\n")
+        fl.write("clean\\:cpu:\n\tdocker rmi ")
+        fl.write(" ".join([i for i in image_list if "cpu" in i]))
+        fl.write("\n\n")
+        fl.write("clean\\:gpu:\n\tdocker rmi ")
+        fl.write(" ".join([i for i in image_list if "gpu" in i]))
+        fl.write("\n\n\n")
+
+        for i, f, d in zip(image_list, filename_list, deps_list):
+            fl.write("%s: " % i)
+            fl.write(" ".join(d))
+            if "gpu" in i:
+                fl.write("\n\tnvidia-docker build $(arg_nocache) -t %s -f %s %s\n\n" % (i, f, f.split("/")[0]))
+            else:
+                fl.write("\n\tdocker build $(arg_nocache) -t %s -f %s %s\n\n" % (i, f, f.split("/")[0]))
+
 
 if __name__ == '__main__':
     main()
