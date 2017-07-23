@@ -28,14 +28,14 @@ make IMAGE_NAME:TAG
 *Note:* make accept `NOCACHE=ON` argument to force the rebuild of all images
 
 #### Images with CPU Only:
-| Image name | TAG | Description |  |  
-|:-- |:-- |:-- |:-- |
+| Image name | TAG | Description | 
+|:-- |:-- |:-- |
 | `all` | <br> `cpu` <br> `gpu` | all images <br> all cpu images <br> all gpu images |
 | `python_lib` | `cpu` <br> `gpu` | my standard configuration |
 | `ffmpeg` | `cpu` <br> `gpu` | with [ffmpeg](https://ffmpeg.org/) compiled from source |
 | `opencv` | `cpu` <br> `gpu` | with [opencv](http://opencv.org/) compiled from source |
 | `redis` | `cpu` <br> `gpu` | with [redis](https://redis.io/) compiled from source |
-| `mxnet` | `cpu` <br> `gpu` <br> `cpu.nnpack` <br> `android`| with [mxnet](http://mxnet.io/) compiled from source <br> with gpu support <br> with [NNPACK](https://github.com/Maratyszcza/NNPACK) <br> [mxnet](http://mxnet.io/) with amalgamation compiled for android |
+| `mxnet` | `cpu` <br> `gpu` <br> `cpu.nnpack` <br> `android`| with [mxnet](http://mxnet.io/) compiled from source <br> with [mxnet](http://mxnet.io/)  compiled from source and gpu support <br> with [mxnet](http://mxnet.io/) and [NNPACK](https://github.com/Maratyszcza/NNPACK) compiled from source  <br> [mxnet](http://mxnet.io/) amalgamation compiled for android (ndk-14b) |
 | `tensorflow` | `cpu` <br> `gpu` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)|
 | `cntk` | `cpu` <br> `gpu` | with [cntk](http://cntk.ai) and [keras](https://keras.io/)|
 | `numba` | `cpu` <br> `gpu` | with [numba](http://numba.pydata.org/) |
