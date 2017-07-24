@@ -23,8 +23,9 @@ RUN $LIB_DIR/${NDK_VERSION}/build/tools/make_standalone_toolchain.py \
 # Compile OpenBLAS
 ENV PATH "${PATH}:$NDK_TOOLCHAIN_DIR/bin"
 RUN cd "$LIB_DIR" && git clone https://github.com/xianyi/OpenBLAS.git && cd OpenBLAS && \
-    make -j"$(nproc)" TARGET=ARMV7 HOSTCC=gcc CC=arm-linux-androideabi-gcc NOFORTRAN=1 libs && \ 
-    make PREFIX=$OPENBLAS_DIR install; exit 0
+    git checkout tags/v0.2.19 && \
+    make TARGET=ARMV7 HOSTCC=gcc CC=arm-linux-androideabi-gcc NOFORTRAN=1 && \ 
+    make PREFIX=$OPENBLAS_DIR install
 
 # Compile MXNet Amalgamation
 ENV PATH "${PATH}:$NDK_TOOLCHAIN_DIR/bin"
