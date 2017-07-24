@@ -27,52 +27,52 @@ clean_gpu:
 	docker rmi jupyter_gpu cntk_gpu numba_gpu mxnet_gpu tensorflow_gpu redis_gpu opencv_gpu ffmpeg_gpu pythonlib_gpu
 
 
-jupyter_cpu: numba_cpu mxnet_cpu redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+jupyter_cpu: numba_cpu
 	docker build $(arg_nocache) -t jupyter_cpu -f jupyter/Dockerfile.cpu jupyter
 
-jupyter_gpu: numba_gpu mxnet_gpu redis_gpu opencv_gpu ffmpeg_gpu pythonlib_gpu
+jupyter_gpu: numba_gpu
 	nvidia-docker build $(arg_nocache) -t jupyter_gpu -f jupyter/Dockerfile.gpu jupyter
 
-cntk_cpu: tensorflow_cpu redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+cntk_cpu: tensorflow_cpu
 	docker build $(arg_nocache) -t cntk_cpu -f cntk/Dockerfile.cpu cntk
 
-cntk_gpu: tensorflow_gpu redis_gpu opencv_gpu ffmpeg_gpu pythonlib_gpu
+cntk_gpu: tensorflow_gpu
 	nvidia-docker build $(arg_nocache) -t cntk_gpu -f cntk/Dockerfile.gpu cntk
 
-numba_cpu: mxnet_cpu redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+numba_cpu: mxnet_cpu
 	docker build $(arg_nocache) -t numba_cpu -f numba/Dockerfile.cpu numba
 
-numba_gpu: mxnet_gpu redis_gpu opencv_gpu ffmpeg_gpu pythonlib_gpu
+numba_gpu: mxnet_gpu
 	nvidia-docker build $(arg_nocache) -t numba_gpu -f numba/Dockerfile.gpu numba
 
-mxnet_android: redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+mxnet_android: redis_cpu
 	docker build $(arg_nocache) -t mxnet_android -f mxnet/Dockerfile.android mxnet
 
-mxnet_cpu: redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+mxnet_cpu: redis_cpu
 	docker build $(arg_nocache) -t mxnet_cpu -f mxnet/Dockerfile.cpu mxnet
 
-mxnet_cpu_nnpack: redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+mxnet_cpu_nnpack: redis_cpu
 	docker build $(arg_nocache) -t mxnet_cpu_nnpack -f mxnet/Dockerfile.cpu.nnpack mxnet
 
-mxnet_gpu: redis_gpu opencv_gpu ffmpeg_gpu pythonlib_gpu
+mxnet_gpu: redis_gpu
 	nvidia-docker build $(arg_nocache) -t mxnet_gpu -f mxnet/Dockerfile.gpu mxnet
 
-tensorflow_cpu: redis_cpu opencv_cpu ffmpeg_cpu pythonlib_cpu
+tensorflow_cpu: redis_cpu
 	docker build $(arg_nocache) -t tensorflow_cpu -f tensorflow/Dockerfile.cpu tensorflow
 
-tensorflow_gpu: redis_gpu opencv_gpu ffmpeg_gpu pythonlib_gpu
+tensorflow_gpu: redis_gpu
 	nvidia-docker build $(arg_nocache) -t tensorflow_gpu -f tensorflow/Dockerfile.gpu tensorflow
 
-redis_cpu: opencv_cpu ffmpeg_cpu pythonlib_cpu
+redis_cpu: opencv_cpu
 	docker build $(arg_nocache) -t redis_cpu -f redis/Dockerfile.cpu redis
 
-redis_gpu: opencv_gpu ffmpeg_gpu pythonlib_gpu
+redis_gpu: opencv_gpu
 	nvidia-docker build $(arg_nocache) -t redis_gpu -f redis/Dockerfile.gpu redis
 
-opencv_cpu: ffmpeg_cpu pythonlib_cpu
+opencv_cpu: ffmpeg_cpu
 	docker build $(arg_nocache) -t opencv_cpu -f opencv/Dockerfile.cpu opencv
 
-opencv_gpu: ffmpeg_gpu pythonlib_gpu
+opencv_gpu: ffmpeg_gpu
 	nvidia-docker build $(arg_nocache) -t opencv_gpu -f opencv/Dockerfile.gpu opencv
 
 ffmpeg_cpu: pythonlib_cpu

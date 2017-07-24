@@ -91,7 +91,7 @@ def main():
 
         for i, f, d in zip(image_list, filename_list, deps_list):
             fl.write("%s: " % i)
-            fl.write(" ".join(d))
+            fl.write(" ".join(d[:1]))
             if "gpu" in i:
                 fl.write("\n\tnvidia-docker build $(arg_nocache) -t %s -f %s %s\n\n" % (i, f, f.split("/")[0]))
             else:
