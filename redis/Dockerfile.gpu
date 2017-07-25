@@ -5,7 +5,7 @@ MAINTAINER Erwan BERNARD
 
 ENV REDIS_DIR "$LIB_DIR/redis-stable"
 
-RUN cd "LIB_DIR" && \
+RUN cd "$LIB_DIR" && \
     wget http://download.redis.io/redis-stable.tar.gz && \
     tar xvzf redis-stable.tar.gz && \
     rm redis-stable.tar.gz && \
