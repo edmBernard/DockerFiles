@@ -68,7 +68,8 @@ def main():
         fl.write("endif\n\n\n")
 
         fl.write(".PHONY: all all_cpu all_gpu clean clean_cpu clean_gpu ")
-        fl.write(" ".join(image_list))
+        fl.write(" ".join(image_list) + " ")
+        fl.write(" ".join(["clean_%s" % i for i in image_list]))
         fl.write("\n\n\n")
 
         fl.write("all: all_cpu all_gpu\n\n")
@@ -79,14 +80,14 @@ def main():
         fl.write(" ".join([i for i in image_list[::-1] if "gpu" in i]))
         fl.write("\n\n\n")
 
-        fl.write("clean:\n\tdocker rmi ")
-        fl.write(" ".join(image_list))
+        fl.write("clean: ")
+        fl.write(" ".join(["clean_%s" % i for i in image_list]))
         fl.write("\n\n")
-        fl.write("clean_cpu:\n\tdocker rmi ")
-        fl.write(" ".join([i for i in image_list if "cpu" in i]))
+        fl.write("clean_cpu: ")
+        fl.write(" ".join(["clean_%s" % i for i in image_list if "cpu" in i]))
         fl.write("\n\n")
-        fl.write("clean_gpu:\n\tdocker rmi ")
-        fl.write(" ".join([i for i in image_list if "gpu" in i]))
+        fl.write("clean_gpu: ")
+        fl.write(" ".join(["clean_%s" % i for i in image_list if "gpu" in i]))
         fl.write("\n\n\n")
 
         for i, f, d in zip(image_list, filename_list, deps_list):
@@ -97,6 +98,9 @@ def main():
             else:
                 fl.write("\n\tdocker build $(arg_nocache) -t %s -f %s %s\n\n" % (i, f, f.split("/")[0]))
 
+            fl.write("clean_%s: " % i)
+            fl.write(" ".join(["clean_%s" % ti for ti, td in zip(image_list, deps_list) if i in td][-1:]))
+            fl.write("""\n\tif [ "$$(docker images -q --filter=reference='%s')" != "" ]; then docker rmi %s; else echo "0"; fi\n\n""" % (i, i))
 
 if __name__ == '__main__':
     main()
