@@ -1,6 +1,7 @@
 FROM pythonlib_cpu:latest
 MAINTAINER Erwan BERNARD
 
+ENV OPENCV_DIR "$LIB_DIR/OpenCV-android-sdk"
 ENV NDK_VERSION "android-ndk-r14b"
 ENV NDK_TOOLCHAIN_DIR "$LIB_DIR/arm7-toolchain"
 ENV OPENBLAS_DIR "$LIB_DIR/OpenBLAS_build"
