@@ -99,7 +99,7 @@ def main():
                 fl.write("\n\tdocker build $(arg_nocache) -t %s -f %s %s\n\n" % (i, f, f.split("/")[0]))
 
             fl.write("clean_%s: " % i)
-            fl.write(" ".join(["clean_%s" % ti for ti, td in zip(image_list, deps_list) if i in td][-1:]))
+            fl.write(" ".join(["clean_%s" % ti for ti, td in zip(image_list, deps_list) if i in td]))
             fl.write("""\n\tif [ "$$(docker images -q --filter=reference='%s')" != "" ]; then docker rmi %s; else echo "0"; fi\n\n""" % (i, i))
 
 if __name__ == '__main__':
