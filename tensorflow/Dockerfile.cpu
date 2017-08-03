@@ -12,5 +12,16 @@ RUN pip3 install tensorflow
 # Keras
 RUN pip3 install git+https://github.com/fchollet/keras.git
 
+# install python2 tools
+RUN pip2 --no-cache-dir install -U \
+    pandas \
+    sklearn \
+    h5py
+
+RUN pip2 install tensorflow
+
+# Keras
+RUN pip2 install git+https://github.com/fchollet/keras.git
+
 # Set Tensorflow backend for Keras
 ENV KERAS_BACKEND=tensorflow
