@@ -11,6 +11,11 @@ RUN apt-get update && apt-get upgrade && \
         openjdk-8-jre \
         openjdk-8-jdk
 
+# Download and unzip opencv sdk build for android
+RUN cd "$LIB_DIR" && wget https://github.com/opencv/opencv/releases/download/3.2.0/opencv-3.2.0-android-sdk.zip && \ 
+    unzip opencv-3.2.0-android-sdk.zip && \ 
+    rm opencv-3.2.0-android-sdk.zip
+
 # Create toolchain
 RUN cd "$LIB_DIR" && \ 
     wget https://dl.google.com/android/repository/${NDK_VERSION}-linux-x86_64.zip && \
@@ -40,3 +45,6 @@ RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd m
     make clean && \
     make ANDROID=1
     # We can't use multiprocess compilation 
+
+    
+
