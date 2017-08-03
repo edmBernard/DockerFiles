@@ -12,7 +12,7 @@ RUN pip3 install tensorflow-gpu
 # Keras
 RUN pip3 install git+https://github.com/fchollet/keras.git
 
-# install python3 tools
+# install python2 tools
 RUN pip2 --no-cache-dir install -U \
     pandas \
     sklearn \
