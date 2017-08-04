@@ -1,21 +1,20 @@
 FROM pythonlib_cpu:latest
 MAINTAINER Erwan BERNARD
 
-ENV OPENCV_DIR "$LIB_DIR/OpenCV-android-sdk"
+ENV OPENCV_DIR "$LIB_DIR/opencv"
+RUN mkdir -p "$OPENCV_DIR"
+
 ENV NDK_VERSION "android-ndk-r14b"
 ENV NDK_TOOLCHAIN_DIR "$LIB_DIR/arm7-toolchain"
 ENV OPENBLAS_DIR "$LIB_DIR/OpenBLAS_build"
 ENV MXNET_DIR "$LIB_DIR/mxnet"
+# ENV ANDROID_STANDALONE_TOOLCHAIN "$NDK_TOOLCHAIN_DIR"
+ENV ANDROID_NDK "$LIB_DIR/$NDK_VERSION"
 
-RUN apt-get update && apt-get upgrade && \
+RUN apt-get update && \
     apt-get install -y \
         openjdk-8-jre \
         openjdk-8-jdk
-
-# Download and unzip opencv sdk build for android
-RUN cd "$LIB_DIR" && wget https://github.com/opencv/opencv/releases/download/3.2.0/opencv-3.2.0-android-sdk.zip && \ 
-    unzip opencv-3.2.0-android-sdk.zip && \ 
-    rm opencv-3.2.0-android-sdk.zip
 
 # Create toolchain
 RUN cd "$LIB_DIR" && \ 
@@ -47,5 +46,22 @@ RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd m
     make ANDROID=1
     # We can't use multiprocess compilation 
 
-    
+# download opencv3
+RUN cd "$OPENCV_DIR" && \
+    wget https://github.com/opencv/opencv/archive/master.zip && \
+    unzip master.zip && \
+    rm master.zip
+    # git clone https://github.com/opencv/opencv.git  <-- don't work anymore : GnuTLS recv error
 
+# download opencv3 contrib
+RUN cd "$OPENCV_DIR" && \
+    wget https://github.com/opencv/opencv_contrib/archive/master.zip && \
+    unzip master.zip && \
+    rm master.zip
+    # git clone https://github.com/opencv/opencv_contrib.git  <-- don't work anymore : GnuTLS recv error
+
+# Compile opencv3
+RUN cd "$OPENCV_DIR/opencv-master/platforms/scripts" && \
+    sh cmake_android_arm.sh -DANDROID_NATIVE_API_LEVEL=21 -DBUILD_SHARED_LIBS=OFF -DBUILD_opencv_world=ON && \
+    cd ../build_android_arm && \
+    make -j$(nproc)
