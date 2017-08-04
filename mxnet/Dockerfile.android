@@ -64,4 +64,5 @@ RUN cd "$OPENCV_DIR" && \
 RUN cd "$OPENCV_DIR/opencv-master/platforms/scripts" && \
     sh cmake_android_arm.sh -DANDROID_NATIVE_API_LEVEL=21 -DBUILD_SHARED_LIBS=OFF -DBUILD_opencv_world=ON && \
     cd ../build_android_arm && \
-    make -j$(nproc)
+    make -j$(nproc) && \
+    make install
