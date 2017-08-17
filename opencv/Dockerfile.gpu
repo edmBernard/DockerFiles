@@ -28,8 +28,11 @@ RUN cd "$OPENCV_DIR" && \
 
 # build opencv3
 # warning if we set BUILD_EXAMPLES=OFF cmake don't find IPP anymore (strange)
+# RUN ln -s /usr/local/nvidia/lib64/libnvcuvid.so.1 /usr/lib/libnvcuvid.so
 RUN cd "$OPENCV_DIR/opencv-master" && mkdir build && cd build && \
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
+    -D WITH_CUDA=ON \
+    # -D WITH_NVCUVID=ON \
     -D CMAKE_LIBRARY_PATH=/usr/local/cuda/lib64/stubs \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
     -D INSTALL_C_EXAMPLES=OFF \
