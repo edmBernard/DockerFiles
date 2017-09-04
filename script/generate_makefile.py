@@ -8,7 +8,7 @@ from tools import *
 
 def main():
     """
-        write Makefile in function of all Dockerfile in the repository
+        Write Makefile in function of all Dockerfile in the repository
     """
 
     graph = extract_dependence()
