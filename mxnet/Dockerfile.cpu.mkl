@@ -7,7 +7,8 @@ ENV MXNET_DIR "$LIB_DIR/mxnet"
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
-  libopenblas-dev
+  libopenblas-dev \
+  cpio
 
 # install python2 tools
 RUN pip2 --no-cache-dir install -U \
@@ -17,6 +18,19 @@ RUN pip2 --no-cache-dir install -U \
 # install python3 tools
 RUN pip3 --no-cache-dir install -U \
     easydict
+
+# install mkl
+RUN cd /tmp && \
+    wget http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/11306/l_mkl_2017.2.174.tgz && \
+    tar -xzf l_mkl_2017.2.174.tgz && \
+    cd l_mkl_2017.2.174 && \
+    sed -i 's/ACCEPT_EULA=decline/ACCEPT_EULA=accept/g' silent.cfg && \
+    ./install.sh -s silent.cfg && \
+    cd .. && \
+    rm -rf *
+
+RUN echo "/opt/intel/mkl/lib/intel64" >> /etc/ld.so.conf.d/intel.conf && \
+    ldconfig
 
 # Clone MXNet repo and move into it
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
