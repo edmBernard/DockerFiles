@@ -7,19 +7,19 @@ else
 endif
 
 
-.PHONY: all all_cpu all_gpu clean clean_cpu clean_gpu jupyter_cpu jupyter_gpu cntk_cpu cntk_gpu numba_cpu numba_gpu mxnet_cpu mxnet_cpu_mkl mxnet_cpu_nnpack mxnet_gpu tensorflow_cpu tensorflow_gpu redis_cpu redis_gpu opencv_cpu opencv_gpu ffmpeg_cpu ffmpeg_gpu mxnet_android python36_alpine python36_ubuntu pythonlib_cpu pythonlib_gpu clean_jupyter_cpu clean_jupyter_gpu clean_cntk_cpu clean_cntk_gpu clean_numba_cpu clean_numba_gpu clean_mxnet_cpu clean_mxnet_cpu_mkl clean_mxnet_cpu_nnpack clean_mxnet_gpu clean_tensorflow_cpu clean_tensorflow_gpu clean_redis_cpu clean_redis_gpu clean_opencv_cpu clean_opencv_gpu clean_ffmpeg_cpu clean_ffmpeg_gpu clean_mxnet_android clean_python36_alpine clean_python36_ubuntu clean_pythonlib_cpu clean_pythonlib_gpu
+.PHONY: all all_cpu all_gpu clean clean_cpu clean_gpu jupyter_cpu jupyter_gpu cntk_cpu cntk_gpu numba_cpu numba_gpu mxnet_cpu mxnet_cpu_mkl mxnet_cpu_nnpack mxnet_gpu tensorflow_cpu tensorflow_gpu redis_cpu redis_gpu opencv_cpu opencv_gpu ffmpeg_cpu ffmpeg_gpu mxnet_android python36_alpine python36_ubuntu pythonlib_cpu pythonlib_gpu tensorflow_cpu_src clean_jupyter_cpu clean_jupyter_gpu clean_cntk_cpu clean_cntk_gpu clean_numba_cpu clean_numba_gpu clean_mxnet_cpu clean_mxnet_cpu_mkl clean_mxnet_cpu_nnpack clean_mxnet_gpu clean_tensorflow_cpu clean_tensorflow_gpu clean_redis_cpu clean_redis_gpu clean_opencv_cpu clean_opencv_gpu clean_ffmpeg_cpu clean_ffmpeg_gpu clean_mxnet_android clean_python36_alpine clean_python36_ubuntu clean_pythonlib_cpu clean_pythonlib_gpu clean_tensorflow_cpu_src
 
 
 all: all_cpu all_gpu
 
-all_cpu: pythonlib_cpu ffmpeg_cpu opencv_cpu redis_cpu tensorflow_cpu mxnet_cpu_nnpack mxnet_cpu_mkl mxnet_cpu numba_cpu cntk_cpu jupyter_cpu
+all_cpu: tensorflow_cpu_src pythonlib_cpu ffmpeg_cpu opencv_cpu redis_cpu tensorflow_cpu mxnet_cpu_nnpack mxnet_cpu_mkl mxnet_cpu numba_cpu cntk_cpu jupyter_cpu
 
 all_gpu: pythonlib_gpu ffmpeg_gpu opencv_gpu redis_gpu tensorflow_gpu mxnet_gpu numba_gpu cntk_gpu jupyter_gpu
 
 
-clean: clean_jupyter_cpu clean_jupyter_gpu clean_cntk_cpu clean_cntk_gpu clean_numba_cpu clean_numba_gpu clean_mxnet_cpu clean_mxnet_cpu_mkl clean_mxnet_cpu_nnpack clean_mxnet_gpu clean_tensorflow_cpu clean_tensorflow_gpu clean_redis_cpu clean_redis_gpu clean_opencv_cpu clean_opencv_gpu clean_ffmpeg_cpu clean_ffmpeg_gpu clean_mxnet_android clean_python36_alpine clean_python36_ubuntu clean_pythonlib_cpu clean_pythonlib_gpu
+clean: clean_jupyter_cpu clean_jupyter_gpu clean_cntk_cpu clean_cntk_gpu clean_numba_cpu clean_numba_gpu clean_mxnet_cpu clean_mxnet_cpu_mkl clean_mxnet_cpu_nnpack clean_mxnet_gpu clean_tensorflow_cpu clean_tensorflow_gpu clean_redis_cpu clean_redis_gpu clean_opencv_cpu clean_opencv_gpu clean_ffmpeg_cpu clean_ffmpeg_gpu clean_mxnet_android clean_python36_alpine clean_python36_ubuntu clean_pythonlib_cpu clean_pythonlib_gpu clean_tensorflow_cpu_src
 
-clean_cpu: clean_jupyter_cpu clean_cntk_cpu clean_numba_cpu clean_mxnet_cpu clean_mxnet_cpu_mkl clean_mxnet_cpu_nnpack clean_tensorflow_cpu clean_redis_cpu clean_opencv_cpu clean_ffmpeg_cpu clean_pythonlib_cpu
+clean_cpu: clean_jupyter_cpu clean_cntk_cpu clean_numba_cpu clean_mxnet_cpu clean_mxnet_cpu_mkl clean_mxnet_cpu_nnpack clean_tensorflow_cpu clean_redis_cpu clean_opencv_cpu clean_ffmpeg_cpu clean_pythonlib_cpu clean_tensorflow_cpu_src
 
 clean_gpu: clean_jupyter_gpu clean_cntk_gpu clean_numba_gpu clean_mxnet_gpu clean_tensorflow_gpu clean_redis_gpu clean_opencv_gpu clean_ffmpeg_gpu clean_pythonlib_gpu
 
@@ -161,4 +161,10 @@ pythonlib_gpu:
 
 clean_pythonlib_gpu: clean_jupyter_gpu clean_cntk_gpu clean_numba_gpu clean_mxnet_gpu clean_tensorflow_gpu clean_redis_gpu clean_opencv_gpu clean_ffmpeg_gpu
 	if [ "$$(docker images -q --filter=reference='pythonlib_gpu')" != "" ]; then docker rmi pythonlib_gpu; else echo "0"; fi
+
+tensorflow_cpu_src: 
+	docker build $(arg_nocache) -t tensorflow_cpu_src -f tensorflow/Dockerfile.cpu.src tensorflow
+
+clean_tensorflow_cpu_src: 
+	if [ "$$(docker images -q --filter=reference='tensorflow_cpu_src')" != "" ]; then docker rmi tensorflow_cpu_src; else echo "0"; fi
 
