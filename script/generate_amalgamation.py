@@ -1,5 +1,28 @@
+#! /usr/bin/python3
+r"""generate amalgamation.py.
+
+Usage:
+  generate_amalgamation.py
+  generate_amalgamation.py --filename <filename> --base <base> [--] <list>...
+
+Options:
+  -h --help      _o/ .
+  --version      \o_ .
+  --filename <filename>  \o/
+  --base <base>  \o/
+"""
+import argparse
+
+from docopt import docopt
 from path import Path
+
 from tools import *
+
+
+def parse_command_line():
+    args = docopt(__doc__, version='0.2')
+    return args
+
 
 def main():
     """
@@ -27,6 +50,28 @@ def main():
                         file_out.write(i)
                 firstloop = False
 
+
+def concatenate_image(filename, base, image_list):
+
+    with open(filename, "w") as file_out:
+        file_out.write("FROM %s\n" % base)
+        file_out.write("MAINTAINER Erwan BERNARD")
+
+        for image_name in image_list:
+            print("../%s" % (imagename_to_filename(image_name)))
+            with open("../%s" % imagename_to_filename(image_name), "r") as file_in:
+                for i in file_in:
+                    match = re.search(r"FROM|MAINTAINER", i)
+                    if match:
+                        continue
+                    file_out.write(i)
+
+
 if __name__ == '__main__':
-    main()
+    clo = parse_command_line()
+    if clo["--filename"] is None:
+        main()
+    else:
+        concatenate_image(clo["--filename"], clo["--base"], clo["<list>"])
+
     print("Generation Done")
