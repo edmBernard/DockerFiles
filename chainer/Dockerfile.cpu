@@ -1,15 +1,7 @@
 FROM redis_cpu:latest
 MAINTAINER Erwan BERNARD
 
-ENV CHAINENR_DIR "$LIB_DIR/chainer"
-ENV CUPY_DIR "$LIB_DIR/cupy"
-
-# Clone cupy repo
-RUN cd "$LIB_DIR" && git clone https://github.com/cupy/cupy.git
-
-# Install cupy package
-RUN cd "$CUPY_DIR" && python2 setup.py install
-RUN cd "$CUPY_DIR" && python3 setup.py install
+ENV CHAINER_DIR "$LIB_DIR/chainer"
 
 # Clone chainer repo
 RUN cd "$LIB_DIR" && git clone https://github.com/chainer/chainer.git
