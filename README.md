@@ -38,8 +38,9 @@ The image is the concatenation of the Library name and the tag (ex: `opencv` and
 | `opencv` | `_cpu` <br> `_gpu` | with [opencv](http://opencv.org/) compiled from source |
 | `redis` | `_cpu` <br> `_gpu` | with [redis](https://redis.io/) compiled from source |
 | `mxnet` | `_cpu` <br> `_gpu` <br> `_cpu_nnpack` <br> `_android`| with [mxnet](http://mxnet.io/) compiled from source <br> with [mxnet](http://mxnet.io/)  compiled from source and gpu support <br> with [mxnet](http://mxnet.io/) and [NNPACK](https://github.com/Maratyszcza/NNPACK) compiled from source  <br> [mxnet](http://mxnet.io/) amalgamation compiled for android (ndk-14b) |
-| `tensorflow` | `_cpu` <br> `_gpu` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)|
+| `tensorflow` | `_cpu` <br> `_gpu` <br> `_cpu_src_py3` <br> `_gpu_src_py3` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)|
 | `cntk` | `_cpu` <br> `_gpu` | with [cntk](http://cntk.ai) and [keras](https://keras.io/)|
+| `chainer` | `_cpu` <br> `_gpu` | with [chainer](https://chainer.org/), [chainerRL](https://github.com/chainer/chainerrl) and [chainerCV](https://github.com/chainer/chainercv)|
 | `numba` | `_cpu` <br> `_gpu` | with [numba](http://numba.pydata.org/) |
 | `jupyter` | `_cpu` <br> `_gpu` | a [jupyter](http://jupyter.org/) server with `pass` as password |
 | `python36` | `_ubuntu` <br> `_alpine` | regular ubuntu installation with python3.6 <br> [alpine](https://alpinelinux.org/) with python 3.6 |
