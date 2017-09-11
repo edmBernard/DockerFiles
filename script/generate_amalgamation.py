@@ -55,7 +55,7 @@ def concatenate_image(filename, base, image_list):
 
     with open(filename, "w") as file_out:
         file_out.write("FROM %s\n" % base)
-        file_out.write("MAINTAINER Erwan BERNARD")
+        file_out.write("MAINTAINER Erwan BERNARD\n")
 
         for image_name in image_list:
             print("../%s" % (imagename_to_filename(image_name)))
