@@ -3,6 +3,8 @@ MAINTAINER Erwan BERNARD
 
 ENV CHAINER_DIR "$LIB_DIR/chainer"
 ENV CUPY_DIR "$LIB_DIR/cupy"
+ENV CHAINERRL_DIR "$LIB_DIR/chainerrl"
+ENV CHAINERCV_DIR "$LIB_DIR/chainercv"
 
 RUN pip2 install -U cython
 RUN pip3 install -U cython
@@ -20,3 +22,17 @@ RUN cd "$LIB_DIR" && git clone https://github.com/chainer/chainer.git
 # Install chainer package
 RUN cd "$CHAINER_DIR" && python2 setup.py install
 RUN cd "$CHAINER_DIR" && python3 setup.py install
+
+# Clone chainerrl repo
+RUN cd "$LIB_DIR" && git clone https://github.com/chainer/chainerrl.git
+
+# Install chainer package
+RUN cd "$CHAINERRL_DIR" && python2 setup.py install
+RUN cd "$CHAINERRL_DIR" && python3 setup.py install
+
+# Clone chainercv repo
+RUN cd "$LIB_DIR" && git clone https://github.com/chainer/chainercv.git
+
+# Install chainer package
+RUN cd "$CHAINERCV_DIR" && python2 setup.py install
+RUN cd "$CHAINERCV_DIR" && python3 setup.py install
