@@ -1,6 +1,8 @@
 FROM gcr.io/tensorflow/tensorflow:latest
 MAINTAINER Erwan BERNARD
 
+# ==============================================================================
+# pythonlib/Dockerfile.cpu
 
 # Pick up some dependencies
 RUN apt-get update && apt-get upgrade -y && \
@@ -98,55 +100,17 @@ RUN mkdir -p "$LIB_DIR"
 
 WORKDIR $HOME/host
 
+# RUN useradd dev && chown -R dev: /home/dev
+# USER dev
+
 RUN ln -snf /bin/bash /bin/sh
 RUN cp /root/.bashrc $HOME/.bashrc && \
     sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' ~/.bashrc
 
 CMD ["/bin/bash"]
-
 # ==============================================================================
-# Install Keras
-# install python3 tools
-RUN pip3 --no-cache-dir install -U \
-    pandas \
-    sklearn
+# opencv/Dockerfile.cpu
 
-# Keras
-RUN pip3 install git+https://github.com/fchollet/keras.git
-
-# install python2 tools
-RUN pip2 --no-cache-dir install -U \
-    pandas \
-    sklearn
-
-# Keras
-RUN pip2 install git+https://github.com/fchollet/keras.git
-
-# Set Tensorflow backend for Keras
-ENV KERAS_BACKEND=tensorflow
-
-# ==============================================================================
-# Install Redis
-ENV REDIS_DIR "$LIB_DIR/redis-stable"
-
-RUN cd "$LIB_DIR" && \
-    wget http://download.redis.io/redis-stable.tar.gz && \
-    tar xvzf redis-stable.tar.gz && \
-    rm redis-stable.tar.gz && \
-    cd redis-stable && \
-    make -j"$(nproc)" && \
-    make install
-
-# install python2 tools
-RUN pip2 --no-cache-dir install \
-        redis
-
-# install python3 tools
-RUN pip3 --no-cache-dir install \
-        redis
-
-# ==============================================================================
-# Install Opencv
 ENV OPENCV_DIR "$LIB_DIR/opencv"
 RUN mkdir -p "$OPENCV_DIR"
 
@@ -154,6 +118,7 @@ RUN mkdir -p "$OPENCV_DIR"
 RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
 
 # download opencv3
 RUN cd "$OPENCV_DIR" && \
@@ -186,3 +151,49 @@ RUN cd "$OPENCV_DIR/opencv-master" && mkdir build && cd build && \
 
 # link ippicv
 RUN ln -s "$OPENCV_DIR/opencv-master/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a" "/usr/local/lib/libippicv.a"
+# ==============================================================================
+# redis/Dockerfile.cpu
+
+# follow the tuto from here : https://redis.io/topics/quickstart
+
+ENV REDIS_DIR "$LIB_DIR/redis-stable"
+
+RUN cd "$LIB_DIR" && \
+    wget http://download.redis.io/redis-stable.tar.gz && \
+    tar xvzf redis-stable.tar.gz && \
+    rm redis-stable.tar.gz && \
+    cd redis-stable && \
+    make -j"$(nproc)" && \
+    make install
+
+# install python2 tools
+RUN pip2 --no-cache-dir install \
+        redis
+
+# install python3 tools
+RUN pip3 --no-cache-dir install \
+        redis
+# ==============================================================================
+# tensorflow/Dockerfile.cpu
+
+# install python3 tools
+RUN pip3 --no-cache-dir install -U \
+    pandas \
+    sklearn \
+    h5py
+
+
+# Keras
+RUN pip3 install git+https://github.com/fchollet/keras.git
+
+# install python2 tools
+RUN pip2 --no-cache-dir install -U \
+    pandas \
+    sklearn \
+    h5py
+
+# Keras
+RUN pip2 install git+https://github.com/fchollet/keras.git
+
+# Set Tensorflow backend for Keras
+ENV KERAS_BACKEND=tensorflow
