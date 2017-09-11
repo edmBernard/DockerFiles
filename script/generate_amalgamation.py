@@ -58,7 +58,7 @@ def concatenate_image(filename, base, image_list):
         file_out.write("MAINTAINER Erwan BERNARD\n\n")
 
         for image_name in image_list:
-            file_out.write("# ==============================================================================\n")
+            file_out.write("\n# ==============================================================================\n")
             file_out.write("# %s\n" % imagename_to_filename(image_name))
             print("../%s" % (imagename_to_filename(image_name)))
             with open("../%s" % imagename_to_filename(image_name), "r") as file_in:
