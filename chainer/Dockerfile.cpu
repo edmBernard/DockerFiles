@@ -5,6 +5,9 @@ ENV CHAINER_DIR "$LIB_DIR/chainer"
 ENV CHAINERRL_DIR "$LIB_DIR/chainerrl"
 ENV CHAINERCV_DIR "$LIB_DIR/chainercv"
 
+RUN pip2 install -U cython
+RUN pip3 install -U cython
+
 # Clone chainer repo
 RUN cd "$LIB_DIR" && git clone https://github.com/chainer/chainer.git
 
