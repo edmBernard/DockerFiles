@@ -1,0 +1,25 @@
+FROM redis_gpu:latest
+MAINTAINER Erwan BERNARD
+
+ENV CHAINENR_DIR "$LIB_DIR/chainer"
+ENV CUPY_DIR "$LIB_DIR/cupy"
+
+# Clone chainer repo and move into it
+RUN cd "$LIB_DIR" && git clone https://github.com/cupy/cupy.git
+
+# RUN pip install -U cython
+
+# # Install Python package
+# RUN cd "$CUPY_DIR" && pip2 install -e .
+# RUN cd "$CUPY_DIR" && pip3 install -e .
+
+# Install cupy package
+RUN cd "$CUPY_DIR" && python2 setup.py install
+RUN cd "$CUPY_DIR" && python3 setup.py install
+
+# Clone chainer repo
+RUN cd "$LIB_DIR" && git clone https://github.com/chainer/chainer.git
+
+# Install chainer package
+RUN cd "$CHAINER_DIR" && python2 setup.py install
+RUN cd "$CHAINER_DIR" && python3 setup.py install
