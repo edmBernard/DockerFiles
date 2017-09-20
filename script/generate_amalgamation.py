@@ -41,13 +41,26 @@ def main():
 
         firstloop = True
         with open(filename, "w") as file_out:
+            print(image_names[::-1])
             for image_name in image_names[::-1]:
-                with open("../" + imagename_to_filename(image_name), "r") as file_in:
-                    for i in file_in:
-                        match = re.search(r"FROM|MAINTAINER", i)
-                        if match and not firstloop:
-                            continue
-                        file_out.write(i)
+                if not firstloop:
+                    file_out.write("\n# ==============================================================================\n")
+                    file_out.write("# %s\n" % imagename_to_filename(image_name))
+
+                try:
+                    with open("../" + imagename_to_filename(image_name), "r") as file_in:
+                        for i in file_in:
+                            match = re.search(r"FROM|LABEL maintainer", i)
+                            if match and not firstloop:
+                                continue
+                            file_out.write(i)
+                except FileNotFoundError:
+                    with open("../super/" + imagename_to_filename(image_name), "r") as file_in:
+                        for i in file_in:
+                            match = re.search(r"FROM|LABEL maintainer", i)
+                            if match and not firstloop:
+                                continue
+                            file_out.write(i)
                 firstloop = False
 
 
