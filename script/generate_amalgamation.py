@@ -71,9 +71,10 @@ def concatenate_image(filename, base, image_list):
 
 if __name__ == '__main__':
     clo = parse_command_line()
+
     if clo["--filename"] is None:
         main()
     else:
-        concatenate_image(clo["--filename"], clo["--base"], clo["<list>"])
+        concatenate_image(clo["--filename"], clo["--base"] + ":latest"*(":" not in clo["--base"]) in, clo["<list>"])
 
     print("Generation Done")
