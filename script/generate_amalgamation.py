@@ -12,6 +12,7 @@ Options:
   --base <base>  \o/
 """
 import argparse
+import sys
 
 from docopt import docopt
 from path import Path
@@ -66,6 +67,7 @@ def concatenate_image(filename, base, image_list):
     with open(filename, "w") as file_out:
         file_out.write("FROM %s\n" % base)
         file_out.write('LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"\n\n')
+        file_out.write("# " + " ".join(sys.argv) + "\n")
 
         for image_name in image_list:
             file_out.write("\n# ==============================================================================\n")

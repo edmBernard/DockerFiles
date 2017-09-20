@@ -14,8 +14,6 @@ def main():
 
     graph = extract_dependence()
     sorted_graph = sorted(graph, key=lambda t: (-len(t), t[0]))
-    for i in sorted_graph:
-        print(i)
     image_list = [i[0] for i in sorted_graph]
     deps_list = [i[1:] for i in sorted_graph]
     filename_list = [imagename_to_filename(i) if Path("../" + imagename_to_filename(i)).exists() else "super/" + imagename_to_filename(i) for i in image_list]
