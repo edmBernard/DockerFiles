@@ -41,7 +41,7 @@ RUN apt-get update && apt-get upgrade -y && \
 
 # install pip for python2 and 3
 RUN wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate && \
-    python get-pip.py && \
+    python2 get-pip.py && \
     python3 get-pip.py && \
     rm get-pip.py
 

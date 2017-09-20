@@ -1,6 +1,7 @@
 FROM gcr.io/tensorflow/tensorflow:latest-py3
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
+# ./generate_amalgamation.py --filename ../super/tensorflow/Dockerfile.cpu.src.py3 --base gcr.io/tensorflow/tensorflow:latest-py3 -- pythonlib_cpu ffmpeg_cpu opencv_cpu redis_cpu tensorflow_cpu
 
 # ==============================================================================
 # pythonlib/Dockerfile.cpu
@@ -45,7 +46,7 @@ RUN apt-get update && apt-get upgrade -y && \
 
 # install pip for python2 and 3
 RUN wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate && \
-    python get-pip.py && \
+    python2 get-pip.py && \
     python3 get-pip.py && \
     rm get-pip.py
 
@@ -299,6 +300,8 @@ RUN pip3 --no-cache-dir install -U \
     sklearn \
     h5py
 
+RUN pip3 install tensorflow
+
 # Keras
 RUN pip3 install git+https://github.com/fchollet/keras.git
 
@@ -307,6 +310,8 @@ RUN pip2 --no-cache-dir install -U \
     pandas \
     sklearn \
     h5py
+
+RUN pip2 install tensorflow
 
 # Keras
 RUN pip2 install git+https://github.com/fchollet/keras.git
