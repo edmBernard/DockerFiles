@@ -46,20 +46,18 @@ def main():
                     file_out.write("\n# ==============================================================================\n")
                     file_out.write("# %s\n" % imagename_to_filename(image_name))
 
-                try:
-                    with open("../" + imagename_to_filename(image_name), "r") as file_in:
-                        for i in file_in:
-                            match = re.search(r"FROM|LABEL maintainer", i)
-                            if match and not firstloop:
-                                continue
-                            file_out.write(i)
-                except FileNotFoundError:
-                    with open("../super/" + imagename_to_filename(image_name), "r") as file_in:
-                        for i in file_in:
-                            match = re.search(r"FROM|LABEL maintainer", i)
-                            if match and not firstloop:
-                                continue
-                            file_out.write(i)
+                if Path("../" + imagename_to_filename(image_name)).exists():
+                    _filename = "../" + imagename_to_filename(image_name)
+                else:
+                    _filename = "../super/" + imagename_to_filename(image_name)
+
+                with open(_filename, "r") as file_in:
+                    for i in file_in:
+                        match = re.search(r"FROM|LABEL maintainer", i)
+                        if match and not firstloop:
+                            continue
+                        file_out.write(i)
+                
                 firstloop = False
 
 
