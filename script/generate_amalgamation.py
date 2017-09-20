@@ -41,7 +41,6 @@ def main():
 
         firstloop = True
         with open(filename, "w") as file_out:
-            print(image_names[::-1])
             for image_name in image_names[::-1]:
                 if not firstloop:
                     file_out.write("\n# ==============================================================================\n")
