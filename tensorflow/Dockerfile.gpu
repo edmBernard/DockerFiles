@@ -1,5 +1,5 @@
 FROM redis_gpu:latest
-MAINTAINER Erwan BERNARD
+LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 # install python3 tools
 RUN pip3 --no-cache-dir install -U \

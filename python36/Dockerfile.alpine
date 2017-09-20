@@ -1,5 +1,5 @@
 FROM alpine:edge
-MAINTAINER Erwan BERNARD
+LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 RUN apk update && apk --no-cache add \
         linux-headers \

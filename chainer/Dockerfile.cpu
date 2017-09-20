@@ -1,5 +1,5 @@
 FROM redis_cpu:latest
-MAINTAINER Erwan BERNARD
+LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 ENV CHAINER_DIR "$LIB_DIR/chainer"
 ENV CHAINERRL_DIR "$LIB_DIR/chainerrl"

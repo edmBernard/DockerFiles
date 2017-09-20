@@ -1,5 +1,5 @@
 FROM numba_gpu:latest
-MAINTAINER Erwan BERNARD
+LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 # configure jupyter
 # the default for this hash is "pass" 

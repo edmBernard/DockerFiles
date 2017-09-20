@@ -55,7 +55,7 @@ def concatenate_image(filename, base, image_list):
 
     with open(filename, "w") as file_out:
         file_out.write("FROM %s\n" % base)
-        file_out.write("MAINTAINER Erwan BERNARD\n\n")
+        file_out.write('LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"\n\n')
 
         for image_name in image_list:
             file_out.write("\n# ==============================================================================\n")
@@ -63,7 +63,7 @@ def concatenate_image(filename, base, image_list):
             print("../%s" % (imagename_to_filename(image_name)))
             with open("../%s" % imagename_to_filename(image_name), "r") as file_in:
                 for i in file_in:
-                    match = re.search(r"FROM|MAINTAINER", i)
+                    match = re.search(r"FROM|LABEL maintainer", i)
                     if match:
                         continue
                     file_out.write(i)
@@ -75,6 +75,6 @@ if __name__ == '__main__':
     if clo["--filename"] is None:
         main()
     else:
-        concatenate_image(clo["--filename"], clo["--base"] + ":latest"*(":" not in clo["--base"]) in, clo["<list>"])
+        concatenate_image(clo["--filename"], clo["--base"] + ":latest"*(":" not in clo["--base"]), clo["<list>"])
 
     print("Generation Done")

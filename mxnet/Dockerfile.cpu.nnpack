@@ -1,5 +1,5 @@
 FROM redis_cpu:latest
-MAINTAINER Erwan BERNARD
+LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 ENV NNPACK_DIR "$LIB_DIR/NNPACK"
 ENV MXNET_DIR "$LIB_DIR/mxnet"

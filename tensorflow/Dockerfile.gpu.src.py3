@@ -1,5 +1,5 @@
 FROM gcr.io/tensorflow/tensorflow:latest-gpu-py3
-MAINTAINER Erwan BERNARD
+LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 
 # ==============================================================================
