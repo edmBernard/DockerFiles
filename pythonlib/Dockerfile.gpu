@@ -61,6 +61,8 @@ RUN pip2 --no-cache-dir install \
         ipykernel \
         jupyter \
         ptvsd==3.0.0 \
+        # line_profiler \
+        h5py \
         && \
     python2 -m ipykernel install
 
@@ -81,6 +83,8 @@ RUN pip3 --no-cache-dir install \
         ipykernel \
         jupyter \
         ptvsd==3.0.0 \
+        line_profiler \
+        h5py \
         && \
     python3 -m ipykernel install
 
