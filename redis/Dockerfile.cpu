@@ -4,6 +4,7 @@ LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 # follow the tuto from here : https://redis.io/topics/quickstart
 
 ENV REDIS_DIR "$LIB_DIR/redis-stable"
+ENV REDIS_NN "$LIB_DIR/neural-redis"
 
 RUN cd "$LIB_DIR" && \
     wget http://download.redis.io/redis-stable.tar.gz && \
@@ -20,3 +21,10 @@ RUN pip2 --no-cache-dir install \
 # install python3 tools
 RUN pip3 --no-cache-dir install \
         redis
+
+# Redis neural network
+RUN cd "$LIB_DIR" && \
+    git clone https://github.com/antirez/neural-redis.git && cd neural-redis && \
+    make avx -j"$(nproc)"
+
+CMD ["sh", "-c", "redis-server", "--loadmodule", "${REDIS_NN}/neuralredis.so]
