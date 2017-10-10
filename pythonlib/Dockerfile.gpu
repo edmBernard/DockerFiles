@@ -85,6 +85,7 @@ RUN pip3 --no-cache-dir install \
         ptvsd==3.0.0 \
         line_profiler \
         h5py \
+        pipenv \
         && \
     python3 -m ipykernel install
 
