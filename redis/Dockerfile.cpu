@@ -27,4 +27,4 @@ RUN cd "$LIB_DIR" && \
     git clone https://github.com/antirez/neural-redis.git && cd neural-redis && \
     make avx -j"$(nproc)"
 
-CMD ["sh", "-c", "redis-server", "--loadmodule", "${REDIS_NN}/neuralredis.so]
+CMD ["sh", "-c", "redis-server", "--loadmodule", "${REDIS_NN}/neuralredis.so"]
