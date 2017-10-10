@@ -30,7 +30,6 @@ RUN cd /tmp && \
     rm -rf *
 
 RUN echo "/opt/intel/mkl/lib/intel64" >> /etc/ld.so.conf.d/intel.conf && \
-    echo "/usr/local/lib" >> /etc/ld.so.conf.d/intel.conf && \
     ldconfig
 
 # Clone MXNet repo and move into it
@@ -44,6 +43,9 @@ RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd m
     sed -i 's/USE_MKL2017_EXPERIMENTAL = 0/USE_MKL2017_EXPERIMENTAL = 1/g' config.mk && \
 # Make
     make -j"$(nproc)"
+
+RUN echo "/usr/local/lib" >> /etc/ld.so.conf.d/intel.conf && \
+    ldconfig
 
 # Install Python package
 RUN cd "$MXNET_DIR/python" && python2 setup.py install
