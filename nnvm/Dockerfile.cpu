@@ -1,0 +1,37 @@
+FROM mxnet_cpu:latest
+LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
+
+ENV NNVM_DIR "$LIB_DIR/nnvm"
+
+# Install git and other dependencies
+RUN apt-get update && apt-get install -y \
+    libopenblas-dev
+
+# install python2 tools
+RUN pip2 --no-cache-dir install -U \
+    easydict \ 
+    tensorboard
+
+# install python3 tools
+RUN pip3 --no-cache-dir install -U \
+    easydict
+
+# Clone MXNet repo and move into it
+RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/nnvm
+
+RUN cd  "$LIB_DIR/nnvm/tvm" && \
+    cp make/config.mk config.mk && \
+    make -j"$(nproc)" && \
+    make install
+
+RUN cd  "$LIB_DIR/nnvm" && \
+    cp make/config.mk config.mk && \
+    make -j"$(nproc)"
+
+# Install Python package
+RUN cd "$LIB_DIR/nnvm/tvm/topi/python" && python2 setup.py install
+RUN cd "$LIB_DIR/nnvm/tvm/topi/python" && python3 setup.py install
+RUN cd "$LIB_DIR/nnvm/tvm/python" && python2 setup.py install
+RUN cd "$LIB_DIR/nnvm/tvm/python" && python3 setup.py install
+RUN cd "$LIB_DIR/nnvm/python" && python2 setup.py install
+RUN cd "$LIB_DIR/nnvm/python" && python3 setup.py install
