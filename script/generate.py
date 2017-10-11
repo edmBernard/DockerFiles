@@ -1,7 +1,8 @@
 #! /usr/bin/python3
 import sys
 from path import Path
-from tools import *
+from tools import imagename_to_filename, extract_dependence
+import re
 import fire
 
 def amalgamation():
@@ -42,8 +43,8 @@ def amalgamation():
                 firstloop = False
 
 
-def concatenate_image(filename, base, image_list):
-    print("Concatenate image")
+def concatenate_image(filename, base, *image_list):
+    print("Image list to concatenate: ", *image_list)
     with open(filename, "w") as file_out:
         file_out.write("FROM %s\n" % base)
         file_out.write('LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"\n\n')
@@ -52,7 +53,7 @@ def concatenate_image(filename, base, image_list):
         for image_name in image_list:
             file_out.write("\n# ==============================================================================\n")
             file_out.write("# %s\n" % imagename_to_filename(image_name))
-            print("../%s" % (imagename_to_filename(image_name)))
+            print("Expand: ", "../%s" % (imagename_to_filename(image_name)))
             with open("../%s" % imagename_to_filename(image_name), "r") as file_in:
                 for i in file_in:
                     match = re.search(r"FROM|LABEL maintainer", i)
