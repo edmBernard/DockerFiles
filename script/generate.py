@@ -1,36 +1,15 @@
 #! /usr/bin/python3
-r"""generate amalgamation.py.
-
-Usage:
-  generate.py amalgamation
-  generate.py makefile
-  generate.py concatenate --filename <filename> --base <base> [--] <list>...
-
-Options:
-  -h --help      _o/ .
-  --version      \o_ .
-  --filename <filename>  \o/
-  --base <base>  \o/
-"""
-import argparse
 import sys
-
-from docopt import docopt
 from path import Path
-
 from tools import *
-
-
-def parse_command_line():
-    args = docopt(__doc__, version='0.2')
-    return args
-
+import fire
 
 def amalgamation():
     """
         Write concatenated Dockerfile in function of all Dockerfile in the repository
         Only if docker file have dependency
     """
+    print("Amalgamation Generation")
     deps = extract_dependence()
 
     for image_names in deps:
@@ -64,7 +43,7 @@ def amalgamation():
 
 
 def concatenate_image(filename, base, image_list):
-
+    print("Concatenate image")
     with open(filename, "w") as file_out:
         file_out.write("FROM %s\n" % base)
         file_out.write('LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"\n\n')
@@ -86,7 +65,7 @@ def makefile():
     """
         Write Makefile in function of all Dockerfile in the repository
     """
-
+    print("Makefile Generation")
     graph = extract_dependence()
     sorted_graph = sorted(graph, key=lambda t: (-len(t), t[0]))
     image_list = [i[0] for i in sorted_graph]
@@ -139,16 +118,10 @@ def makefile():
 
 
 if __name__ == '__main__':
-    clo = parse_command_line()
-
-    if clo["amalgamation"]:
-        print("Amalgamation Generation")
-        amalgamation()
-    elif clo["makefile"]:
-        print("Makefile Generation")
-        makefile()
-    elif clo["concatenate"]:
-        print("Concatenate image")
-        concatenate_image(clo["--filename"], clo["--base"] + ":latest"*(":" not in clo["--base"]), clo["<list>"])
+    fire.Fire({
+        "amalgamation": amalgamation,
+        "makefile": makefile,
+        "concatenate": concatenate_image
+    }, name="./generate.py")
 
     print("Generation Done")
