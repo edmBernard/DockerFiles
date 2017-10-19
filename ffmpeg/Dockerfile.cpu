@@ -46,6 +46,7 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
     wget http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.bz2 && \
     tar xjvf nasm-2.13.01.tar.bz2 && \
+    rm nasm-2.13.01.tar.bz2 && \
     cd nasm-2.13.01 && \
     ./autogen.sh && \
     PATH="$FFMPEG_DIR/bin:$PATH" ./configure --prefix="$FFMPEG_DIR/ffmpeg_build" --bindir="$FFMPEG_DIR/bin" && \
