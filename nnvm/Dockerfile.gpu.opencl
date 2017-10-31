@@ -1,4 +1,4 @@
-FROM mxnet_cpu_nnpack:latest
+FROM mxnet_gpu:latest
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 ENV NNVM_DIR "$LIB_DIR/nnvm"
@@ -23,7 +23,9 @@ RUN apt-get update && apt-get install -y \
     llvm-4.0-runtime \
     clang-format-4.0 \
     python-clang-4.0 \
-    libfuzzer-4.0-dev
+    libfuzzer-4.0-dev \ 
+    opencl-headers \
+    beignet beignet-dev \
 
 # Clone NNVM repo and compile
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/nnvm
@@ -32,8 +34,7 @@ RUN cd  "$LIB_DIR/nnvm/tvm" && \
     cp make/config.mk config.mk && \
     sed -i "s|LLVM_CONFIG=|LLVM_CONFIG=llvm-config-4.0|g" config.mk && \
     sed -i "s|USE_BLAS = none|USE_BLAS = openblas|g" config.mk && \
-    sed -i "s|USE_NNPACK = 0|USE_NNPACK = 1|g" config.mk && \
-    sed -i "s|# NNPACK_PATH = none|NNPACK_PATH = $NNPACK_DIR|g" config.mk && \
+    sed -i "s|USE_OPENCL = 0|USE_OPENCL = 1|g" config.mk && \
     make -j"$(nproc)" && \
     make install
 
