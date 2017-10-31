@@ -32,7 +32,7 @@ RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/nnvm
 
 RUN cd  "$LIB_DIR/nnvm/tvm" && \
     cp make/config.mk config.mk && \
-    sed -i "s|LLVM_CONFIG=|LLVM_CONFIG=llvm-config-4.0|g" config.mk && \
+    sed -i "s|# LLVM_CONFIG = llvm-config|LLVM_CONFIG = llvm-config-4.0|g" config.mk && \
     sed -i "s|USE_BLAS = none|USE_BLAS = openblas|g" config.mk && \
     sed -i "s|USE_OPENCL = 0|USE_OPENCL = 1|g" config.mk && \
     make -j"$(nproc)" && \
