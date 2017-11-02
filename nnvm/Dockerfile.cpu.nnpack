@@ -1,4 +1,4 @@
-FROM mxnet_cpu_nnpack:latest
+FROM mxnet_cpu:latest
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 ENV NNVM_DIR "$LIB_DIR/nnvm"
@@ -25,6 +25,31 @@ RUN apt-get update && apt-get install -y \
     python-clang-4.0 \
     libfuzzer-4.0-dev
 
+
+# install ninja
+RUN cd "$LIB_DIR" && git clone git://github.com/ninja-build/ninja.git && cd ninja && \
+    ./configure.py --bootstrap
+
+RUN ln -s $LIB_DIR/ninja/./ninja /usr/bin/ninja
+
+# Install Peach
+RUN cd "$LIB_DIR" && git clone https://github.com/Maratyszcza/PeachPy.git && cd PeachPy && \
+    pip2 install --upgrade -r requirements.txt && \
+    python2 setup.py generate && \
+    pip2 install --upgrade .
+
+RUN pip2 install --upgrade git+https://github.com/Maratyszcza/confu
+
+# Warning this is the last version of NNPACK it is support by TVM but not MXnet
+RUN cd "$LIB_DIR" && git clone --recursive https://github.com/Maratyszcza/NNPACK.git && cd NNPACK && \
+    confu setup && \
+    python ./configure.py && \
+    ninja
+
+# ENV LD_LIBRARY_PATH ""$LIB_DIR"/NNPACK/lib:${LD_LIBRARY_PATH}"
+RUN /bin/bash -c 'echo "$LIB_DIR/NNPACK/lib" > /etc/ld.so.conf.d/nnpack.conf'
+RUN ldconfig
+
 # Clone NNVM repo and compile
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/nnvm
 
@@ -34,8 +59,6 @@ RUN cd  "$LIB_DIR/nnvm/tvm" && \
     sed -i "s|USE_BLAS = none|USE_BLAS = openblas|g" config.mk && \
     sed -i "s|USE_NNPACK = 0|USE_NNPACK = 1|g" config.mk && \
     sed -i "s|# NNPACK_PATH = none|NNPACK_PATH = $NNPACK_DIR|g" config.mk && \
-    sed -i 's/ADD_CFLAGS =/ADD_CFLAGS = -I\/home\/dev\/lib\/NNPACK\/include\/ -I\/home\/dev\/lib\/NNPACK\/third-party\/pthreadpool\/include\//g' config.mk && \
-    sed -i 's/ADD_LDFLAGS =/ADD_LDFLAGS = -L\/home\/dev\/lib\/NNPACK\/lib/g' config.mk && \
     make -j"$(nproc)" && \
     make install
 
