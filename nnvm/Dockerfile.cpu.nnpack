@@ -30,7 +30,7 @@ RUN apt-get update && apt-get install -y \
 RUN cd "$LIB_DIR" && git clone git://github.com/ninja-build/ninja.git && cd ninja && \
     ./configure.py --bootstrap
 
-RUN ln -s $LIB_DIR/ninja/./ninja /usr/bin/ninja
+ENV PATH "${PATH}:$LIB_DIR/ninja"
 
 # Install Peach
 RUN cd "$LIB_DIR" && git clone https://github.com/Maratyszcza/PeachPy.git && cd PeachPy && \
