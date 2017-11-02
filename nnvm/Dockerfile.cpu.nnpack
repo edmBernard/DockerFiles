@@ -34,6 +34,8 @@ RUN cd  "$LIB_DIR/nnvm/tvm" && \
     sed -i "s|USE_BLAS = none|USE_BLAS = openblas|g" config.mk && \
     sed -i "s|USE_NNPACK = 0|USE_NNPACK = 1|g" config.mk && \
     sed -i "s|# NNPACK_PATH = none|NNPACK_PATH = $NNPACK_DIR|g" config.mk && \
+    sed -i 's/ADD_CFLAGS =/ADD_CFLAGS = -I\/home\/dev\/lib\/NNPACK\/include\/ -I\/home\/dev\/lib\/NNPACK\/third-party\/pthreadpool\/include\//g' config.mk && \
+    sed -i 's/ADD_LDFLAGS =/ADD_LDFLAGS = -L\/home\/dev\/lib\/NNPACK\/lib/g' config.mk && \
     make -j"$(nproc)" && \
     make install
 
