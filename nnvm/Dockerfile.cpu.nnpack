@@ -1,6 +1,7 @@
 FROM mxnet_cpu:latest
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
+ENV NNPACK_DIR "$LIB_DIR/NNPACK"
 ENV NNVM_DIR "$LIB_DIR/nnvm"
 
 RUN echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-4.0 main" >> /etc/apt/sources.list
@@ -32,22 +33,18 @@ RUN cd "$LIB_DIR" && git clone git://github.com/ninja-build/ninja.git && cd ninj
 
 ENV PATH "${PATH}:$LIB_DIR/ninja"
 
-# Install Peach
-RUN cd "$LIB_DIR" && git clone https://github.com/Maratyszcza/PeachPy.git && cd PeachPy && \
-    pip2 install --upgrade -r requirements.txt && \
-    python2 setup.py generate && \
-    pip2 install --upgrade .
-
-RUN pip2 install --upgrade git+https://github.com/Maratyszcza/confu
-
 # Warning this is the last version of NNPACK it is support by TVM but not MXnet
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/Maratyszcza/NNPACK.git && cd NNPACK && \
-    confu setup && \
-    python ./configure.py && \
-    ninja
+    sed -i "s|gnu99|gnu99 -fPIC|g" CMakeLists.txt && \
+    sed -i "s|gnu++11|gnu++11 -fPIC|g" CMakeLists.txt && \
+    mkdir build && cd build && \
+    cmake -G Ninja -D BUILD_SHARED_LIBS=ON .. && \
+    ninja && \
+    ninja install
 
 # ENV LD_LIBRARY_PATH ""$LIB_DIR"/NNPACK/lib:${LD_LIBRARY_PATH}"
-RUN /bin/bash -c 'echo "$LIB_DIR/NNPACK/lib" > /etc/ld.so.conf.d/nnpack.conf'
+RUN /bin/bash -c 'echo "$LIB_DIR/NNPACK/build" > /etc/ld.so.conf.d/nnpack.conf' && \
+    /bin/bash -c 'echo "$LIB_DIR/NNPACK/build/deps" >> /etc/ld.so.conf.d/nnpack.conf'
 RUN ldconfig
 
 # Clone NNVM repo and compile
@@ -61,6 +58,8 @@ RUN cd  "$LIB_DIR/nnvm/tvm" && \
     sed -i "s|# NNPACK_PATH = none|NNPACK_PATH = $NNPACK_DIR|g" config.mk && \
     make -j"$(nproc)" && \
     make install
+    # sed -i 's|ADD_CFLAGS =|ADD_CFLAGS = -I/home/dev/lib/NNPACK/include/ -I/home/dev/lib/NNPACK/deps/pthreadpool/include/|g' config.mk && \
+    # sed -i 's|ADD_LDFLAGS =|ADD_LDFLAGS = -L/home/dev/lib/NNPACK/build/lib|g' config.mk && \
 
 RUN cd  "$LIB_DIR/nnvm" && \
     cp make/config.mk config.mk && \
