@@ -42,11 +42,6 @@ RUN cd "$LIB_DIR" && git clone --recursive https://github.com/Maratyszcza/NNPACK
     ninja && \
     ninja install
 
-# ENV LD_LIBRARY_PATH ""$LIB_DIR"/NNPACK/lib:${LD_LIBRARY_PATH}"
-RUN /bin/bash -c 'echo "$LIB_DIR/NNPACK/build" > /etc/ld.so.conf.d/nnpack.conf' && \
-    /bin/bash -c 'echo "$LIB_DIR/NNPACK/build/deps" >> /etc/ld.so.conf.d/nnpack.conf'
-RUN ldconfig
-
 # Clone NNVM repo and compile
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/nnvm
 
@@ -58,8 +53,6 @@ RUN cd  "$LIB_DIR/nnvm/tvm" && \
     sed -i "s|# NNPACK_PATH = none|NNPACK_PATH = $NNPACK_DIR|g" config.mk && \
     make -j"$(nproc)" && \
     make install
-    # sed -i 's|ADD_CFLAGS =|ADD_CFLAGS = -I/home/dev/lib/NNPACK/include/ -I/home/dev/lib/NNPACK/deps/pthreadpool/include/|g' config.mk && \
-    # sed -i 's|ADD_LDFLAGS =|ADD_LDFLAGS = -L/home/dev/lib/NNPACK/build/lib|g' config.mk && \
 
 RUN cd  "$LIB_DIR/nnvm" && \
     cp make/config.mk config.mk && \
