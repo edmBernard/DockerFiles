@@ -42,6 +42,9 @@ RUN cd "$LIB_DIR" && git clone --recursive https://github.com/Maratyszcza/NNPACK
     ninja && \
     ninja install
 
+RUN /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/nnpack.conf'
+RUN ldconfig
+
 # Clone NNVM repo and compile
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/nnvm
 
