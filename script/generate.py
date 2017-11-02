@@ -1,9 +1,25 @@
 #! /usr/bin/python3
-import sys
-from path import Path
-from tools import imagename_to_filename, extract_dependence
+r"""Script to generate makefile, super dockerfile or dockerfile concatenation.
+
+Usage:
+generate.py amalgamation
+generate.py makefile
+generate.py concatenate --filename <filename> --base <base> [--] <list>...
+
+Options:
+-h --help      _o/ .
+--version      \o_ .
+--filename <filename>  \o/
+--base <base>  \o/
+"""
 import re
-import fire
+import sys
+
+from docopt import docopt
+from path import Path
+
+from tools import extract_dependence, imagename_to_filename
+
 
 def amalgamation():
     """
@@ -119,10 +135,14 @@ def makefile():
 
 
 if __name__ == '__main__':
-    fire.Fire({
-        "amalgamation": amalgamation,
-        "makefile": makefile,
-        "concatenate": concatenate_image
-    }, name="./generate.py")
+    clo = docopt(__doc__, version='0.2')
+
+    if clo["amalgamation"]:
+        amalgamation()
+    elif clo["makefile"]:
+        makefile()
+    elif clo["concatenate"]:
+        concatenate_image(clo["--filename"], clo["--base"] + ":latest"*(":" not in clo["--base"]), clo["<list>"])
 
     print("Generation Done")
+
