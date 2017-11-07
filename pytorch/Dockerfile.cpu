@@ -1,0 +1,23 @@
+FROM redis_cpu:latest
+LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
+
+ENV PYTORCH_DIR "$LIB_DIR/pytorch"
+
+# Install git and other dependencies
+RUN apt-get update && apt-get install -y \
+  libopenblas-dev
+
+# install python2 tools
+RUN pip2 --no-cache-dir install -U \
+    pyyaml mkl cffi
+
+# install python3 tools
+RUN pip3 --no-cache-dir install -U \
+    pyyaml mkl cffi
+
+# Clone Pytorch repo and move into it
+RUN cd "$LIB_DIR" && git clone --recursive https://github.com/pytorch/pytorch
+
+# Install Python package
+RUN cd "$PYTORCH_DIR" && python2 setup.py install
+RUN cd "$PYTORCH_DIR" && python3 setup.py install
