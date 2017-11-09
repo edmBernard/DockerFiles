@@ -98,11 +98,15 @@ def makefile():
         fl.write("\targ_nocache=\n")
         fl.write("endif\n\n\n")
 
-        fl.write(".PHONY: all all_cpu all_gpu clean clean_cpu clean_gpu ")
+        fl.write(".PHONY: script_amalgamation script_makefile all all_cpu all_gpu clean clean_cpu clean_gpu ")
         fl.write(" ".join(image_list) + " ")
         fl.write(" ".join(["clean_%s" % i for i in image_list]))
         fl.write("\n\n\n")
 
+        fl.write("script_makefile:\n")
+        fl.write("\tcd script && python3 generate.py makefile\n\n")
+        fl.write("script_amalgamation:\n")
+        fl.write("\tcd script && python3 generate.py amalgamation\n\n")
         fl.write("all: all_cpu all_gpu\n\n")
         fl.write("all_cpu: ")
         fl.write(" ".join([i for i in image_list[::-1] if "cpu" in i]))
