@@ -57,6 +57,7 @@ RUN pip2 --no-cache-dir install \
         requests \
         bottle \
         tornado \
+        tqdm \
         ipython \
         ipykernel \
         jupyter \
@@ -79,6 +80,7 @@ RUN pip3 --no-cache-dir install \
         requests \
         bottle \
         tornado \
+        tqdm \
         ipython \
         ipykernel \
         jupyter \
