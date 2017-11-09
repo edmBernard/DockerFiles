@@ -5,7 +5,7 @@ ENV PYTORCH_DIR "$LIB_DIR/pytorch"
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
-  libopenblas-dev
+    libopenblas-dev
 
 # install python2 tools
 RUN pip2 --no-cache-dir install -U \

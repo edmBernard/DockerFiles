@@ -1,11 +1,12 @@
 FROM redis_gpu:latest
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
+ENV MAGMA_DIR "$LIB_DIR/magma-2.2.0"
 ENV PYTORCH_DIR "$LIB_DIR/pytorch"
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
-  libopenblas-dev
+    libopenblas-dev
 
 # install python2 tools
 RUN pip2 --no-cache-dir install -U \
@@ -14,6 +15,24 @@ RUN pip2 --no-cache-dir install -U \
 # install python3 tools
 RUN pip3 --no-cache-dir install -U \
     pyyaml mkl cffi
+
+RUN cd "$LIB_DIR" && \
+    wget http://icl.cs.utk.edu/projectsfiles/magma/downloads/magma-2.2.0.tar.gz  && \
+    tar xvzf magma-2.2.0.tar.gz && \
+    rm magma-2.2.0.tar.gz
+
+# Install Magma
+# Magma add LAPACK support for the GPU
+ENV CUDADIR "/usr/local/cuda"
+ENV OPENBLASDIR "/usr/lib/openblas-base"
+
+RUN cd "$MAGMA_DIR" && \
+    cp make.inc-examples/make.inc.openblas make.inc && \ 
+    sed -i "s|#GPU_TARGET ?= Fermi Kepler|GPU_TARGET ?= Fermi Kepler Maxwell|g" make.inc && \
+    sed -i "s|FORT      = gfortran|#FORT      = gfortran|g" make.inc && \
+    make shared && \
+    make test && \
+    make install prefix=/usr/local/magma
 
 # Clone Pytorch repo and move into it
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/pytorch/pytorch
