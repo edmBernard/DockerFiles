@@ -30,8 +30,9 @@ RUN cd "$MAGMA_DIR" && \
     cp make.inc-examples/make.inc.openblas make.inc && \ 
     sed -i "s|#GPU_TARGET ?= Fermi Kepler|GPU_TARGET ?= Fermi Kepler Maxwell|g" make.inc && \
     sed -i "s|FORT      = gfortran|#FORT      = gfortran|g" make.inc && \
-    make shared && \
-    make test && \
+    sed -i "s|cp include/\*.mod|#cp include/\*.mod|g" Makefile && \
+    make shared -j"$(nproc)"&& \
+    make test -j"$(nproc)"&& \
     make install prefix=/usr/local/magma
 
 # Clone Pytorch repo and move into it
