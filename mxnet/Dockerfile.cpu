@@ -18,12 +18,7 @@ RUN pip3 --no-cache-dir install -U \
 
 # Clone MXNet repo and move into it
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
-# Copy config.mk
-    cp make/config.mk config.mk && \
-# Set OpenBLAS
-    sed -i 's/USE_BLAS = atlas/USE_BLAS = openblas/g' config.mk && \
-# Make 
-    make -j"$(nproc)"
+    make -j$(nproc) USE_BLAS=openblas
 
 # Install Python package
 RUN cd "$MXNET_DIR/python" && python2 setup.py install

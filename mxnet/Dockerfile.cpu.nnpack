@@ -43,16 +43,7 @@ RUN ldconfig
 
 # Clone MXNet repo and move into it
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
-# Copy config.mk
-    cp make/config.mk config.mk && \
-# Set OpenBLAS
-    sed -i 's/USE_BLAS = atlas/USE_BLAS = openblas/g' config.mk && \
-# Set NNPACK 
-    sed -i 's/ADD_CFLAGS =/ADD_CFLAGS = -I\/home\/dev\/lib\/NNPACK\/include\/ -I\/home\/dev\/lib\/NNPACK\/third-party\/pthreadpool\/include\//g' config.mk && \
-    sed -i 's/ADD_LDFLAGS =/ADD_LDFLAGS = -L\/home\/dev\/lib\/NNPACK\/lib/g' config.mk && \
-    sed -i 's/USE_NNPACK = 0/USE_NNPACK = 1/g' config.mk && \
-# Make
-    make -j"$(nproc)"
+    make -j$(nproc) USE_BLAS=openblas USE_NNPACK=1 ADD_LDFLAGS="-L/home/dev/lib/NNPACK/lib" ADD_CFLAGS="-I/home/dev/lib/NNPACK/include/ -I/home/dev/lib/NNPACK/third-party/pthreadpool/include/"
 
 # Install Python package
 RUN cd "$MXNET_DIR/python" && python2 setup.py install
