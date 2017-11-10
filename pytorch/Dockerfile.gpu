@@ -39,5 +39,5 @@ RUN cd "$MAGMA_DIR" && \
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/pytorch/pytorch
 
 # Install Python package
-RUN cd "$PYTORCH_DIR/python" && python2 setup.py install
-RUN cd "$PYTORCH_DIR/python" && python3 setup.py install
+RUN cd "$PYTORCH_DIR" && python2 setup.py install
+RUN cd "$PYTORCH_DIR" && python3 setup.py install
