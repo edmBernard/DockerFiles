@@ -1,30 +1,39 @@
 FROM redis_cpu:latest
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
-ENV PYTORCH_DIR "$LIB_DIR/pytorch"
-ENV PYTORCHVISION_DIR "$LIB_DIR/vision"
+RUN pip3 install http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp35-cp35m-manylinux1_x86_64.whl 
+RUN pip3 install torchvision
 
-# Install git and other dependencies
-RUN apt-get update && apt-get install -y \
-    libopenblas-dev
+RUN pip2 install http://download.pytorch.org/whl/cu75/torch-0.2.0.post3-cp27-cp27mu-manylinux1_x86_64.whl 
+RUN pip2 install torchvision
 
-# install python2 tools
-RUN pip2 --no-cache-dir install -U \
-    pyyaml mkl cffi
+# Build from source
+# /!\ I was not able to activte mkl integration in compilation from source
 
-# install python3 tools
-RUN pip3 --no-cache-dir install -U \
-    pyyaml mkl cffi
+# ENV PYTORCH_DIR "$LIB_DIR/pytorch"
+# ENV PYTORCHVISION_DIR "$LIB_DIR/vision"
 
-# Clone Pytorch repo and move into it
-RUN cd "$LIB_DIR" && git clone --recursive https://github.com/pytorch/pytorch
+# # Install git and other dependencies
+# RUN apt-get update && apt-get install -y \
+#     libopenblas-dev
 
-# Install Python package
-RUN cd "$PYTORCH_DIR" && python2 setup.py install
-RUN cd "$PYTORCH_DIR" && python3 setup.py install
+# # install python2 tools
+# RUN pip2 --no-cache-dir install -U \
+#     pyyaml mkl cffi
 
-# Install pytorch_vision
-RUN cd "$LIB_DIR" && git clone https://github.com/pytorch/vision.git
+# # install python3 tools
+# RUN pip3 --no-cache-dir install -U \
+#     pyyaml mkl cffi
 
-RUN cd "$PYTORCHVISION_DIR" && python2 setup.py install
-RUN cd "$PYTORCHVISION_DIR" && python3 setup.py install
+# # Clone Pytorch repo and move into it
+# RUN cd "$LIB_DIR" && git clone --recursive https://github.com/pytorch/pytorch
+
+# # Install Python package
+# RUN cd "$PYTORCH_DIR" && python2 setup.py install
+# RUN cd "$PYTORCH_DIR" && python3 setup.py install
+
+# # Install pytorch_vision
+# RUN cd "$LIB_DIR" && git clone https://github.com/pytorch/vision.git
+
+# RUN cd "$PYTORCHVISION_DIR" && python2 setup.py install
+# RUN cd "$PYTORCHVISION_DIR" && python3 setup.py install
