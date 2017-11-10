@@ -2,6 +2,7 @@ FROM redis_cpu:latest
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 ENV PYTORCH_DIR "$LIB_DIR/pytorch"
+ENV PYTORCHVISION_DIR "$LIB_DIR/vision"
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
@@ -21,3 +22,9 @@ RUN cd "$LIB_DIR" && git clone --recursive https://github.com/pytorch/pytorch
 # Install Python package
 RUN cd "$PYTORCH_DIR" && python2 setup.py install
 RUN cd "$PYTORCH_DIR" && python3 setup.py install
+
+# Install pytorch_vision
+RUN cd "$LIB_DIR" && git clone https://github.com/pytorch/vision.git
+
+RUN cd "$PYTORCHVISION_DIR" && python2 setup.py install
+RUN cd "$PYTORCHVISION_DIR" && python3 setup.py install
