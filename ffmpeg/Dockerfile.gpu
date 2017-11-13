@@ -49,7 +49,7 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
     cd nasm-2.13.01 && \
     ./autogen.sh && \
     PATH="$FFMPEG_DIR/bin:$PATH" ./configure --prefix="$FFMPEG_DIR/ffmpeg_build" --bindir="$FFMPEG_DIR/bin" && \
-    PATH="$FFMPEG_DIR/bin:$PATH" make -j"$(nproc)" && \
+    make -j"$(nproc)" && \
     make install
 
 # install x264
@@ -66,8 +66,9 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
     hg clone https://bitbucket.org/multicoreware/x265 && \
     cd "$FFMPEG_DIR/ffmpeg_sources/x265/build/linux" && \
-    PATH="$FFMPEG_DIR/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$FFMPEG_DIR/ffmpeg_build" -DENABLE_SHARED:bool=on ../../source && \
-    make -j"$(nproc)" && \
+    hg update -r e98cb4c && \
+    PATH="$FFMPEG_DIR/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$FFMPEG_DIR/ffmpeg_build" -DENABLE_SHARED:bool=off ../../source && \
+    PATH="$FFMPEG_DIR/bin:$PATH" make -j"$(nproc)" && \
     make install
 
 # install ffmpeg
@@ -86,6 +87,7 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
         --pkg-config-flags="--static" \
         --extra-cflags="-I$FFMPEG_DIR/ffmpeg_build/include -I/usr/local/cuda/include" \
         --extra-ldflags="-L$FFMPEG_DIR/ffmpeg_build/lib -L/usr/local/cuda/lib64" \
+        --extra-libs="-lpthread -lm" \
         --bindir="$FFMPEG_DIR/bin" \
         --enable-gpl \
         --enable-libass \
