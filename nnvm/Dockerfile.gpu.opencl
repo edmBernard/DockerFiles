@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y \
     python-clang-4.0 \
     libfuzzer-4.0-dev \ 
     opencl-headers \
-    beignet beignet-dev \
+    beignet beignet-dev
 
 # Clone NNVM repo and compile
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/nnvm
