@@ -66,3 +66,5 @@ RUN cd "$OPENCV_DIR/opencv-master/platforms/scripts" && \
     cd ../build_android_arm && \
     make -j$(nproc) && \
     make install
+
+CMD ["/bin/bash"]

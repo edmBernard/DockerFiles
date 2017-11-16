@@ -7,6 +7,8 @@ RUN pip3 install torchvision
 RUN pip2 install http://download.pytorch.org/whl/cu80/torch-0.2.0.post3-cp27-cp27mu-manylinux1_x86_64.whl  
 RUN pip2 install torchvision
 
+CMD ["/bin/bash"]
+
 # Build from source
 # /!\ Build from source work but result image is heavy as fuck 43Go instead of 17Go when build with pip
 
@@ -57,3 +59,5 @@ RUN pip2 install torchvision
 
 # RUN cd "$PYTORCHVISION_DIR" && python2 setup.py install
 # RUN cd "$PYTORCHVISION_DIR" && python3 setup.py install
+
+# CMD ["/bin/bash"]

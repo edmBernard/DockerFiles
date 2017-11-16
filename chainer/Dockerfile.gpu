@@ -36,3 +36,5 @@ RUN cd "$LIB_DIR" && git clone https://github.com/chainer/chainercv.git
 # Install chainer package
 RUN cd "$CHAINERCV_DIR" && python2 setup.py install
 RUN cd "$CHAINERCV_DIR" && python3 setup.py install
+
+CMD ["/bin/bash"]

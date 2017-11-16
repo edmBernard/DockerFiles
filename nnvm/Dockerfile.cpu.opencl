@@ -49,3 +49,5 @@ RUN cd "$LIB_DIR/nnvm/tvm/python" && python2 setup.py install
 RUN cd "$LIB_DIR/nnvm/tvm/python" && python3 setup.py install
 RUN cd "$LIB_DIR/nnvm/python" && python2 setup.py install
 RUN cd "$LIB_DIR/nnvm/python" && python3 setup.py install
+
+CMD ["/bin/bash"]

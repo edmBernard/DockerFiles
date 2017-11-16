@@ -23,3 +23,5 @@ RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd m
 # Install Python package
 RUN cd "$MXNET_DIR/python" && python2 setup.py install
 RUN cd "$MXNET_DIR/python" && python3 setup.py install
+
+CMD ["/bin/bash"]

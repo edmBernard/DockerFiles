@@ -25,3 +25,5 @@ RUN pip2 install git+https://github.com/fchollet/keras.git
 
 # Set Tensorflow backend for Keras
 ENV KERAS_BACKEND=tensorflow
+
+CMD ["/bin/bash"]
