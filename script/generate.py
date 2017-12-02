@@ -59,7 +59,7 @@ def amalgamation():
                 firstloop = False
 
 
-def concatenate_image(filename, base, *image_list):
+def concatenate_image(filename, base, image_list):
     print("Image list to concatenate: ", *image_list)
     with open(filename, "w") as file_out:
         file_out.write("FROM %s\n" % base)
@@ -141,6 +141,7 @@ def makefile():
 if __name__ == '__main__':
     clo = docopt(__doc__, version='0.2')
 
+    print(clo)
     if clo["amalgamation"]:
         amalgamation()
     elif clo["makefile"]:
