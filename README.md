@@ -1,8 +1,8 @@
 # DockerFiles
 
-Some Dockerfiles to install Opencv3 with Python2, Python3 and Deeplearning framework. I also use them as a reminder to complicated framework installation.
+Some Dockerfiles to install Opencv, ffmpeg and Deeplearning framework. I also use them as a reminder to complicated framework installation.
 
-## Requirement
+## Requirements
 
 Most of these docker use the [Nvidia-docker][1] plugin for [Docker][2]
 
@@ -37,9 +37,11 @@ The image is the concatenation of the Library name and the tag (ex: `opencv` and
 | `ffmpeg` | `_cpu` <br> `_gpu` | with [ffmpeg](https://ffmpeg.org/) compiled from source |
 | `opencv` | `_cpu` <br> `_gpu` | with [opencv](http://opencv.org/) compiled from source |
 | `redis` | `_cpu` <br> `_gpu` | with [redis](https://redis.io/) compiled from source |
-| `mxnet` | `_cpu` <br> `_gpu` <br> `_cpu_nnpack` <br> `_android`| with [mxnet](http://mxnet.io/) compiled from source <br> with [mxnet](http://mxnet.io/)  compiled from source and gpu support <br> with [mxnet](http://mxnet.io/) and [NNPACK](https://github.com/Maratyszcza/NNPACK) compiled from source  <br> [mxnet](http://mxnet.io/) amalgamation compiled for android (ndk-14b) |
-| `tensorflow` | `_cpu` <br> `_gpu` <br> `_cpu_src_py3` <br> `_gpu_src_py3` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)|
+| `mxnet` | `_cpu` <br> `_gpu` <br> `_cpu_mkl` <br> `_cpu_nnpack` <br> `_android`| with [mxnet](http://mxnet.io/) compiled from source <br> with [mxnet](http://mxnet.io/)  compiled from source and gpu support <br> with [mxnet](http://mxnet.io/) and [mkl](https://software.intel.com/en-us/mkl) <br> with [mxnet](http://mxnet.io/) and [NNPACK](https://github.com/Maratyszcza/NNPACK) compiled from source  <br> [mxnet](http://mxnet.io/) amalgamation compiled for android (ndk-14b) |
+| `nnvm` | `_cpu` <br> `_gpu_opencl` <br> `_cpu_opencl`| with [nnvm](https://github.com/dmlc/nnvm), [tvm](https://github.com/dmlc/tvm) compiled from source <br> with [nnvm](https://github.com/dmlc/nnvm), [tvm](https://github.com/dmlc/tvm) and [opencl](https://fr.wikipedia.org/wiki/OpenCL) compiled from source and gpu support <br> with [nnvm](https://github.com/dmlc/nnvm), [tvm](https://github.com/dmlc/tvm) and [opencl](https://fr.wikipedia.org/wiki/OpenCL) compiled from source|
+| `tensorflow` | `_cpu` <br> `_gpu` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)|
 | `cntk` | `_cpu` <br> `_gpu` | with [cntk](http://cntk.ai) and [keras](https://keras.io/)|
+| `pytorch` | `_cpu` <br> `_gpu` | with [pytorch](http://pytorch.org/) and [pytorch/vision](https://github.com/pytorch/vision)|
 | `chainer` | `_cpu` <br> `_gpu` | with [chainer](https://chainer.org/), [chainerRL](https://github.com/chainer/chainerrl) and [chainerCV](https://github.com/chainer/chainercv)|
 | `numba` | `_cpu` <br> `_gpu` | with [numba](http://numba.pydata.org/) |
 | `jupyter` | `_cpu` <br> `_gpu` | a [jupyter](http://jupyter.org/) server with `pass` as password |
@@ -49,7 +51,7 @@ The image is the concatenation of the Library name and the tag (ex: `opencv` and
 ## Create container (with CPU Only)
 
 ```
-sudo docker run -it --name container_name -p 0.0.0.0:6000:7000 -p 0.0.0.0:8000:9000 -v shared/path/on/host:/shared/path/in/container image_name:latest /bin/bash
+docker run -it --name container_name -p 0.0.0.0:6000:7000 -p 0.0.0.0:8000:9000 -v shared/path/on/host:/shared/path/in/container image_name:latest /bin/bash
 ```
 
 ##### Unfold
@@ -69,7 +71,7 @@ image_name:latest               # Image name to use for container creation
 ## Create container (with GPU support)
 
 ```
-NV_GPU='0' sudo nvidia-docker run -it --name container_name -p 0.0.0.0:6000:7000 -p 0.0.0.0:8000:9000 -v shared/path/on/host:/shared/path/in/container image_name:latest /bin/bash
+NV_GPU='0' nvidia-docker run -it --name container_name -p 0.0.0.0:6000:7000 -p 0.0.0.0:8000:9000 -v shared/path/on/host:/shared/path/in/container image_name:latest /bin/bash
 ```
 
 ##### Unfold
@@ -89,17 +91,17 @@ image_name:latest               # Image name to use for container creation
 
 ## Advance use
 
-### Open new terminal in existing container
+### Open new terminal in running container
 
 ```bash
-sudo docker exec -it container_name /bin/bash
+docker exec -it container_name /bin/bash
 ```
 
 ### Alias to create Jupyter server
 #### CPU version
 
 ```bash
-    alias jupserver='docker run -it -d -p 0.0.0.0:5000-5010:8888 -v $PWD:/home/dev/host jupyter_cpu:latest'
+alias jupserver='docker run -it -d -p 0.0.0.0:5000-5010:8888 -v $PWD:/home/dev/host jupyter_cpu:latest'
 ```
 
 ***Note***: If host port is a range of ports and container port a single one, docker will choose a random free port in the specified range.
@@ -107,43 +109,42 @@ sudo docker exec -it container_name /bin/bash
 #### GPU version
 
 ```bash
-    alias jupserver='docker run -it -d -p 0.0.0.0:5000-5010:8888 -v $PWD:/home/dev/host jupyter_gpu:latest'
+alias jupserver='docker run -it -d -p 0.0.0.0:5000-5010:8888 -v $PWD:/home/dev/host jupyter_gpu:latest'
 ```
 
 ***Note***: If host port is a range of ports and container port a single one, docker will choose a random free port in the specified range.
 
 ### Alias to create a isolated devbox
 ```bash
-    alias devbox='docker run -it --rm -v $PWD:/home/dev/host mxnet:latest'
+alias devbox='docker run -it --rm -v $PWD:/home/dev/host mxnet:latest'
 ```
 
-### Notes
+## Fixed version
 
-* `tensorflow/Dockerfile.cpu.src` is generated by: 
+Sometime update in library can break compatibility with other module. 
+In certain Dockerfile there is fixed version to keep older version. 
+Other tools can be download with last version so I need to change manually version at each update. 
+Most of the time, I try to keep last version for all tools. 
+In some case last version fix bug or the reason I fixed the version without I know it. 
 
-    ```bash
-    ./generate_amalgamation.py --filename ../tensorflow/Dockerfile.cpu.src.py2 --base gcr.io/tensorflow/tensorflow:latest -- pythonlib_cpu ffmpeg_cpu opencv_cpu redis_cpu tensorflow_cpu
-    ```
+| Tools | version | Docker image | Description |
+| -- | -- | -- | -- |
+| cuda | 8.0 | all gpu images | -- |
+| cudnn | 7 | all gpu images | -- |
+| ptvsd | 3.0.0 | pythonlib | remote debugging for python |
+| h265 | e98cb4c | ffmpeg | h265 and ffmpeg newest version are not compatible |
+| ffmpeg | 3.4 | ffmpeg | h265 and ffmpeg newest version are not compatible |
+| mxnet | c8f7dce0eb49ab1a62ddc2c7e37b93e9b92c2ae4 | mxnet_android | recent change break amalgamation again as amalgamation is not maintained properly update must be done carefully |
+| mkl | 2017.2.174 | mxnet_mkl | -- |
+| nnpack | 9c6747d7b80051b40e6f92d6828e2ed997529cd2 | mxnet_nnpack | newest nnpack version don't support building shared library |
+| cntk | 2.0 | cntk | -- |
+| pytorch | 0.2.0 | pytoch | -- |
+| llvmlite | 0.14.0 | numba | -- |
 
-### Some strange bug I encounter that disappear alone
+## Script
 
-* Sometimes Cudnn was unlink
-
-    if you got this error
-
-    ```bash
-    tensorflow/stream_executor/cuda/cuda_dnn.cc:204] could not find cudnnCreate in cudnn DSO; dlerror: /usr/local/lib/python2.7/dist-packages/tensorflow/python/_pywrap_tensorflow.so: undefined symbol: cudnnCreate
-    ```
-
-    that can be solve by
-    ```bash
-    rm /usr/lib/x86_64-linux-gnu/libcudnn.so
-    ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so.4 /usr/lib/x86_64-linux-gnu/libcudnn.so
-    ```
-
-* IPPICV
-
-    if you got `incorrect hash` in cmake `ippicv` when installing [like this issue](https://github.com/opencv/opencv/issues/5973)
-
-    just try again ^^
+The `generate.py` script available in script folder allow three things.
+* `generate.py amalgamation`: generate Dockerfile for each end image without dependency. It generate a dockerfile with all depency expanded.
+* `generate.py makefile`: update makefile with all images found in folders. Useful after amalgamation generation.
+* `generate.py concatenate`: allow to concatenate dockerfile. For example, if you want to add jupyter support on pytorch images. `generate.py concatenate --filename pytorch_jupyter --base pytorch_cpu -- jupyter_cpu` will generate a new dockerfile that depends of pytorch_cpu and add jupyter_cpu installation.
 
