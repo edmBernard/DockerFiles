@@ -132,8 +132,9 @@ In some case last version fix bug or the reason I fixed the version without I kn
 | cuda | 8.0 | all gpu images | -- |
 | cudnn | 7 | all gpu images | -- |
 | ptvsd | 3.0.0 | pythonlib | remote debugging for python |
+| h264 | 20171224-2245 | ffmpeg | h265 and ffmpeg newest version are not compatible (wait patch 6964 on ffmpeg) |
 | h265 | e98cb4c | ffmpeg | h265 and ffmpeg newest version are not compatible |
-| ffmpeg | 3.4 | ffmpeg | h265 and ffmpeg newest version are not compatible |
+| ffmpeg | 3.4.1 | ffmpeg | h265 and ffmpeg newest version are not compatible |
 | mxnet | c8f7dce0eb49ab1a62ddc2c7e37b93e9b92c2ae4 | mxnet_android | recent change break amalgamation again as amalgamation is not maintained properly update must be done carefully |
 | mkl | 2017.2.174 | mxnet_mkl | -- |
 | nnpack | 9c6747d7b80051b40e6f92d6828e2ed997529cd2 | mxnet_nnpack | newest nnpack version don't support building shared library |
