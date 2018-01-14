@@ -58,6 +58,8 @@ RUN pip2 --no-cache-dir install \
         requests \
         bottle \
         tornado \
+        pymysql \
+        peewee \
         tqdm \
         ipython \
         ipykernel \
@@ -81,6 +83,8 @@ RUN pip3 --no-cache-dir install \
         requests \
         bottle \
         tornado \
+        pymysql \
+        peewee \
         tqdm \
         ipython \
         ipykernel \
