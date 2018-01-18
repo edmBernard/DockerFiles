@@ -46,7 +46,7 @@ RUN wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate && \
     rm get-pip.py
 
 # install python2 tools
-RUN pip2 --no-cache-dir install -U \
+RUN pip2 --no-cache-dir install \
         numpy \
         matplotlib \
         scipy \
@@ -71,7 +71,7 @@ RUN pip2 --no-cache-dir install -U \
     python2 -m ipykernel install
 
 # install python3 tools
-RUN pip3 --no-cache-dir install -U \
+RUN pip3 --no-cache-dir install \
         numpy \
         matplotlib \
         scipy \
