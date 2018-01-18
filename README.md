@@ -4,7 +4,7 @@ Some Dockerfiles to install Opencv, ffmpeg and Deeplearning framework. I also us
 
 ## Requirements
 
-Most of these docker use the [Nvidia-docker][1] plugin for [Docker][2]
+Most of these docker use the [Nvidia][1] runtime for [Docker][2]
 
 [1]: https://github.com/NVIDIA/nvidia-docker
 [2]: https://www.docker.com/
@@ -14,7 +14,7 @@ Most of these docker use the [Nvidia-docker][1] plugin for [Docker][2]
 ### With docker api
 
 ```bash
-sudo nvidia-docker build -t image_name -f dockerfile_name .
+sudo docker build --runtime=nvidia -t image_name -f dockerfile_name .
 ```
 
 ### With Make
@@ -71,14 +71,15 @@ image_name:latest               # Image name to use for container creation
 ## Create container (with GPU support)
 
 ```
-NV_GPU='0' nvidia-docker run -it --name container_name -p 0.0.0.0:6000:7000 -p 0.0.0.0:8000:9000 -v shared/path/on/host:/shared/path/in/container image_name:latest /bin/bash
+NV_GPU='0' docker run -it --runtime=nvidia --name container_name -p 0.0.0.0:6000:7000 -p 0.0.0.0:8000:9000 -v shared/path/on/host:/shared/path/in/container image_name:latest /bin/bash
 ```
 
 ##### Unfold
 
 ```bash
 NV_GPU='0'                      # GPU id give by nvidia-smi ('0', '1' or '0,1' for GPU0, GPU2 or both)
-sudo nvidia-docker run -it      # -it option allow interaction with the container
+sudo docker run -it             # -it option allow interaction with the container
+--runtime=nvidia                # Allow docker to run with nvidia runtime to support GPU
 --name container_name           # Name of the created container
 -p 0.0.0.0:6000:7000            # Port redirection (redirect host port 6000 to container port 7000)
 -p 0.0.0.0:8000:9000            # Port redirection (redirect host port 8000 to container port 9000)
