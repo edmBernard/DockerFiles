@@ -79,7 +79,6 @@ RUN pip3 --no-cache-dir install \
         fire \
         schema \
         path.py \
-        addict \
         requests \
         bottle \
         tornado \
@@ -90,8 +89,9 @@ RUN pip3 --no-cache-dir install \
         ipykernel \
         jupyter \
         ptvsd==3.0.0 \
-        line_profiler \
         h5py \
+        line_profiler \
+        jupyterlab \
         pipenv \
         && \
     python3 -m ipykernel install
