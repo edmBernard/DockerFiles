@@ -55,12 +55,13 @@ def amalgamation():
                         if match and not firstloop:
                             continue
                         file_out.write(i)
-                
+
                 firstloop = False
 
 
 def concatenate_image(filename, base, image_list):
     print("Image list to concatenate: ", *image_list)
+    Path(filename).parent.makedirs_p()
     with open(filename, "w") as file_out:
         file_out.write("FROM %s\n" % base)
         file_out.write('LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"\n\n')
