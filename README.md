@@ -24,13 +24,13 @@ I made a `Makefile` to automate the build process.
 ```bash
 make IMAGE_NAME
 ```
-The image is the concatenation of the Library name and the tag (ex: `opencv` and `_gpu` is create by `make opencv_gpu`) 
+The image is the concatenation of the Library name and the tag (ex: `opencv` and `_gpu` is create by `make opencv_gpu`)
 
 *Note1:* `make` accept `NOCACHE=ON` argument to force the rebuild of all images<br>
 *Note2:* As image depends from each other, `make` will automatically build images dependency. (ex: if you build `opencv_cpu` image,  `pythonlib_cpu` and `ffmpeg_cpu` will be create as well by the command `make opencv:cpu`)
 
 #### Images with CPU Only:
-| Library | Tag | Description | 
+| Library | Tag | Description |
 |:-- |:-- |:-- |
 | `all` | <br> `_cpu` <br> `_gpu` | all images <br> all cpu images <br> all gpu images |
 | `pythonlib` | `_cpu` <br> `_gpu` | my standard configuration |
@@ -122,11 +122,11 @@ alias devbox='docker run -it --rm -v $PWD:/home/dev/host mxnet:latest'
 
 ## Fixed version
 
-Sometime update in library can break compatibility with other module. 
-In certain Dockerfile there is fixed version to keep older version. 
-Other tools can be download with last version so I need to change manually version at each update. 
-Most of the time, I try to keep last version for all tools. 
-In some case last version fix bug or the reason I fixed the version without I know it. 
+Sometime update in library can break compatibility with other module.
+In certain Dockerfile there is fixed version to keep older version.
+Other tools can be download with last version so I need to change manually version at each update.
+Most of the time, I try to keep last version for all tools.
+In some case last version fix bug or the reason I fixed the version without I know it.
 
 | Tools | version | Docker image | Description |
 | -- | -- | -- | -- |
@@ -148,5 +148,5 @@ In some case last version fix bug or the reason I fixed the version without I kn
 The `generate.py` script available in script folder allow three things.
 * `generate.py amalgamation`: generate Dockerfile for each end image without dependency. It generate a dockerfile with all depency expanded.
 * `generate.py makefile`: update makefile with all images found in folders. Useful after amalgamation generation.
-* `generate.py concatenate`: allow to concatenate dockerfile. For example, if you want to add jupyter support on pytorch images. `generate.py concatenate --filename pytorch_jupyter --base pytorch_cpu -- jupyter_cpu` will generate a new dockerfile that depends of pytorch_cpu and add jupyter_cpu installation.
+* `generate.py concatenate`: allow to concatenate dockerfile. For example, if you want to add jupyter support on pytorch images. `generate.py concatenate --filename ../super/pytorch/Dockerfile.jupyter --base pytorch_cpu -- jupyter_cpu` will generate a new dockerfile that depends of pytorch_cpu and add jupyter_cpu installation. This image will be available - after makefile update - via `make pytorch_jupyter`
 
