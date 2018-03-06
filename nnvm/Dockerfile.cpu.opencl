@@ -3,27 +3,27 @@ LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 ENV NNVM_DIR "$LIB_DIR/nnvm"
 
-RUN echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-4.0 main" >> /etc/apt/sources.list
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+RUN echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-5.0 main" >> /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y \
-    clang-4.0 \
-    clang-4.0-doc \
-    libclang-common-4.0-dev \
-    libclang-4.0-dev \
-    libclang1-4.0 \
-    libclang1-4.0-dbg \
-    libllvm-4.0-ocaml-dev \
-    libllvm4.0 \
-    libllvm4.0-dbg \
-    lldb-4.0 \
-    llvm-4.0 \
-    llvm-4.0-dev \
-    llvm-4.0-doc \
-    llvm-4.0-examples \
-    llvm-4.0-runtime \
-    clang-format-4.0 \
-    python-clang-4.0 \
-    libfuzzer-4.0-dev \ 
+    llvm-5.0 \
+    llvm-5.0-dev \
+    llvm-5.0-doc \
+    llvm-5.0-examples \
+    llvm-5.0-runtime \
+    clang-5.0 \
+    clang-5.0-doc \
+    libclang-common-5.0-dev \
+    libclang-5.0-dev \
+    libclang1-5.0 \
+    libclang1-5.0-dbg \
+    libllvm5.0 \
+    libllvm5.0-dbg \
+    lldb-5.0 \
+    clang-format-5.0 \
+    python-clang-5.0 \
+    libfuzzer-4.0-dev \
     opencl-headers \
     beignet beignet-dev
 
@@ -32,7 +32,7 @@ RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/nnvm
 
 RUN cd  "$LIB_DIR/nnvm/tvm" && \
     cp make/config.mk config.mk && \
-    sed -i "s|# LLVM_CONFIG = llvm-config|LLVM_CONFIG = llvm-config-4.0|g" config.mk && \
+    sed -i "s|# LLVM_CONFIG = llvm-config|LLVM_CONFIG = llvm-config-5.0|g" config.mk && \
     sed -i "s|USE_BLAS = none|USE_BLAS = openblas|g" config.mk && \
     sed -i "s|USE_OPENCL = 0|USE_OPENCL = 1|g" config.mk && \
     make -j"$(nproc)" && \
