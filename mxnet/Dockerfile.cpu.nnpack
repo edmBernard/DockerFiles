@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 # install python2 tools
 RUN pip2 --no-cache-dir install -U \
     easydict \
-    ninja_syntax \ 
+    ninja_syntax \
     tensorboard
 
 # install python3 tools
@@ -43,7 +43,7 @@ RUN ldconfig
 
 # Clone MXNet repo and move into it
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
-    make -j$(nproc) USE_BLAS=openblas USE_NNPACK=1 ADD_LDFLAGS="-L/home/dev/lib/NNPACK/lib" ADD_CFLAGS="-I/home/dev/lib/NNPACK/include/ -I/home/dev/lib/NNPACK/third-party/pthreadpool/include/"
+    make -j$(nproc) USE_BLAS=openblas USE_CPP_PACKAGE=1 USE_NNPACK=1 ADD_LDFLAGS="-L/home/dev/lib/NNPACK/lib" ADD_CFLAGS="-I/home/dev/lib/NNPACK/include/ -I/home/dev/lib/NNPACK/third-party/pthreadpool/include/"
 
 # Install Python package
 RUN cd "$MXNET_DIR/python" && python2 setup.py install

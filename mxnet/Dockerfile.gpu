@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 
 # install python2 tools
 RUN pip2 --no-cache-dir install -U \
-    easydict \ 
+    easydict \
     tensorboard
 
 # install python3 tools
@@ -18,7 +18,7 @@ RUN pip3 --no-cache-dir install -U \
 
 # Clone MXNet repo and move into it
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
-    make -j$(nproc) USE_BLAS=openblas USE_CUDA=1 USE_CUDA_PATH=/usr/local/cuda USE_CUDNN=1
+    make -j$(nproc) USE_BLAS=openblas USE_CPP_PACKAGE=1 USE_CUDA=1 USE_CUDA_PATH=/usr/local/cuda USE_CUDNN=1
 
 # Install Python package
 RUN cd "$MXNET_DIR/python" && python2 setup.py install
