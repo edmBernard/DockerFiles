@@ -91,6 +91,7 @@ RUN pip3 --no-cache-dir install \
         ptvsd==3.0.0 \
         h5py \
         pytest \
+        pytest-cov \
         line_profiler \
         jupyterlab \
         pipenv \
