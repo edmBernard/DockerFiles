@@ -139,8 +139,8 @@ In some case last version fix bug or the reason I fixed the version without I kn
 | mxnet | c8f7dce0eb49ab1a62ddc2c7e37b93e9b92c2ae4 | mxnet_android | recent change break amalgamation again as amalgamation is not maintained properly update must be done carefully |
 | mkl | 2017.2.174 | mxnet_mkl | -- |
 | nnpack | 9c6747d7b80051b40e6f92d6828e2ed997529cd2 | mxnet_nnpack | newest nnpack version don't support building shared library |
-| cntk | 2.0 | cntk | -- |
-| pytorch | 0.2.0 | pytoch | -- |
+| cntk | 2.5.1 | cntk | -- |
+| pytorch | 0.4.0 | pytoch | -- |
 | llvmlite | 0.14.0 | numba | -- |
 
 ## Script
