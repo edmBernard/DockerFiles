@@ -150,3 +150,9 @@ The `generate.py` script available in script folder allow three things.
 * `generate.py makefile`: update makefile with all images found in folders. Useful after amalgamation generation.
 * `generate.py concatenate`: allow to concatenate dockerfile. For example, if you want to add jupyter support on pytorch images. `generate.py concatenate --filename ../super/pytorch/Dockerfile.jupyter --base pytorch_cpu -- jupyter_cpu` will generate a new dockerfile that depends of pytorch_cpu and add jupyter_cpu installation. This image will be available - after makefile update - via `make pytorch_jupyter`
 
+### Example :
+```bash
+./generate.py concatenate --filename ../super/jupyter/Dockerfile.mxnet --base mxnet_cpu_mkl -- jupyter_cpu
+./generate.py concatenate --filename ../super/jupyter/Dockerfile.opencv --base opencv_cpu -- jupyter_cpu
+./generate.py concatenate --filename ../super/jupyter/Dockerfile.pythonlib --base pythonlib_cpu -- jupyter_cpu
+```
