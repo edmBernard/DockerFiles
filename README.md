@@ -32,7 +32,7 @@ The image is the concatenation of the Library name and the tag (ex: `opencv` and
 #### Images with CPU Only:
 | Library | Tag | Description |
 |:-- |:-- |:-- |
-| `all` | <br> `_cpu` <br> `_gpu` | all images <br> all cpu images <br> all gpu images |
+| `all` | <br> `_cpu` <br> `_gpu` <br> `_alpine`| all images <br> all cpu images <br> all gpu images <br> all alpine images|
 | `pythonlib` | `_cpu` <br> `_gpu` | my standard configuration |
 | `ffmpeg` | `_cpu` <br> `_gpu` | with [ffmpeg](https://ffmpeg.org/) compiled from source |
 | `opencv` | `_cpu` <br> `_gpu` | with [opencv](http://opencv.org/) compiled from source |
@@ -45,7 +45,7 @@ The image is the concatenation of the Library name and the tag (ex: `opencv` and
 | `chainer` | `_cpu` <br> `_gpu` | with [chainer](https://chainer.org/), [chainerRL](https://github.com/chainer/chainerrl) and [chainerCV](https://github.com/chainer/chainercv)|
 | `numba` | `_cpu` <br> `_gpu` | with [numba](http://numba.pydata.org/) |
 | `jupyter` | `_cpu` <br> `_gpu` | a [jupyter](http://jupyter.org/) server with `pass` as password |
-| `python36` | `_ubuntu` <br> `_alpine` | regular ubuntu installation with python3.6 <br> [alpine](https://alpinelinux.org/) with python 3.6 |
+| `alpine` | `_redis` <br> `_pythonlib` <br> `_node` | some usefull image based on [alpine](https://alpinelinux.org/) to have small memory footprint |
 
 
 ## Create container (with CPU Only)

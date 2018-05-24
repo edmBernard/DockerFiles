@@ -114,6 +114,9 @@ def makefile():
         fl.write("\n\n")
         fl.write("all_gpu: ")
         fl.write(" ".join([i for i in image_list[::-1] if "gpu" in i]))
+        fl.write("\n\n")
+        fl.write("all_alpine: ")
+        fl.write(" ".join([i for i in image_list[::-1] if "alpine" in i]))
         fl.write("\n\n\n")
 
         fl.write("clean: ")
