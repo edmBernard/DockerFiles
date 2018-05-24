@@ -7,7 +7,7 @@ else
 endif
 
 
-.PHONY: script_amalgamation script_makefile all all_cpu all_gpu clean clean_cpu clean_gpu jupyter_cpu jupyter_gpu cntk_cpu cntk_gpu nnvm_cpu nnvm_cpu_nnpack nnvm_cpu_opencl nnvm_gpu_opencl numba_cpu numba_gpu chainer_cpu chainer_gpu mxnet_cpu mxnet_cpu_mkl mxnet_cpu_nnpack mxnet_gpu pytorch_cpu pytorch_gpu tensorflow_cpu tensorflow_gpu redis_cpu redis_gpu opencv_cpu opencv_gpu ffmpeg_cpu ffmpeg_gpu mxnet_android python36_alpine python36_ubuntu pythonlib_cpu pythonlib_gpu clean_jupyter_cpu clean_jupyter_gpu clean_cntk_cpu clean_cntk_gpu clean_nnvm_cpu clean_nnvm_cpu_nnpack clean_nnvm_cpu_opencl clean_nnvm_gpu_opencl clean_numba_cpu clean_numba_gpu clean_chainer_cpu clean_chainer_gpu clean_mxnet_cpu clean_mxnet_cpu_mkl clean_mxnet_cpu_nnpack clean_mxnet_gpu clean_pytorch_cpu clean_pytorch_gpu clean_tensorflow_cpu clean_tensorflow_gpu clean_redis_cpu clean_redis_gpu clean_opencv_cpu clean_opencv_gpu clean_ffmpeg_cpu clean_ffmpeg_gpu clean_mxnet_android clean_python36_alpine clean_python36_ubuntu clean_pythonlib_cpu clean_pythonlib_gpu
+.PHONY: script_amalgamation script_makefile all all_cpu all_gpu clean clean_cpu clean_gpu jupyter_cpu jupyter_gpu cntk_cpu cntk_gpu nnvm_cpu nnvm_cpu_nnpack nnvm_cpu_opencl nnvm_gpu_opencl numba_cpu numba_gpu chainer_cpu chainer_gpu mxnet_cpu mxnet_cpu_mkl mxnet_cpu_nnpack mxnet_gpu pytorch_cpu pytorch_gpu tensorflow_cpu tensorflow_gpu redis_cpu redis_gpu opencv_cpu opencv_gpu ffmpeg_cpu ffmpeg_gpu mxnet_android alpine_node alpine_pythonlib python36_alpine python36_ubuntu pythonlib_cpu pythonlib_gpu clean_jupyter_cpu clean_jupyter_gpu clean_cntk_cpu clean_cntk_gpu clean_nnvm_cpu clean_nnvm_cpu_nnpack clean_nnvm_cpu_opencl clean_nnvm_gpu_opencl clean_numba_cpu clean_numba_gpu clean_chainer_cpu clean_chainer_gpu clean_mxnet_cpu clean_mxnet_cpu_mkl clean_mxnet_cpu_nnpack clean_mxnet_gpu clean_pytorch_cpu clean_pytorch_gpu clean_tensorflow_cpu clean_tensorflow_gpu clean_redis_cpu clean_redis_gpu clean_opencv_cpu clean_opencv_gpu clean_ffmpeg_cpu clean_ffmpeg_gpu clean_mxnet_android clean_alpine_node clean_alpine_pythonlib clean_python36_alpine clean_python36_ubuntu clean_pythonlib_cpu clean_pythonlib_gpu
 
 
 script_makefile:
@@ -23,7 +23,7 @@ all_cpu: pythonlib_cpu ffmpeg_cpu opencv_cpu redis_cpu tensorflow_cpu pytorch_cp
 all_gpu: pythonlib_gpu ffmpeg_gpu opencv_gpu redis_gpu tensorflow_gpu pytorch_gpu mxnet_gpu chainer_gpu numba_gpu nnvm_gpu_opencl cntk_gpu jupyter_gpu
 
 
-clean: clean_jupyter_cpu clean_jupyter_gpu clean_cntk_cpu clean_cntk_gpu clean_nnvm_cpu clean_nnvm_cpu_nnpack clean_nnvm_cpu_opencl clean_nnvm_gpu_opencl clean_numba_cpu clean_numba_gpu clean_chainer_cpu clean_chainer_gpu clean_mxnet_cpu clean_mxnet_cpu_mkl clean_mxnet_cpu_nnpack clean_mxnet_gpu clean_pytorch_cpu clean_pytorch_gpu clean_tensorflow_cpu clean_tensorflow_gpu clean_redis_cpu clean_redis_gpu clean_opencv_cpu clean_opencv_gpu clean_ffmpeg_cpu clean_ffmpeg_gpu clean_mxnet_android clean_python36_alpine clean_python36_ubuntu clean_pythonlib_cpu clean_pythonlib_gpu
+clean: clean_jupyter_cpu clean_jupyter_gpu clean_cntk_cpu clean_cntk_gpu clean_nnvm_cpu clean_nnvm_cpu_nnpack clean_nnvm_cpu_opencl clean_nnvm_gpu_opencl clean_numba_cpu clean_numba_gpu clean_chainer_cpu clean_chainer_gpu clean_mxnet_cpu clean_mxnet_cpu_mkl clean_mxnet_cpu_nnpack clean_mxnet_gpu clean_pytorch_cpu clean_pytorch_gpu clean_tensorflow_cpu clean_tensorflow_gpu clean_redis_cpu clean_redis_gpu clean_opencv_cpu clean_opencv_gpu clean_ffmpeg_cpu clean_ffmpeg_gpu clean_mxnet_android clean_alpine_node clean_alpine_pythonlib clean_python36_alpine clean_python36_ubuntu clean_pythonlib_cpu clean_pythonlib_gpu
 
 clean_cpu: clean_jupyter_cpu clean_cntk_cpu clean_nnvm_cpu clean_nnvm_cpu_nnpack clean_nnvm_cpu_opencl clean_numba_cpu clean_chainer_cpu clean_mxnet_cpu clean_mxnet_cpu_mkl clean_mxnet_cpu_nnpack clean_pytorch_cpu clean_tensorflow_cpu clean_redis_cpu clean_opencv_cpu clean_ffmpeg_cpu clean_pythonlib_cpu
 
@@ -191,6 +191,18 @@ mxnet_android: pythonlib_cpu
 
 clean_mxnet_android: 
 	if [ "$$(docker images -q --filter=reference='mxnet_android')" != "" ]; then docker rmi mxnet_android; else echo "0"; fi
+
+alpine_node: 
+	docker build $(arg_nocache) -t alpine_node -f alpine/Dockerfile.node alpine
+
+clean_alpine_node: 
+	if [ "$$(docker images -q --filter=reference='alpine_node')" != "" ]; then docker rmi alpine_node; else echo "0"; fi
+
+alpine_pythonlib: 
+	docker build $(arg_nocache) -t alpine_pythonlib -f alpine/Dockerfile.pythonlib alpine
+
+clean_alpine_pythonlib: 
+	if [ "$$(docker images -q --filter=reference='alpine_pythonlib')" != "" ]; then docker rmi alpine_pythonlib; else echo "0"; fi
 
 python36_alpine: 
 	docker build $(arg_nocache) -t python36_alpine -f python36/Dockerfile.alpine python36
