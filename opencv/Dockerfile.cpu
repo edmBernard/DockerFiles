@@ -37,6 +37,7 @@ RUN cd "$OPENCV_DIR/opencv-3.4.0" && mkdir build && cd build && \
     make -j$(nproc) && \
     make install && \
     /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf' && \
+    cd .. && rm -r build && \
     ldconfig
 
 # link ippicv

@@ -6,26 +6,29 @@ ENV NNVM_DIR "$LIB_DIR/nnvm"
 RUN echo "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-4.0 main" >> /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y \
-    clang-4.0 \
-    clang-4.0-doc \
-    libclang-common-4.0-dev \
-    libclang-4.0-dev \
-    libclang1-4.0 \
-    libclang1-4.0-dbg \
-    libllvm-4.0-ocaml-dev \
-    libllvm4.0 \
-    libllvm4.0-dbg \
-    lldb-4.0 \
-    llvm-4.0 \
-    llvm-4.0-dev \
-    llvm-4.0-doc \
-    llvm-4.0-examples \
-    llvm-4.0-runtime \
-    clang-format-4.0 \
-    python-clang-4.0 \
-    libfuzzer-4.0-dev \ 
-    opencl-headers \
-    beignet beignet-dev
+        clang-4.0 \
+        clang-4.0-doc \
+        libclang-common-4.0-dev \
+        libclang-4.0-dev \
+        libclang1-4.0 \
+        libclang1-4.0-dbg \
+        libllvm-4.0-ocaml-dev \
+        libllvm4.0 \
+        libllvm4.0-dbg \
+        lldb-4.0 \
+        llvm-4.0 \
+        llvm-4.0-dev \
+        llvm-4.0-doc \
+        llvm-4.0-examples \
+        llvm-4.0-runtime \
+        clang-format-4.0 \
+        python-clang-4.0 \
+        libfuzzer-4.0-dev \
+        opencl-headers \
+        beignet beignet-dev \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Clone NNVM repo and compile
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/nnvm

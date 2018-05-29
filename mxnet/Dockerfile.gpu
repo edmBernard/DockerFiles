@@ -5,7 +5,10 @@ ENV MXNET_DIR "$LIB_DIR/mxnet"
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
-  libopenblas-dev
+        libopenblas-dev \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # install python2 tools
 RUN pip2 --no-cache-dir install -U \
