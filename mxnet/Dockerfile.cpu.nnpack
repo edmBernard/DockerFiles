@@ -23,9 +23,9 @@ RUN pip3 --no-cache-dir install -U \
 
 # Install Peach
 RUN cd "$LIB_DIR" && git clone https://github.com/Maratyszcza/PeachPy.git && cd PeachPy && \
-    pip2 install --upgrade -r requirements.txt && \
+    pip2 --no-cache-dir install --upgrade -r requirements.txt && \
     python2 setup.py generate && \
-    pip2 install --upgrade .
+    pip2 --no-cache-dir install --upgrade .
 
 # install ninja
 RUN cd "$LIB_DIR" && git clone git://github.com/ninja-build/ninja.git && cd ninja && \
