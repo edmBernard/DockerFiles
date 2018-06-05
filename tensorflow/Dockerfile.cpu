@@ -7,10 +7,10 @@ RUN pip3 --no-cache-dir install -U \
     sklearn \
     h5py
 
-RUN pip3 install tensorflow
+RUN pip3 --no-cache-dir install tensorflow
 
 # Keras
-RUN pip3 install git+https://github.com/fchollet/keras.git
+RUN pip3 --no-cache-dir install git+https://github.com/fchollet/keras.git
 
 # install python2 tools
 RUN pip2 --no-cache-dir install -U \
@@ -18,10 +18,10 @@ RUN pip2 --no-cache-dir install -U \
     sklearn \
     h5py
 
-RUN pip2 install tensorflow
+RUN pip2 --no-cache-dir install tensorflow
 
 # Keras
-RUN pip2 install git+https://github.com/fchollet/keras.git
+RUN pip2 --no-cache-dir install git+https://github.com/fchollet/keras.git
 
 # Set Tensorflow backend for Keras
 ENV KERAS_BACKEND=tensorflow
