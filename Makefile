@@ -201,7 +201,7 @@ clean_alpine_dotnet:
 	if [ "$$(docker images -q --filter=reference='alpine_dotnet')" != "" ]; then docker rmi alpine_dotnet; else echo "0"; fi
 
 alpine_dotnet_sdk: 
-	docker build $(arg_nocache) -t alpine_dotnet_sdk -f super/alpine/Dockerfile.dotnet.sdk super
+	docker build $(arg_nocache) -t alpine_dotnet_sdk -f alpine/Dockerfile.dotnet.sdk alpine
 
 clean_alpine_dotnet_sdk: 
 	if [ "$$(docker images -q --filter=reference='alpine_dotnet_sdk')" != "" ]; then docker rmi alpine_dotnet_sdk; else echo "0"; fi
