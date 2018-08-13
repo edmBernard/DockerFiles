@@ -42,7 +42,7 @@ def amalgamation():
             for image_name in image_names[::-1]:
                 if not firstloop:
                     file_out.write("\n# ==============================================================================\n")
-                    file_out.write("# %s\n" % imagename_to_filename(image_name))
+                    file_out.write("# %s\n\n" % imagename_to_filename(image_name))
 
                 if Path("../" + imagename_to_filename(image_name)).exists():
                     _filename = "../" + imagename_to_filename(image_name)
@@ -52,9 +52,16 @@ def amalgamation():
                 with open(_filename, "r") as file_in:
                     for i in file_in:
                         match = re.search(r"FROM|LABEL maintainer", i)
-                        if match and not firstloop:
-                            continue
-                        file_out.write(i)
+                        if firstloop or not match:
+                            file_out.write(i)
+                        else:
+                            file_out.write("# %s" % i)
+
+                        # print filename after maintainer name
+                        match = re.search(r"LABEL maintainer", i)
+                        if match and firstloop:
+                            file_out.write("\n# ==============================================================================\n")
+                            file_out.write("# %s\n" % imagename_to_filename(image_name))
 
                 firstloop = False
 
