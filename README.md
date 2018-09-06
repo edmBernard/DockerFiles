@@ -132,7 +132,6 @@ In some case last version fix bug or the reason I fixed the version without I kn
 | -- | -- | -- | -- |
 | cuda | 8.0 | all gpu images | -- |
 | cudnn | 7 | all gpu images | -- |
-| ptvsd | 3.0.0 | pythonlib | remote debugging for python |
 | h264 | 20171224-2245 | ffmpeg | h265 and ffmpeg newest version are not compatible (wait patch 6964 on ffmpeg) |
 | h265 | e98cb4c | ffmpeg | h265 and ffmpeg newest version are not compatible |
 | ffmpeg | 3.4.1 | ffmpeg | h265 and ffmpeg newest version are not compatible |
