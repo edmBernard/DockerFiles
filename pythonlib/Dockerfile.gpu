@@ -64,7 +64,7 @@ RUN pip2 --no-cache-dir install \
         ipython \
         ipykernel \
         jupyter \
-        ptvsd==3.0.0 \
+        ptvsd \
         h5py \
         && \
     python2 -m ipykernel install
@@ -88,7 +88,7 @@ RUN pip3 --no-cache-dir install \
         ipython \
         ipykernel \
         jupyter \
-        ptvsd==3.0.0 \
+        ptvsd \
         h5py \
         pytest \
         pytest-cov \
