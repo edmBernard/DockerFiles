@@ -24,7 +24,6 @@ RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd m
     make -j$(nproc) USE_BLAS=openblas USE_CPP_PACKAGE=1
 
 # Install Python package
-RUN cd "$MXNET_DIR/python" && python2 setup.py install
 RUN cd "$MXNET_DIR/python" && python3 setup.py install
 
 # check mxnet install

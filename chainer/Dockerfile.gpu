@@ -13,28 +13,24 @@ RUN pip3 --no-cache-dir install -U cython
 RUN cd "$LIB_DIR" && git clone https://github.com/cupy/cupy.git
 
 # Install cupy package
-RUN cd "$CUPY_DIR" && python2 setup.py install
 RUN cd "$CUPY_DIR" && python3 setup.py install
 
 # Clone chainer repo
 RUN cd "$LIB_DIR" && git clone https://github.com/chainer/chainer.git
 
 # Install chainer package
-RUN cd "$CHAINER_DIR" && python2 setup.py install
 RUN cd "$CHAINER_DIR" && python3 setup.py install
 
 # Clone chainerrl repo
 RUN cd "$LIB_DIR" && git clone https://github.com/chainer/chainerrl.git
 
 # Install chainer package
-RUN cd "$CHAINERRL_DIR" && python2 setup.py install
 RUN cd "$CHAINERRL_DIR" && python3 setup.py install
 
 # Clone chainercv repo
 RUN cd "$LIB_DIR" && git clone https://github.com/chainer/chainercv.git
 
 # Install chainer package
-RUN cd "$CHAINERCV_DIR" && python2 setup.py install
 RUN cd "$CHAINERCV_DIR" && python3 setup.py install
 
 CMD ["/bin/bash"]
