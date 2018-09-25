@@ -140,7 +140,7 @@ def makefile():
             fl.write("%s: " % i)
             fl.write(" ".join(d[:1]))
             if "gpu" in i:
-                fl.write("\n\tnvidia-docker build $(arg_nocache) -t %s -f %s %s\n\n" % (i, f, f.split("/")[0]))
+                fl.write("\n\tdocker build $(arg_nocache) -t %s -f %s %s\n\n" % (i, f, f.split("/")[0]))
             else:
                 fl.write("\n\tdocker build $(arg_nocache) -t %s -f %s %s\n\n" % (i, f, f.split("/")[0]))
 

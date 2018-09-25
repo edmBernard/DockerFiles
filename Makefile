@@ -39,7 +39,7 @@ clean_jupyter_cpu:
 	if [ "$$(docker images -q --filter=reference='jupyter_cpu')" != "" ]; then docker rmi jupyter_cpu; else echo "0"; fi
 
 jupyter_gpu: numba_gpu
-	nvidia-docker build $(arg_nocache) -t jupyter_gpu -f jupyter/Dockerfile.gpu jupyter
+	docker build $(arg_nocache) -t jupyter_gpu -f jupyter/Dockerfile.gpu jupyter
 
 clean_jupyter_gpu: 
 	if [ "$$(docker images -q --filter=reference='jupyter_gpu')" != "" ]; then docker rmi jupyter_gpu; else echo "0"; fi
@@ -51,7 +51,7 @@ clean_cntk_cpu:
 	if [ "$$(docker images -q --filter=reference='cntk_cpu')" != "" ]; then docker rmi cntk_cpu; else echo "0"; fi
 
 cntk_gpu: tensorflow_gpu
-	nvidia-docker build $(arg_nocache) -t cntk_gpu -f cntk/Dockerfile.gpu cntk
+	docker build $(arg_nocache) -t cntk_gpu -f cntk/Dockerfile.gpu cntk
 
 clean_cntk_gpu: 
 	if [ "$$(docker images -q --filter=reference='cntk_gpu')" != "" ]; then docker rmi cntk_gpu; else echo "0"; fi
@@ -75,7 +75,7 @@ clean_nnvm_cpu_opencl:
 	if [ "$$(docker images -q --filter=reference='nnvm_cpu_opencl')" != "" ]; then docker rmi nnvm_cpu_opencl; else echo "0"; fi
 
 nnvm_gpu_opencl: mxnet_gpu
-	nvidia-docker build $(arg_nocache) -t nnvm_gpu_opencl -f nnvm/Dockerfile.gpu.opencl nnvm
+	docker build $(arg_nocache) -t nnvm_gpu_opencl -f nnvm/Dockerfile.gpu.opencl nnvm
 
 clean_nnvm_gpu_opencl: 
 	if [ "$$(docker images -q --filter=reference='nnvm_gpu_opencl')" != "" ]; then docker rmi nnvm_gpu_opencl; else echo "0"; fi
@@ -87,7 +87,7 @@ clean_numba_cpu: clean_jupyter_cpu
 	if [ "$$(docker images -q --filter=reference='numba_cpu')" != "" ]; then docker rmi numba_cpu; else echo "0"; fi
 
 numba_gpu: mxnet_gpu
-	nvidia-docker build $(arg_nocache) -t numba_gpu -f numba/Dockerfile.gpu numba
+	docker build $(arg_nocache) -t numba_gpu -f numba/Dockerfile.gpu numba
 
 clean_numba_gpu: clean_jupyter_gpu
 	if [ "$$(docker images -q --filter=reference='numba_gpu')" != "" ]; then docker rmi numba_gpu; else echo "0"; fi
@@ -99,7 +99,7 @@ clean_chainer_cpu:
 	if [ "$$(docker images -q --filter=reference='chainer_cpu')" != "" ]; then docker rmi chainer_cpu; else echo "0"; fi
 
 chainer_gpu: redis_gpu
-	nvidia-docker build $(arg_nocache) -t chainer_gpu -f chainer/Dockerfile.gpu chainer
+	docker build $(arg_nocache) -t chainer_gpu -f chainer/Dockerfile.gpu chainer
 
 clean_chainer_gpu: 
 	if [ "$$(docker images -q --filter=reference='chainer_gpu')" != "" ]; then docker rmi chainer_gpu; else echo "0"; fi
@@ -123,7 +123,7 @@ clean_mxnet_cpu_nnpack:
 	if [ "$$(docker images -q --filter=reference='mxnet_cpu_nnpack')" != "" ]; then docker rmi mxnet_cpu_nnpack; else echo "0"; fi
 
 mxnet_gpu: redis_gpu
-	nvidia-docker build $(arg_nocache) -t mxnet_gpu -f mxnet/Dockerfile.gpu mxnet
+	docker build $(arg_nocache) -t mxnet_gpu -f mxnet/Dockerfile.gpu mxnet
 
 clean_mxnet_gpu: clean_jupyter_gpu clean_nnvm_gpu_opencl clean_numba_gpu
 	if [ "$$(docker images -q --filter=reference='mxnet_gpu')" != "" ]; then docker rmi mxnet_gpu; else echo "0"; fi
@@ -135,7 +135,7 @@ clean_pytorch_cpu:
 	if [ "$$(docker images -q --filter=reference='pytorch_cpu')" != "" ]; then docker rmi pytorch_cpu; else echo "0"; fi
 
 pytorch_gpu: redis_gpu
-	nvidia-docker build $(arg_nocache) -t pytorch_gpu -f pytorch/Dockerfile.gpu pytorch
+	docker build $(arg_nocache) -t pytorch_gpu -f pytorch/Dockerfile.gpu pytorch
 
 clean_pytorch_gpu: 
 	if [ "$$(docker images -q --filter=reference='pytorch_gpu')" != "" ]; then docker rmi pytorch_gpu; else echo "0"; fi
@@ -147,7 +147,7 @@ clean_tensorflow_cpu: clean_cntk_cpu
 	if [ "$$(docker images -q --filter=reference='tensorflow_cpu')" != "" ]; then docker rmi tensorflow_cpu; else echo "0"; fi
 
 tensorflow_gpu: redis_gpu
-	nvidia-docker build $(arg_nocache) -t tensorflow_gpu -f tensorflow/Dockerfile.gpu tensorflow
+	docker build $(arg_nocache) -t tensorflow_gpu -f tensorflow/Dockerfile.gpu tensorflow
 
 clean_tensorflow_gpu: clean_cntk_gpu
 	if [ "$$(docker images -q --filter=reference='tensorflow_gpu')" != "" ]; then docker rmi tensorflow_gpu; else echo "0"; fi
@@ -159,7 +159,7 @@ clean_redis_cpu: clean_jupyter_cpu clean_cntk_cpu clean_nnvm_cpu clean_nnvm_cpu_
 	if [ "$$(docker images -q --filter=reference='redis_cpu')" != "" ]; then docker rmi redis_cpu; else echo "0"; fi
 
 redis_gpu: opencv_gpu
-	nvidia-docker build $(arg_nocache) -t redis_gpu -f redis/Dockerfile.gpu redis
+	docker build $(arg_nocache) -t redis_gpu -f redis/Dockerfile.gpu redis
 
 clean_redis_gpu: clean_jupyter_gpu clean_cntk_gpu clean_nnvm_gpu_opencl clean_numba_gpu clean_chainer_gpu clean_mxnet_gpu clean_pytorch_gpu clean_tensorflow_gpu
 	if [ "$$(docker images -q --filter=reference='redis_gpu')" != "" ]; then docker rmi redis_gpu; else echo "0"; fi
@@ -177,7 +177,7 @@ clean_opencv_cpu: clean_jupyter_cpu clean_cntk_cpu clean_nnvm_cpu clean_nnvm_cpu
 	if [ "$$(docker images -q --filter=reference='opencv_cpu')" != "" ]; then docker rmi opencv_cpu; else echo "0"; fi
 
 opencv_gpu: ffmpeg_gpu
-	nvidia-docker build $(arg_nocache) -t opencv_gpu -f opencv/Dockerfile.gpu opencv
+	docker build $(arg_nocache) -t opencv_gpu -f opencv/Dockerfile.gpu opencv
 
 clean_opencv_gpu: clean_jupyter_gpu clean_cntk_gpu clean_nnvm_gpu_opencl clean_numba_gpu clean_chainer_gpu clean_mxnet_gpu clean_pytorch_gpu clean_tensorflow_gpu clean_redis_gpu
 	if [ "$$(docker images -q --filter=reference='opencv_gpu')" != "" ]; then docker rmi opencv_gpu; else echo "0"; fi
@@ -189,7 +189,7 @@ clean_ffmpeg_cpu: clean_jupyter_cpu clean_cntk_cpu clean_nnvm_cpu clean_nnvm_cpu
 	if [ "$$(docker images -q --filter=reference='ffmpeg_cpu')" != "" ]; then docker rmi ffmpeg_cpu; else echo "0"; fi
 
 ffmpeg_gpu: pythonlib_gpu
-	nvidia-docker build $(arg_nocache) -t ffmpeg_gpu -f ffmpeg/Dockerfile.gpu ffmpeg
+	docker build $(arg_nocache) -t ffmpeg_gpu -f ffmpeg/Dockerfile.gpu ffmpeg
 
 clean_ffmpeg_gpu: clean_jupyter_gpu clean_cntk_gpu clean_nnvm_gpu_opencl clean_numba_gpu clean_chainer_gpu clean_mxnet_gpu clean_pytorch_gpu clean_tensorflow_gpu clean_redis_gpu clean_opencv_gpu
 	if [ "$$(docker images -q --filter=reference='ffmpeg_gpu')" != "" ]; then docker rmi ffmpeg_gpu; else echo "0"; fi
@@ -243,7 +243,7 @@ clean_pythonlib_cpu: clean_jupyter_cpu clean_cntk_cpu clean_nnvm_cpu clean_nnvm_
 	if [ "$$(docker images -q --filter=reference='pythonlib_cpu')" != "" ]; then docker rmi pythonlib_cpu; else echo "0"; fi
 
 pythonlib_gpu: 
-	nvidia-docker build $(arg_nocache) -t pythonlib_gpu -f pythonlib/Dockerfile.gpu pythonlib
+	docker build $(arg_nocache) -t pythonlib_gpu -f pythonlib/Dockerfile.gpu pythonlib
 
 clean_pythonlib_gpu: clean_jupyter_gpu clean_cntk_gpu clean_nnvm_gpu_opencl clean_numba_gpu clean_chainer_gpu clean_mxnet_gpu clean_pytorch_gpu clean_tensorflow_gpu clean_redis_gpu clean_opencv_gpu clean_ffmpeg_gpu
 	if [ "$$(docker images -q --filter=reference='pythonlib_gpu')" != "" ]; then docker rmi pythonlib_gpu; else echo "0"; fi

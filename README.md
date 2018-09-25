@@ -9,12 +9,31 @@ Most of these docker use the [Nvidia][1] runtime for [Docker][2]
 [1]: https://github.com/NVIDIA/nvidia-docker
 [2]: https://www.docker.com/
 
+to Use Nvidia runtime as default runtime add this in `/etc/docker/daemon.json`
+```javascript
+{
+    "default-runtime": "nvidia",
+    "runtimes": {
+        "nvidia": {
+            "path": "/usr/bin/nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    }
+}
+```
+
 ## Building images
 
 ### With docker api
 
 ```bash
 sudo docker build --runtime=nvidia -t image_name -f dockerfile_name .
+```
+
+or (if nvidia is the default runtime)
+
+```bash
+sudo docker build -t image_name -f dockerfile_name .
 ```
 
 ### With Make
