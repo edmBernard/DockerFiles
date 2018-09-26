@@ -3,8 +3,6 @@ LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 RUN pip3 --no-cache-dir install torch torchvision
 
-RUN pip2 --no-cache-dir install torch torchvision
-
 CMD ["/bin/bash"]
 
 # Build from source
@@ -17,10 +15,6 @@ CMD ["/bin/bash"]
 # # Install git and other dependencies
 # RUN apt-get update && apt-get install -y \
 #     libopenblas-dev
-
-# # install python2 tools
-# RUN pip2 --no-cache-dir install -U \
-#     pyyaml mkl cffi
 
 # # install python3 tools
 # RUN pip3 --no-cache-dir install -U \

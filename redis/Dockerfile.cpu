@@ -14,10 +14,6 @@ RUN cd "$LIB_DIR" && \
     make -j"$(nproc)" && \
     make install
 
-# install python2 tools
-RUN pip2 --no-cache-dir install \
-        redis
-
 # install python3 tools
 RUN pip3 --no-cache-dir install \
         redis
