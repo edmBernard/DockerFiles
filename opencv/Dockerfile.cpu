@@ -17,6 +17,11 @@ RUN cd "$OPENCV_DIR" && \
     rm 3.4.0.zip
     # git clone https://github.com/opencv/opencv.git  <-- don't work anymore : GnuTLS recv error
 
+# Fix for issue with cloud pickle in spark
+RUN cd "$OPENCV_DIR" && \
+    sed -i 's|python${_version_major_minor}/site-packages|python${_version_major_minor}/site-packages/cv2|' opencv-3.4.0/cmake/OpenCVDetectPython.cmake && \
+    sed -i 's|python${_version_major_minor}/dist-packages|python${_version_major_minor}/dist-packages/cv2|' opencv-3.4.0/cmake/OpenCVDetectPython.cmake
+
 # download opencv3 contrib
 RUN cd "$OPENCV_DIR" && \
     wget https://github.com/opencv/opencv_contrib/archive/3.4.0.zip && \
