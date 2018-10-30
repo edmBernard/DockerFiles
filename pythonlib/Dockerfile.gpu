@@ -64,12 +64,13 @@ RUN pip3 --no-cache-dir install \
         ipython \
         ipykernel \
         jupyter \
+        jupyterlab \
         ptvsd \
         h5py \
         pytest \
         pytest-cov \
+        pytest-html \
         line_profiler \
-        jupyterlab \
         pipenv \
         && \
     python3 -m ipykernel install
