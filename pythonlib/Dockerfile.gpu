@@ -70,6 +70,7 @@ RUN pip3 --no-cache-dir install \
         pytest \
         pytest-cov \
         pytest-html \
+        gcovr \
         line_profiler \
         pipenv \
         && \
