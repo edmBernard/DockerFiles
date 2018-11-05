@@ -4,6 +4,7 @@ LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 # https://software.intel.com/en-us/articles/installing-and-building-mxnet-with-intel-mkl
 
 ENV MXNET_DIR "$LIB_DIR/mxnet"
+ENV MKLDNN_DIR "$LIB_DIR/mkl-dnn"
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
@@ -23,19 +24,18 @@ RUN pip3 --no-cache-dir install -U \
     easydict
 
 # install mkl
-RUN wget --no-check-certificate -O /tmp/mklml.tgz https://github.com/intel/mkl-dnn/releases/download/v0.12/mklml_lnx_2018.0.1.20171227.tgz && \
-    tar -zxvf /tmp/mklml.tgz && cp -rf mklml_*/* /usr/local/ && rm -rf mklml_*
+RUN cd $LIB_DIR && git clone --recursive https://github.com/intel/mkl-dnn.git && cd mkl-dnn && \
+    cd scripts && ./prepare_mkl.sh && cd .. && \
+    mkdir -p build && cd build && cmake -DWITH_EXAMPLE=OFF .. && \
+    make && \
+    make install
 
-RUN echo "/opt/intel/mkl/lib/intel64" >> /etc/ld.so.conf.d/intel.conf && \
+RUN echo "usr/local/lib" >> /etc/ld.so.conf.d/intel.conf && \
     ldconfig
 
 # Clone MXNet repo and move into it
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
     make -j$(nproc) USE_CPP_PACKAGE=1 USE_LAPACK=1 USE_LAPACK_PATH=/usr/lib64/liblapack.so USE_MKLDNN=1 USE_BLAS=openblas
-
-RUN echo "/usr/local/lib" >> /etc/ld.so.conf.d/intel.conf && \
-    echo "/home/dev/lib/mxnet/3rdparty/mkldnn/install/lib" >> /etc/ld.so.conf.d/intel.conf && \
-    ldconfig
 
 # Install Python package
 RUN cd "$MXNET_DIR/python" && python3 setup.py install
