@@ -43,6 +43,8 @@ RUN cd $HOME/lib && \
     ./bootstrap-vcpkg.sh && \
     ./vcpkg integrate install
 
+ENV VCPKG_DIR "${HOME}/lib/vcpkg"
+
 WORKDIR $HOME/host
 
 RUN ln -snf /bin/bash /bin/sh
