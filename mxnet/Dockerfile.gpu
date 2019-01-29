@@ -21,7 +21,11 @@ RUN pip3 --no-cache-dir install -U \
 
 # Clone MXNet repo and move into it
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
-    make -j$(nproc) USE_BLAS=openblas USE_CPP_PACKAGE=1 USE_CUDA=1 USE_CUDA_PATH=/usr/local/cuda USE_CUDNN=1
+    cmake -DUSE_CUDA=1 -DUSE_CUDA_PATH=/usr/local/cuda -DUSE_CUDNN=1 -DUSE_MKLDNN=1 -DUSE_CPP_PACKAGE=1 . && \
+    make -j$(nproc)
+
+RUN echo "$LIB_DIR/mxnet/lib" >> /etc/ld.so.conf.d/mxnet.conf && \
+    ldconfig
 
 # Install Python package
 RUN cd "$MXNET_DIR/python" && python3 setup.py install
