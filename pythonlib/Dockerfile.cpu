@@ -46,6 +46,7 @@ RUN pip3 --no-cache-dir install \
         matplotlib \
         scipy \
         scikit-image \
+        pandas \
         docopt \
         fire \
         schema \
