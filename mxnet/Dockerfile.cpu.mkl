@@ -26,7 +26,7 @@ RUN pip3 --no-cache-dir install -U \
 
 # Clone MXNet repo and move into it
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
-    make -j$(nproc) USE_OPENCV=1 USE_CUDA=0 USE_MKLDNN=1 USE_CPP_PACKAGE=1
+    make USE_OPENCV=1 USE_CUDA=0 USE_MKLDNN=1 USE_CPP_PACKAGE=1
 
 RUN echo "$LIB_DIR/mxnet/lib" >> /etc/ld.so.conf.d/mxnet.conf && \
     ldconfig
