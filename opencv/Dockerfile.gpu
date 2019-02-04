@@ -1,11 +1,12 @@
 FROM ffmpeg_gpu:latest
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
-ENV OPENCV_DIR "$LIB_DIR/opencv"
-RUN mkdir -p "$OPENCV_DIR"
+RUN add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
 
 # Pick up some dependencies
-RUN apt-get update && \
+RUN apt-get update && apt-get install -y \
+        libjasper-dev \
+        && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

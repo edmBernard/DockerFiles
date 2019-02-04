@@ -1,10 +1,13 @@
 FROM ubuntu:18.04
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Pick up some dependencies
 RUN apt-get clean && apt-get update && apt-get upgrade -y && \
     apt-get install -y \
-        build-essential cmake git nano \
+        build-essential software-properties-common \
+        cmake git nano \
         curl wget rsync unzip \
         libboost-all-dev \
         pkg-config \
@@ -16,7 +19,6 @@ RUN apt-get clean && apt-get update && apt-get upgrade -y && \
         libjpeg-dev \
         libjpeg8-dev \
         libtiff-dev \
-        libjasper-dev \
         # library for video format convertion YUV ...
         libv4l-dev v4l-utils \
         # camera control
