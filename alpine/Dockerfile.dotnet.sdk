@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.2-sdk-alpine
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 # configuration
