@@ -24,6 +24,7 @@ RUN apt-get update && \
         libxcb1-dev \
         libxcb-shm0-dev \
         libxcb-xfixes0-dev \
+        libmp3lame-dev \
         pkg-config \
         texinfo \
         zlib1g-dev \
@@ -93,7 +94,8 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
         --enable-libx264 \
         --enable-libx265 \
         --enable-nonfree \
-        --enable-shared \ 
+        --enable-shared \
+        --enable-libmp3lame \
         && \
     PATH="$FFMPEG_DIR/bin:$PATH" make -j"$(nproc)" && \
     make install && \
@@ -105,7 +107,7 @@ RUN ldconfig
 ENV PATH "$FFMPEG_DIR/bin:${PATH}"
 ENV PKG_CONFIG_PATH "$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig:${PKG_CONFIG_PATH}"
 
-# define environnement variable in .bashrc don't work in dockerfile as docker file don't use .bashrc 
+# define environnement variable in .bashrc don't work in dockerfile as docker file don't use .bashrc
 # RUN echo 'export PATH="$FFMPEG_DIR/bin:$PATH"' >> ~/.bashrc
 # RUN echo 'export PKG_CONFIG_PATH="$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig:$PKG_CONFIG_PATH"' >> ~/.bashrc
 # RUN /bin/bash -c "source ~/.bashrc"

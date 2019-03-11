@@ -11,9 +11,9 @@ RUN apt-get update && \
     apt-get install -y \
         wget \
         autoconf automake \
-        cmake mercurial \ 
+        cmake mercurial \
         build-essential \
-        libass-dev \ 
+        libass-dev \
         libfreetype6-dev \
         libsdl2-dev \
         libtheora-dev \
@@ -23,8 +23,9 @@ RUN apt-get update && \
         libvorbis-dev \
         libxcb1-dev \
         libxcb-shm0-dev \
-        libxcb-xfixes0-dev \ 
-        pkg-config \ 
+        libxcb-xfixes0-dev \
+        libmp3lame-dev \
+        pkg-config \
         texinfo \
         zlib1g-dev \
         && \
@@ -34,7 +35,7 @@ RUN apt-get update && \
 # install yasm
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
     wget http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz && \
-    tar xzvf yasm-1.3.0.tar.gz && \ 
+    tar xzvf yasm-1.3.0.tar.gz && \
     rm yasm-1.3.0.tar.gz && \
     cd yasm-1.3.0 && \
     ./configure --prefix="$FFMPEG_DIR/ffmpeg_build" --bindir="$FFMPEG_DIR/bin" && \
@@ -82,7 +83,7 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
         --enable-cuvid \
         --enable-nvenc \
         --enable-nonfree \
-        --enable-libnpp \ 
+        --enable-libnpp \
         --prefix="$FFMPEG_DIR/ffmpeg_build" \
         --pkg-config-flags="--static" \
         --extra-cflags="-I$FFMPEG_DIR/ffmpeg_build/include -I/usr/local/cuda/include" \
@@ -101,7 +102,8 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
         --enable-libx264 \
         --enable-libx265 \
         --enable-nonfree \
-        --enable-shared \ 
+        --enable-shared \
+        --enable-libmp3lame \
         && \
     PATH="$FFMPEG_DIR/bin:$PATH" make -j"$(nproc)" && \
     make install && \
@@ -113,7 +115,7 @@ RUN ldconfig
 ENV PATH "$FFMPEG_DIR/bin:${PATH}"
 ENV PKG_CONFIG_PATH "$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig:${PKG_CONFIG_PATH}"
 
-# define environnement variable in .bashrc don't work in dockerfile as docker file don't use .bashrc 
+# define environnement variable in .bashrc don't work in dockerfile as docker file don't use .bashrc
 # RUN echo 'export PATH="$FFMPEG_DIR/bin:$PATH"' >> ~/.bashrc
 # RUN echo 'export PKG_CONFIG_PATH="$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig:$PKG_CONFIG_PATH"' >> ~/.bashrc
 # RUN /bin/bash -c "source ~/.bashrc"
