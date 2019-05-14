@@ -19,8 +19,8 @@ RUN pip3 --no-cache-dir install \
         pyspark==2.4.1
 
 
-ENV PYSPARK_PYTHON python3.5
-ENV PYSPARK_DRIVER_PYTHON python3.5
+ENV PYSPARK_PYTHON python3.6
+ENV PYSPARK_DRIVER_PYTHON python3.6
 ENV SPARK_HOME=/home/dev/lib/spark-2.4.1-bin-hadoop2.7
 ENV PATH $PATH:/home/dev/lib/spark-2.4.1-bin-hadoop2.7/bin
 
