@@ -30,9 +30,9 @@ RUN mkdir -p "$LIB_DIR"
 
 # Install cmake 3.11
 RUN cd $HOME/lib && \
-    wget https://cmake.org/files/v3.11/cmake-3.11.1.tar.gz && \
-    tar -zxvf cmake-3.11.1.tar.gz && \
-    cd cmake-3.11.1 && \
+    wget https://cmake.org/files/v3.14/cmake-3.14.3.tar.gz && \
+    tar -zxvf cmake-3.14.3.tar.gz && \
+    cd cmake-3.14.3 && \
     cmake . && \
     make && \
     make install
