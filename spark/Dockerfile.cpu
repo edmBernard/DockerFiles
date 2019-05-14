@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 
 
-RUN cd ${LIB_DIR} && wget http://apache.mirrors.ovh.net/ftp.apache.org/dist/spark/spark-2.4.1/spark-2.4.1-bin-hadoop2.7.tgz && \
+RUN cd ${LIB_DIR} && wget https://archive.apache.org/dist/spark/spark-2.4.1/spark-2.4.1-bin-hadoop2.7.tgz && \
     tar xvzf spark-2.4.1-bin-hadoop2.7.tgz && \
     rm spark-2.4.1-bin-hadoop2.7.tgz
 
