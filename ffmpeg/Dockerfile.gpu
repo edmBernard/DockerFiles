@@ -83,7 +83,7 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
     wget -O ffmpeg-snapshot.tar.bz2 https://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2  && \
     tar xjvf ffmpeg-snapshot.tar.bz2 && \
     rm ffmpeg-snapshot.tar.bz2 && \
-    cd ffmpeg-snapshot && \
+    cd ffmpeg && \
     PATH="$FFMPEG_DIR/bin:$PATH" PKG_CONFIG_PATH="$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig" ./configure \
         --enable-cuda \
         --enable-cuvid \
