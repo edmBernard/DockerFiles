@@ -15,22 +15,22 @@ ENV OPENCV_DIR "/home/dev/lib/opencv"
 
 # download opencv3
 RUN cd "$OPENCV_DIR" && \
-    wget https://github.com/opencv/opencv/archive/3.4.0.zip && \
-    unzip 3.4.0.zip && \
-    rm 3.4.0.zip
+    wget https://github.com/opencv/opencv/archive/4.1.0.zip && \
+    unzip 4.1.0.zip && \
+    rm 4.1.0.zip
     # git clone https://github.com/opencv/opencv.git  <-- don't work anymore : GnuTLS recv error
 
 # download opencv3 contrib
 RUN cd "$OPENCV_DIR" && \
-    wget https://github.com/opencv/opencv_contrib/archive/3.4.0.zip && \
-    unzip 3.4.0.zip && \
-    rm 3.4.0.zip
+    wget https://github.com/opencv/opencv_contrib/archive/4.1.0.zip && \
+    unzip 4.1.0.zip && \
+    rm 4.1.0.zip
     # git clone https://github.com/opencv/opencv_contrib.git  <-- don't work anymore : GnuTLS recv error
 
 # build opencv3
 # warning if we set BUILD_EXAMPLES=OFF cmake don't find IPP anymore (strange)
 # RUN ln -s /usr/local/nvidia/lib64/libnvcuvid.so.1 /usr/lib/libnvcuvid.so
-RUN cd "$OPENCV_DIR/opencv-3.4.0" && mkdir build && cd build && \
+RUN cd "$OPENCV_DIR/opencv-4.1.0" && mkdir build && cd build && \
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D WITH_CUDA=ON \
     # -D WITH_NVCUVID=ON \
@@ -38,7 +38,7 @@ RUN cd "$OPENCV_DIR/opencv-3.4.0" && mkdir build && cd build && \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
     -D INSTALL_C_EXAMPLES=OFF \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
-    -D OPENCV_EXTRA_MODULES_PATH="$OPENCV_DIR/opencv_contrib-3.4.0/modules" \
+    -D OPENCV_EXTRA_MODULES_PATH="$OPENCV_DIR/opencv_contrib-4.1.0/modules" \
     -D BUILD_EXAMPLES=OFF \
     -D BUILD_TESTS=OFF \
     -D BUILD_PERF_TESTS=OFF \
@@ -50,4 +50,4 @@ RUN cd "$OPENCV_DIR/opencv-3.4.0" && mkdir build && cd build && \
     ldconfig
 
 # link ippicv
-RUN ln -s "$OPENCV_DIR/opencv-3.4.0/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a" "/usr/local/lib/libippicv.a"
+RUN ln -s "$OPENCV_DIR/opencv-4.1.0/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a" "/usr/local/lib/libippicv.a"
