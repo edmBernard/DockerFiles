@@ -57,7 +57,7 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
 
 # install x264
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
-    git clone git clone --depth 1 https://git.videolan.org/git/x264 && \
+    git clone --depth 1 https://git.videolan.org/git/x264 && \
     cd x264 && \
     PATH="$FFMPEG_DIR/bin:$PATH" ./configure --prefix="$FFMPEG_DIR/ffmpeg_build" --bindir="$FFMPEG_DIR/bin" --enable-static --enable-shared --disable-opencl --enable-pic && \
     PATH="$FFMPEG_DIR/bin:$PATH" make -j"$(nproc)" && \
