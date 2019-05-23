@@ -49,5 +49,3 @@ RUN cd "$OPENCV_DIR/opencv-4.1.0" && mkdir build && cd build && \
     cd .. && rm -r build && \
     ldconfig
 
-# link ippicv
-RUN ln -s "$OPENCV_DIR/opencv-4.1.0/3rdparty/ippicv/unpack/ippicv_lnx/lib/intel64/libippicv.a" "/usr/local/lib/libippicv.a"
