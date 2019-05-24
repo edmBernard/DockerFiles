@@ -8,8 +8,8 @@ ENV NDK_VERSION "android-ndk-r14b"
 ENV NDK_TOOLCHAIN_DIR "$LIB_DIR/arm7-toolchain"
 ENV OPENBLAS_DIR "$LIB_DIR/OpenBLAS_build"
 ENV MXNET_DIR "$LIB_DIR/mxnet"
-
 ENV ANDROID_STANDALONE_TOOLCHAIN ${NDK_TOOLCHAIN_DIR}
+# ENV ANDROID_NDK "$LIB_DIR/$NDK_VERSION"
 
 RUN apt-get update && \
     apt-get install -y \
@@ -25,7 +25,7 @@ RUN cd "$LIB_DIR" && \
     unzip ${NDK_VERSION}-linux-x86_64.zip && \
     rm ${NDK_VERSION}-linux-x86_64.zip
 
-ENV API_VERSION 22
+ENV API_VERSION 23
 RUN $LIB_DIR/${NDK_VERSION}/build/tools/make_standalone_toolchain.py \
     --arch arm --api ${API_VERSION} --install-dir $NDK_TOOLCHAIN_DIR
 
@@ -54,16 +54,16 @@ RUN cd "$OPENCV_DIR" && \
 # Compile opencv4
 RUN cd "$OPENCV_DIR/opencv-master/" && \
     mkdir build_android_arm && cd build_android_arm && \
-    cmake -DCMAKE_TOOLCHAIN_FILE=../platforms/android/android.toolchain.cmake -DANDROID_STL=gnustl_shared -DANDROID_NATIVE_API_LEVEL=${API_VERSION} -DBUILD_SHARED_LIBS=OFF -DBUILD_opencv_world=ON -DOPENCV_EXTRA_MODULES_PATH="$OPENCV_DIR/opencv_contrib-master/modules" .. && \
+    cmake .. -DCMAKE_TOOLCHAIN_FILE=../platforms/android/android.toolchain.cmake -DANDROID_SDK=$ANDROID_NDK -DANDROID_STL=gnustl_shared -DANDROID_NATIVE_API_LEVEL=${API_VERSION} -DBUILD_SHARED_LIBS=OFF -DBUILD_opencv_world=ON -DOPENCV_EXTRA_MODULES_PATH="$OPENCV_DIR/opencv_contrib-master/modules" && \
     make -j$(nproc) && \
     make install
 
 # Build Mxnet amalgamation
-RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet/amalgamation && \
-    sed -i "s|/usr/local/opt/openblas|$OPENBLAS_DIR|g" Makefile && \
-    make mxnet_predict-all.cc && \
-    sed  -i 's|#include <sys/fcntl.h>|#include <fcntl.h>|' mxnet_predict-all.cc && \
-    make ANDROID=1
-    # We can't use multiprocess compilation
+# RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet/amalgamation && \
+#     sed -i "s|/usr/local/opt/openblas|$OPENBLAS_DIR|g" Makefile && \
+#     make mxnet_predict-all.cc && \
+#     sed  -i 's|#include <sys/fcntl.h>|#include <fcntl.h>|' mxnet_predict-all.cc && \
+#     make ANDROID=1
+#     # We can't use multiprocess compilation
 
 CMD ["/bin/bash"]
