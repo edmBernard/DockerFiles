@@ -13,14 +13,14 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p "/home/dev/lib/opencv"
 ENV OPENCV_DIR "/home/dev/lib/opencv"
 
-# download opencv3
+# download opencv4
 RUN cd "$OPENCV_DIR" && \
     wget https://github.com/opencv/opencv/archive/4.1.0.zip && \
     unzip 4.1.0.zip && \
     rm 4.1.0.zip
     # git clone https://github.com/opencv/opencv.git  <-- don't work anymore : GnuTLS recv error
 
-# download opencv3 contrib
+# download opencv4 contrib
 RUN cd "$OPENCV_DIR" && \
     wget https://github.com/opencv/opencv_contrib/archive/4.1.0.zip && \
     unzip 4.1.0.zip && \
