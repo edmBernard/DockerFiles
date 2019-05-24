@@ -1,10 +1,7 @@
 FROM redis_cpu:latest
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
-# https://software.intel.com/en-us/articles/installing-and-building-mxnet-with-intel-mkl
-
 ENV MXNET_DIR "$LIB_DIR/mxnet"
-ENV MKLDNN_DIR "$LIB_DIR/mkl-dnn"
 
 # Install git and other dependencies
 RUN apt-get update && apt-get install -y \
