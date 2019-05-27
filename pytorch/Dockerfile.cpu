@@ -1,8 +1,8 @@
 FROM redis_cpu:latest
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
-RUN pip3 --no-cache-dir install http://download.pytorch.org/whl/cpu/torch-0.4.0-cp35-cp35m-linux_x86_64.whl
 RUN pip3 --no-cache-dir install torch torchvision
+RUN pip3 --no-cache-dir install onnx protobuf
 
 CMD ["/bin/bash"]
 
