@@ -48,7 +48,7 @@ The image is the concatenation of the Library name and the tag (ex: `opencv` and
 *Note1:* `make` accept `NOCACHE=ON` argument to force the rebuild of all images<br>
 *Note2:* As image depends from each other, `make` will automatically build images dependency. (ex: if you build `opencv_cpu` image,  `pythonlib_cpu` and `ffmpeg_cpu` will be create as well by the command `make opencv:cpu`)
 
-#### Images with CPU Only:
+#### List of all available images
 | Library | Tag | Description |
 |:-- |:-- |:-- |
 | `all` | <br> `_cpu` <br> `_gpu` <br> `_alpine`| all images <br> all cpu images <br> all gpu images <br> all alpine images|
