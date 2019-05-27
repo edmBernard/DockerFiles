@@ -45,10 +45,10 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
 
 # install nasm
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
-    wget http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.bz2 && \
-    tar xjvf nasm-2.13.01.tar.bz2 && \
-    rm nasm-2.13.01.tar.bz2 && \
-    cd nasm-2.13.01 && \
+    wget https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.bz2 && \
+    tar xjvf nasm-2.14.02.tar.bz2 && \
+    rm nasm-2.14.02.tar.bz2 && \
+    cd nasm-2.14.02 && \
     ./autogen.sh && \
     PATH="$FFMPEG_DIR/bin:$PATH" ./configure --prefix="$FFMPEG_DIR/ffmpeg_build" --bindir="$FFMPEG_DIR/bin" && \
     make -j"$(nproc)" && \
@@ -56,11 +56,9 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
 
 # install x264
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
-    wget http://download.videolan.org/pub/x264/snapshots/x264-snapshot-20171224-2245-stable.tar.bz2 && \
-    tar xjvf x264-snapshot-20171224-2245-stable.tar.bz2 && \
-    rm x264-snapshot-20171224-2245-stable.tar.bz2 && \
-    cd x264-snapshot* && \
-    PATH="$FFMPEG_DIR/bin:$PATH" ./configure --prefix="$FFMPEG_DIR/ffmpeg_build" --bindir="$FFMPEG_DIR/bin" --enable-static --enable-shared --disable-opencl && \
+    git clone --depth 1 https://git.videolan.org/git/x264 && \
+    cd x264 && \
+    PATH="$FFMPEG_DIR/bin:$PATH" ./configure --prefix="$FFMPEG_DIR/ffmpeg_build" --bindir="$FFMPEG_DIR/bin" --enable-static --enable-shared --disable-opencl --enable-pic && \
     PATH="$FFMPEG_DIR/bin:$PATH" make -j"$(nproc)" && \
     make install
 
@@ -68,7 +66,6 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
     hg clone https://bitbucket.org/multicoreware/x265 && \
     cd "$FFMPEG_DIR/ffmpeg_sources/x265/build/linux" && \
-    hg update -r e98cb4c && \
     PATH="$FFMPEG_DIR/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$FFMPEG_DIR/ffmpeg_build" -DENABLE_SHARED:bool=on ../../source && \
     PATH="$FFMPEG_DIR/bin:$PATH" make -j"$(nproc)" && \
     make install
