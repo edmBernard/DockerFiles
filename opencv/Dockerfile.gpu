@@ -27,9 +27,7 @@ RUN cd "$OPENCV_DIR" && \
     rm 4.1.0.zip
     # git clone https://github.com/opencv/opencv_contrib.git  <-- don't work anymore : GnuTLS recv error
 
-# build opencv3
-# warning if we set BUILD_EXAMPLES=OFF cmake don't find IPP anymore (strange)
-# RUN ln -s /usr/local/nvidia/lib64/libnvcuvid.so.1 /usr/lib/libnvcuvid.so
+# build opencv4
 RUN cd "$OPENCV_DIR/opencv-4.1.0" && mkdir build && cd build && \
     cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D WITH_CUDA=ON \

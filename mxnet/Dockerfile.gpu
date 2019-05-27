@@ -24,7 +24,7 @@ RUN pip3 --no-cache-dir install -U \
 
 ENV LD_LIBRARY_PATH "/usr/local/cuda/compat:$LD_LIBRARY_PATH"
 
-# Clone MXNet repo and move into it
+# Clone And build MXNet
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
     mkdir build && cd build && \
     cmake .. -DUSE_OPENCV=1 -DUSE_OPENCV_INC_PATH=/usr/local/include/opencv4 -DUSE_OPENCV_LIB_PATH=/usr/local/lib -DUSE_CUDA=1 -DUSE_CUDA_PATH=/usr/local/cuda -DUSE_CUDNN=1 -DUSE_MKLDNN=1 -DUSE_CPP_PACKAGE=1 -DBUILD_CPP_EXAMPLES=OFF -DBUILD_TESTING=OFF && \

@@ -21,7 +21,7 @@ RUN pip3 --no-cache-dir install -U \
     onnx \
     protobuf
 
-# Clone MXNet repo and move into it
+# Clone And build MXNet
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
     mkdir build && cd build && \
     cmake .. -DUSE_OPENCV=1 -DUSE_OPENCV_INC_PATH=/usr/local/include/opencv4 -DUSE_OPENCV_LIB_PATH=/usr/local/lib -DUSE_CUDA=0 -DUSE_BLAS=openblas -DUSE_CPP_PACKAGE=1 -DBUILD_CPP_EXAMPLES=OFF -DBUILD_TESTING=OFF && \
