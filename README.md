@@ -52,11 +52,11 @@ The image is the concatenation of the Library name and the tag (ex: `opencv` and
 | Library | Tag | Description |
 |:-- |:-- |:-- |
 | `all` | <br> `_cpu` <br> `_gpu` <br> `_alpine`| all images <br> all cpu images <br> all gpu images <br> all alpine images|
-| `pythonlib` | `_cpu` <br> `_gpu` | my standard configuration |
-| `ffmpeg` | `_cpu` <br> `_gpu` | with [ffmpeg](https://ffmpeg.org/) compiled from source |
+| `pythonlib` | `_cpu` <br> `_gpu` | my standard configuration with all library I use |
+| `ffmpeg` | `_cpu` <br> `_gpu` | with [ffmpeg](https://ffmpeg.org/) compiled from source with x264, h265 and nvencode on gpu images |
 | `opencv` | `_cpu` <br> `_gpu` | with [opencv](http://opencv.org/) compiled from source |
 | `redis` | `_cpu` <br> `_gpu` | with [redis](https://redis.io/) compiled from source |
-| `mxnet` | `_cpu` <br> `_gpu` <br> `_cpu_mkl` <br> `_android`| with [mxnet](http://mxnet.io/) compiled from source <br> with [mxnet](http://mxnet.io/)  compiled from source and gpu support <br> with [mxnet](http://mxnet.io/) and [mkl](https://software.intel.com/en-us/mkl) <br> with [mxnet](http://mxnet.io/) and [NNPACK](https://github.com/Maratyszcza/NNPACK) compiled from source  <br> [mxnet](http://mxnet.io/) amalgamation compiled for android (ndk-14b) |
+| `mxnet` | `_cpu` <br> `_gpu` <br> `_cpu_mkl` <br> `_android`| with [mxnet](http://mxnet.io/) compiled from source <br> with [mxnet](http://mxnet.io/)  compiled from source and gpu support <br> with [mxnet](http://mxnet.io/) and [mkl](https://software.intel.com/en-us/mkl)  <br> [mxnet](http://mxnet.io/) amalgamation compiled for android (ndk-14b) |
 | `nnvm` | `_cpu` <br> `_gpu_opencl` <br> `_cpu_opencl`| with [nnvm](https://github.com/dmlc/nnvm), [tvm](https://github.com/dmlc/tvm) compiled from source <br> with [nnvm](https://github.com/dmlc/nnvm), [tvm](https://github.com/dmlc/tvm) and [opencl](https://fr.wikipedia.org/wiki/OpenCL) compiled from source and gpu support <br> with [nnvm](https://github.com/dmlc/nnvm), [tvm](https://github.com/dmlc/tvm) and [opencl](https://fr.wikipedia.org/wiki/OpenCL) compiled from source|
 | `tensorflow` | `_cpu` <br> `_gpu` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)|
 | `cntk` | `_cpu` <br> `_gpu` | with [cntk](http://cntk.ai) and [keras](https://keras.io/)|
