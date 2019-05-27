@@ -9,7 +9,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # CNTK
-RUN pip3 --no-cache-dir install https://cntk.ai/PythonWheel/CPU-Only/cntk-2.5.1-cp35-cp35m-linux_x86_64.whl
+RUN pip3 --no-cache-dir install cntk
 
 # Set CNTK backend for Keras
 ENV KERAS_BACKEND=cntk

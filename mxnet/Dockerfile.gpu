@@ -22,11 +22,16 @@ RUN pip3 --no-cache-dir install -U \
     onnx \
     protobuf
 
-# Clone MXNet repo and move into it
-RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
-    make USE_OPENCV=1 USE_CUDA=1 USE_CUDA_PATH=/usr/local/cuda USE_CUDNN=1 USE_MKLDNN=1 USE_CPP_PACKAGE=1
+ENV LD_LIBRARY_PATH "/usr/local/cuda/compat:$LD_LIBRARY_PATH"
 
-RUN echo "$LIB_DIR/mxnet/lib" >> /etc/ld.so.conf.d/mxnet.conf && \
+# Clone And build MXNet
+RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
+    mkdir build && cd build && \
+    cmake .. -DUSE_OPENCV=1 -DUSE_OPENCV_INC_PATH=/usr/local/include/opencv4 -DUSE_OPENCV_LIB_PATH=/usr/local/lib -DUSE_CUDA=1 -DUSE_CUDA_PATH=/usr/local/cuda -DUSE_CUDNN=1 -DUSE_MKLDNN=1 -DUSE_CPP_PACKAGE=1 -DBUILD_CPP_EXAMPLES=OFF -DBUILD_TESTING=OFF && \
+    make -j$(nproc)
+    # make USE_OPENCV=1 USE_OPENCV_INC_PATH=/usr/local/include/opencv4 USE_OPENCV_LIB_PATH=/usr/local/lib USE_CUDA=1 USE_CUDA_PATH=/usr/local/cuda ADD_LDFLAGS=-L/usr/local/cuda/compat USE_CUDNN=1 USE_MKLDNN=1 USE_CPP_PACKAGE=1
+
+RUN echo "$LIB_DIR/mxnet/build" >> /etc/ld.so.conf.d/mxnet.conf && \
     ldconfig
 
 # Install Python package
