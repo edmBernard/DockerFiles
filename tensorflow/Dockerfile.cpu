@@ -5,7 +5,8 @@ LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 RUN pip3 --no-cache-dir install -U \
     pandas \
     sklearn \
-    h5py
+    h5py \
+    onnx protobuf
 
 RUN pip3 --no-cache-dir install tensorflow
 
