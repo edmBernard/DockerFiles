@@ -3,5 +3,6 @@
 !Makefile
 !README.md
 !Dockerfile*
+!*.cmake
 !script/*
 !*/
