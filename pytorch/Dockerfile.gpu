@@ -2,7 +2,7 @@ FROM redis_gpu:latest
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 RUN pip3 --no-cache-dir install torch torchvision
-RUN pip3 --no-cache-dir install onnx protobuf
+RUN pip3 --no-cache-dir install onnx protobuf future
 
 CMD ["/bin/bash"]
 
