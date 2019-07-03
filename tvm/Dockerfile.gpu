@@ -37,6 +37,8 @@ RUN cd  "$TVM_DIR" && \
     cmake .. -DUSE_CUDA=ON -DUSE_CUDNN=ON -DUSE_LLVM=ON -DUSE_CUBLAS=ON -DUSE_BLAS=openblas && \
     make -j"$(nproc)"
 
+RUN pip3 --no-cache-dir install onnx
+
 ENV PYTHONPATH $TVM_DIR/python:$TVM_DIR/topi/python:$TVM_DIR/nnvm/python:${PYTHONPATH}
 
 CMD ["/bin/bash"]
