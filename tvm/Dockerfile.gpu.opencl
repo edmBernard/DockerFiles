@@ -31,10 +31,14 @@ RUN apt-get update && apt-get install -y \
 # Clone tvm repo and compile
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/tvm
 
+# cmake options were not options but variable in config file
 RUN cd  "$TVM_DIR" && \
     mkdir build && cd build && \
     cp ../cmake/config.cmake config.cmake && \
-    cmake .. -DUSE_CUDA=OFF -DUSE_LLVM=ON -DUSE_BLAS=openblas -DUSE_OPENCL=ON && \
+    sed -i 's/USE_LLVM OFF/USE_LLVM ON/' config.cmake && \
+    sed -i 's/USE_BLAS none/USE_BLAS openblas/' config.cmake && \
+    sed -i 's/USE_OPENCL OFF/USE_OPENCL ON/' config.cmake && \
+    cmake .. && \
     make -j"$(nproc)"
 
 RUN pip3 --no-cache-dir install onnx
