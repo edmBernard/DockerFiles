@@ -1,4 +1,4 @@
-FROM redis_cpu:latest
+FROM redis_gpu:latest
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 ENV TVM_DIR "$LIB_DIR/tvm"
