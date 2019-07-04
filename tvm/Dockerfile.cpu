@@ -40,7 +40,7 @@ RUN cd  "$TVM_DIR" && \
     cmake .. && \
     make -j"$(nproc)"
 
-RUN pip3 --no-cache-dir install onnx psutil
+RUN pip3 --no-cache-dir install onnx psutil xgboost
 
 ENV PYTHONPATH $TVM_DIR/python:$TVM_DIR/topi/python:$TVM_DIR/nnvm/python:${PYTHONPATH}
 
