@@ -134,7 +134,7 @@ tvm_cpu_opencl: redis_cpu
 clean_tvm_cpu_opencl: 
 	if [ "$$(docker images -q --filter=reference='tvm_cpu_opencl')" != "" ]; then docker rmi tvm_cpu_opencl; else echo "0"; fi
 
-tvm_gpu: redis_cpu
+tvm_gpu: redis_gpu
 	docker build $(arg_nocache) -t tvm_gpu -f tvm/Dockerfile.gpu tvm
 
 clean_tvm_gpu: 
@@ -149,13 +149,13 @@ clean_tvm_gpu_opencl:
 redis_cpu: opencv_cpu
 	docker build $(arg_nocache) -t redis_cpu -f redis/Dockerfile.cpu redis
 
-clean_redis_cpu: clean_jupyter_cpu clean_cntk_cpu clean_numba_cpu clean_chainer_cpu clean_mxnet_cpu clean_onnxruntime_cpu clean_pytorch_cpu clean_tensorflow_cpu clean_tvm_cpu clean_tvm_cpu_opencl clean_tvm_gpu
+clean_redis_cpu: clean_jupyter_cpu clean_cntk_cpu clean_numba_cpu clean_chainer_cpu clean_mxnet_cpu clean_onnxruntime_cpu clean_pytorch_cpu clean_tensorflow_cpu clean_tvm_cpu clean_tvm_cpu_opencl
 	if [ "$$(docker images -q --filter=reference='redis_cpu')" != "" ]; then docker rmi redis_cpu; else echo "0"; fi
 
 redis_gpu: opencv_gpu
 	docker build $(arg_nocache) -t redis_gpu -f redis/Dockerfile.gpu redis
 
-clean_redis_gpu: clean_jupyter_gpu clean_cntk_gpu clean_numba_gpu clean_chainer_gpu clean_mxnet_gpu clean_pytorch_gpu clean_tensorflow_gpu clean_tvm_gpu_opencl
+clean_redis_gpu: clean_jupyter_gpu clean_cntk_gpu clean_numba_gpu clean_chainer_gpu clean_mxnet_gpu clean_pytorch_gpu clean_tensorflow_gpu clean_tvm_gpu clean_tvm_gpu_opencl
 	if [ "$$(docker images -q --filter=reference='redis_gpu')" != "" ]; then docker rmi redis_gpu; else echo "0"; fi
 
 spark_cpu: opencv_cpu
@@ -167,25 +167,25 @@ clean_spark_cpu:
 opencv_cpu: ffmpeg_cpu
 	docker build $(arg_nocache) -t opencv_cpu -f opencv/Dockerfile.cpu opencv
 
-clean_opencv_cpu: clean_jupyter_cpu clean_cntk_cpu clean_numba_cpu clean_chainer_cpu clean_mxnet_cpu clean_onnxruntime_cpu clean_pytorch_cpu clean_tensorflow_cpu clean_tvm_cpu clean_tvm_cpu_opencl clean_tvm_gpu clean_redis_cpu clean_spark_cpu
+clean_opencv_cpu: clean_jupyter_cpu clean_cntk_cpu clean_numba_cpu clean_chainer_cpu clean_mxnet_cpu clean_onnxruntime_cpu clean_pytorch_cpu clean_tensorflow_cpu clean_tvm_cpu clean_tvm_cpu_opencl clean_redis_cpu clean_spark_cpu
 	if [ "$$(docker images -q --filter=reference='opencv_cpu')" != "" ]; then docker rmi opencv_cpu; else echo "0"; fi
 
 opencv_gpu: ffmpeg_gpu
 	docker build $(arg_nocache) -t opencv_gpu -f opencv/Dockerfile.gpu opencv
 
-clean_opencv_gpu: clean_jupyter_gpu clean_cntk_gpu clean_numba_gpu clean_chainer_gpu clean_mxnet_gpu clean_pytorch_gpu clean_tensorflow_gpu clean_tvm_gpu_opencl clean_redis_gpu
+clean_opencv_gpu: clean_jupyter_gpu clean_cntk_gpu clean_numba_gpu clean_chainer_gpu clean_mxnet_gpu clean_pytorch_gpu clean_tensorflow_gpu clean_tvm_gpu clean_tvm_gpu_opencl clean_redis_gpu
 	if [ "$$(docker images -q --filter=reference='opencv_gpu')" != "" ]; then docker rmi opencv_gpu; else echo "0"; fi
 
 ffmpeg_cpu: pythonlib_cpu
 	docker build $(arg_nocache) -t ffmpeg_cpu -f ffmpeg/Dockerfile.cpu ffmpeg
 
-clean_ffmpeg_cpu: clean_jupyter_cpu clean_cntk_cpu clean_numba_cpu clean_chainer_cpu clean_mxnet_cpu clean_onnxruntime_cpu clean_pytorch_cpu clean_tensorflow_cpu clean_tvm_cpu clean_tvm_cpu_opencl clean_tvm_gpu clean_redis_cpu clean_spark_cpu clean_opencv_cpu
+clean_ffmpeg_cpu: clean_jupyter_cpu clean_cntk_cpu clean_numba_cpu clean_chainer_cpu clean_mxnet_cpu clean_onnxruntime_cpu clean_pytorch_cpu clean_tensorflow_cpu clean_tvm_cpu clean_tvm_cpu_opencl clean_redis_cpu clean_spark_cpu clean_opencv_cpu
 	if [ "$$(docker images -q --filter=reference='ffmpeg_cpu')" != "" ]; then docker rmi ffmpeg_cpu; else echo "0"; fi
 
 ffmpeg_gpu: pythonlib_gpu
 	docker build $(arg_nocache) -t ffmpeg_gpu -f ffmpeg/Dockerfile.gpu ffmpeg
 
-clean_ffmpeg_gpu: clean_jupyter_gpu clean_cntk_gpu clean_numba_gpu clean_chainer_gpu clean_mxnet_gpu clean_pytorch_gpu clean_tensorflow_gpu clean_tvm_gpu_opencl clean_redis_gpu clean_opencv_gpu
+clean_ffmpeg_gpu: clean_jupyter_gpu clean_cntk_gpu clean_numba_gpu clean_chainer_gpu clean_mxnet_gpu clean_pytorch_gpu clean_tensorflow_gpu clean_tvm_gpu clean_tvm_gpu_opencl clean_redis_gpu clean_opencv_gpu
 	if [ "$$(docker images -q --filter=reference='ffmpeg_gpu')" != "" ]; then docker rmi ffmpeg_gpu; else echo "0"; fi
 
 mxnet_android: pythonlib_cpu
@@ -239,13 +239,13 @@ clean_alpine_vcpkg:
 pythonlib_cpu: 
 	docker build $(arg_nocache) -t pythonlib_cpu -f pythonlib/Dockerfile.cpu pythonlib
 
-clean_pythonlib_cpu: clean_jupyter_cpu clean_cntk_cpu clean_numba_cpu clean_chainer_cpu clean_mxnet_cpu clean_onnxruntime_cpu clean_pytorch_cpu clean_tensorflow_cpu clean_tvm_cpu clean_tvm_cpu_opencl clean_tvm_gpu clean_redis_cpu clean_spark_cpu clean_opencv_cpu clean_ffmpeg_cpu clean_mxnet_android
+clean_pythonlib_cpu: clean_jupyter_cpu clean_cntk_cpu clean_numba_cpu clean_chainer_cpu clean_mxnet_cpu clean_onnxruntime_cpu clean_pytorch_cpu clean_tensorflow_cpu clean_tvm_cpu clean_tvm_cpu_opencl clean_redis_cpu clean_spark_cpu clean_opencv_cpu clean_ffmpeg_cpu clean_mxnet_android
 	if [ "$$(docker images -q --filter=reference='pythonlib_cpu')" != "" ]; then docker rmi pythonlib_cpu; else echo "0"; fi
 
 pythonlib_gpu: 
 	docker build $(arg_nocache) -t pythonlib_gpu -f pythonlib/Dockerfile.gpu pythonlib
 
-clean_pythonlib_gpu: clean_jupyter_gpu clean_cntk_gpu clean_numba_gpu clean_chainer_gpu clean_mxnet_gpu clean_pytorch_gpu clean_tensorflow_gpu clean_tvm_gpu_opencl clean_redis_gpu clean_opencv_gpu clean_ffmpeg_gpu
+clean_pythonlib_gpu: clean_jupyter_gpu clean_cntk_gpu clean_numba_gpu clean_chainer_gpu clean_mxnet_gpu clean_pytorch_gpu clean_tensorflow_gpu clean_tvm_gpu clean_tvm_gpu_opencl clean_redis_gpu clean_opencv_gpu clean_ffmpeg_gpu
 	if [ "$$(docker images -q --filter=reference='pythonlib_gpu')" != "" ]; then docker rmi pythonlib_gpu; else echo "0"; fi
 
 vcpkg_cpu: 
