@@ -53,6 +53,7 @@ RUN pip3 --no-cache-dir install \
         fire \
         schema \
         path.py \
+        pyyaml \
         requests \
         bottle \
         tornado \

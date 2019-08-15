@@ -25,7 +25,8 @@ RUN pip3 --no-cache-dir install \
         path.py \
         redis \
         bottle \
-        tornado
+        tornado \
+        pyyaml
 
 # configuration
 ENV HOME "/home/dev"
