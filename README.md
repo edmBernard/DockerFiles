@@ -64,8 +64,9 @@ The image is the concatenation of the Library name and the tag (ex: `opencv` and
 | `numba` | `_cpu` <br> `_gpu` | with [numba](http://numba.pydata.org/) |
 | `jupyter` | `_cpu` <br> `_gpu` | a [jupyter](http://jupyter.org/) server with `pass` as password |
 | `vcpkg` | `_cpu` | with [vcpkg](https://github.com/microsoft/vcpkg) installed |
-| `alpine` | `_redis` <br> `_pythonlib` <br> `_node` <br> `_dotnet` <br> `_vcpkg` | some usefull image based on [alpine](https://alpinelinux.org/) to have small memory footprint |
+| `alpine` | `_redis` <br> `_pythonlib` <br> `_node` <br> `_dotnet` <br> `_vcpkg` <br> `_rust`*  | some usefull image based on [alpine](https://alpinelinux.org/) to have small memory footprint |
 
+\* : rust lib `proc-macro` don't work on musl. If you need it use the following [image](https://github.com/emk/rust-musl-builder) to cross compile
 
 ## Create container (with CPU Only)
 
