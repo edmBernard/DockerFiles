@@ -106,6 +106,8 @@ def makefile():
         fl.write("\targ_nocache=\n")
         fl.write("endif\n\n\n")
 
+        fl.write("REGISTRY=docker.pkg.github.com/edmbernard/dockerfiles\n\n")
+
         fl.write(".PHONY: script_amalgamation script_makefile all all_cpu all_gpu clean clean_cpu clean_gpu ")
         fl.write(" ".join(image_list) + " ")
         fl.write(" ".join(["clean_%s" % i for i in image_list]))
@@ -147,6 +149,11 @@ def makefile():
             fl.write("clean_%s: " % i)
             fl.write(" ".join(["clean_%s" % ti for ti, td in zip(image_list, deps_list) if i in td]))
             fl.write("""\n\tif [ "$$(docker images -q --filter=reference='%s')" != "" ]; then docker rmi %s; else echo "0"; fi\n\n""" % (i, i))
+
+            fl.write("deploy_%s: \n" % i)
+
+            fl.write("""\tdocker tag %s:latest $(REGISTRY)/%s:latest\n""" % (i, i))
+            fl.write("""\tdocker push $(REGISTRY)/%s\n\n""" % i)
 
 
 if __name__ == '__main__':
