@@ -11,11 +11,6 @@ RUN apt-get update && apt-get install -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# install python2 tools
-RUN pip2 --no-cache-dir install -U \
-    easydict \
-    tensorboard
-
 # install python3 tools
 RUN pip3 --no-cache-dir install -U \
     easydict \
