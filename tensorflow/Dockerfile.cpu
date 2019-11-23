@@ -10,10 +10,4 @@ RUN pip3 --no-cache-dir install -U \
 
 RUN pip3 --no-cache-dir install tensorflow
 
-# Keras
-RUN pip3 --no-cache-dir install git+https://github.com/fchollet/keras.git
-
-# Set Tensorflow backend for Keras
-ENV KERAS_BACKEND=tensorflow
-
 CMD ["/bin/bash"]

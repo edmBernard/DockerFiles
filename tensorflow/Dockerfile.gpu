@@ -8,13 +8,7 @@ RUN pip3 --no-cache-dir install -U \
     h5py \
     onnx protobuf
 
-# tensorflow 1.13 does not support cuda 10.1 : https://www.tensorflow.org/install/source#linux
-RUN pip3 --no-cache-dir install tf-nightly-gpu
-
-# Keras
-RUN pip3 --no-cache-dir install git+https://github.com/fchollet/keras.git
-
-# Set Tensorflow backend for Keras
-ENV KERAS_BACKEND=tensorflow
+# tensorflow 2.0 does not support cuda 10.1 but only cuda 10.0 : https://www.tensorflow.org/install/source#linux
+RUN pip3 --no-cache-dir install tensorflow-gpu
 
 CMD ["/bin/bash"]

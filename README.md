@@ -58,8 +58,7 @@ The image is the concatenation of the Library name and the tag (ex: `opencv` and
 | `redis` | `_cpu` <br> `_gpu` | with [redis](https://redis.io/) compiled from source |
 | `mxnet` | `_cpu` <br> `_gpu` <br> `_android`| with [mxnet](http://mxnet.io/) compiled from source and [mkl](https://software.intel.com/en-us/mkl) <br> with [mxnet](http://mxnet.io/)  compiled from source and gpu support <br> [mxnet](http://mxnet.io/) amalgamation compiled for android (ndk-14b) |
 | `nnvm` | `_cpu` <br> `_gpu_opencl` <br> `_cpu_opencl`| with [nnvm](https://github.com/dmlc/nnvm), [tvm](https://github.com/dmlc/tvm) compiled from source <br> with [nnvm](https://github.com/dmlc/nnvm), [tvm](https://github.com/dmlc/tvm) and [opencl](https://fr.wikipedia.org/wiki/OpenCL) compiled from source and gpu support <br> with [nnvm](https://github.com/dmlc/nnvm), [tvm](https://github.com/dmlc/tvm) and [opencl](https://fr.wikipedia.org/wiki/OpenCL) compiled from source|
-| `tensorflow` | `_cpu` <br> `_gpu` | with [tensoflow](https://www.tensorflow.org/) and [keras](https://keras.io/)|
-| `cntk` | `_cpu` <br> `_gpu` | with [cntk](http://cntk.ai) and [keras](https://keras.io/)|
+| `tensorflow` | `_cpu` <br> `_gpu` | with [tensoflow](https://www.tensorflow.org/)|
 | `pytorch` | `_cpu` <br> `_gpu` | with [pytorch](http://pytorch.org/) and [pytorch/vision](https://github.com/pytorch/vision)|
 | `numba` | `_cpu` <br> `_gpu` | with [numba](http://numba.pydata.org/) |
 | `jupyter` | `_cpu` <br> `_gpu` | a [jupyter](http://jupyter.org/) server with `pass` as password |
@@ -152,9 +151,8 @@ In some case last version fix bug or the reason I fixed the version without I kn
 | -- | -- | -- | -- |
 | cuda | 10.1 | all gpu images | -- |
 | cudnn | 7 | all gpu images | -- |
-| opencv | 4.1 | opencv | -- |
-| pytorch | 1.1.0 | pytorch | -- |
-| llvmlite | 0.14.0 | numba | -- |
+| opencv | 4.1.2 | opencv | -- |
+| pytorch | 1.3 | pytorch | -- |
 
 ## Script
 
