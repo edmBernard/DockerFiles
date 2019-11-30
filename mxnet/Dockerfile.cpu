@@ -16,7 +16,8 @@ RUN apt-get update && apt-get install -y \
 RUN pip3 --no-cache-dir install -U \
     easydict \
     onnx \
-    protobuf
+    protobuf \
+    mxboard
 
 # Clone And build MXNet
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
