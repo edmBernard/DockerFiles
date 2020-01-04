@@ -9,7 +9,7 @@ RUN apk update && apk --no-cache add \
         musl-dev \
         tar \
         python3 \
-        py-numpy && \
+        py3-numpy && \
     rm -fr /var/cache/apk/*
 
 # install pip for python3
