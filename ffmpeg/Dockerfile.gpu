@@ -65,7 +65,7 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
 
 # install x265
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
-    hg clone https://bitbucket.org/multicoreware/x265 && \
+    hg clone http://hg.videolan.org/x265 && \
     cd "$FFMPEG_DIR/ffmpeg_sources/x265/build/linux" && \
     PATH="$FFMPEG_DIR/bin:$PATH" cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$FFMPEG_DIR/ffmpeg_build" -DENABLE_SHARED:bool=off ../../source && \
     PATH="$FFMPEG_DIR/bin:$PATH" make -j"$(nproc)" && \
