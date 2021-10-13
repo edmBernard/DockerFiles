@@ -22,13 +22,13 @@ ENV LD_LIBRARY_PATH "/usr/local/cuda/compat:$LD_LIBRARY_PATH"
 
 RUN cd "$LIB_DIR" && \
     mkdir cmake && \
-    wget https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4-Linux-x86_64.sh && \
-    sh cmake-3.16.4-Linux-x86_64.sh --skip-licence --exclude-subdir --prefix=cmake
+    wget https://github.com/Kitware/CMake/releases/download/v3.21.3/cmake-3.21.3-linux-x86_64.sh && \
+    sh cmake-3.21.3-linux-x86_64.sh --skip-licence --exclude-subdir --prefix=cmake
 
 # Clone And build MXNet
 RUN cd "$LIB_DIR" && git clone --recursive https://github.com/dmlc/mxnet && cd mxnet && \
     mkdir build && cd build && \
-    "$LIB_DIR"/cmake/bin/cmake .. -DUSE_OPENCV=1 -DUSE_CUDA=1 -DUSE_CUDA_PATH=/usr/local/cuda -DUSE_CUDNN=1 -DUSE_MKLDNN=1 -DUSE_CPP_PACKAGE=1 -DBUILD_CPP_EXAMPLES=OFF -DBUILD_TESTING=OFF && \
+    "$LIB_DIR"/cmake/bin/cmake .. -DUSE_OPENCV=ON -DUSE_CUDA=ON -DUSE_CUDA_PATH=/usr/local/cuda -DUSE_CUDNN=ON -DUSE_ONEDNN=ON -DUSE_OPENMP=ON -DUSE_CPP_PACKAGE=ON -DBUILD_CPP_EXAMPLES=OFF -DBUILD_TESTING=OFF && \
     make -j$(nproc)
     # make USE_OPENCV=1 USE_OPENCV_INC_PATH=/usr/local/include/opencv4 USE_OPENCV_LIB_PATH=/usr/local/lib USE_CUDA=1 USE_CUDA_PATH=/usr/local/cuda ADD_LDFLAGS=-L/usr/local/cuda/compat USE_CUDNN=1 USE_MKLDNN=1 USE_CPP_PACKAGE=1
 
