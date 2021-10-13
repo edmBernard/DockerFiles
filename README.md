@@ -56,7 +56,7 @@ The image is the concatenation of the Library name and the tag (ex: `opencv` and
 | `ffmpeg` | `_cpu` <br> `_gpu` | with [ffmpeg](https://ffmpeg.org/) compiled from source with x264, h265 and nvencode on gpu images |
 | `opencv` | `_cpu` <br> `_gpu` | with [opencv](http://opencv.org/) compiled from source |
 | `redis` | `_cpu` <br> `_gpu` | with [redis](https://redis.io/) compiled from source |
-| `mxnet` | `_cpu` <br> `_gpu` <br> `_android`| with [mxnet](http://mxnet.io/) compiled from source and [mkl](https://software.intel.com/en-us/mkl) <br> with [mxnet](http://mxnet.io/)  compiled from source and gpu support <br> [mxnet](http://mxnet.io/) amalgamation compiled for android (ndk-14b) |
+| `mxnet` | `_cpu` <br> `_gpu` | with [mxnet](http://mxnet.io/) compiled from source and [mkl](https://software.intel.com/en-us/mkl) <br> with [mxnet](http://mxnet.io/)  compiled from source and gpu support |
 | `nnvm` | `_cpu` <br> `_gpu_opencl` <br> `_cpu_opencl`| with [nnvm](https://github.com/dmlc/nnvm), [tvm](https://github.com/dmlc/tvm) compiled from source <br> with [nnvm](https://github.com/dmlc/nnvm), [tvm](https://github.com/dmlc/tvm) and [opencl](https://fr.wikipedia.org/wiki/OpenCL) compiled from source and gpu support <br> with [nnvm](https://github.com/dmlc/nnvm), [tvm](https://github.com/dmlc/tvm) and [opencl](https://fr.wikipedia.org/wiki/OpenCL) compiled from source|
 | `tensorflow` | `_cpu` <br> `_gpu` | with [tensoflow](https://www.tensorflow.org/)|
 | `pytorch` | `_cpu` <br> `_gpu` | with [pytorch](http://pytorch.org/) and [pytorch/vision](https://github.com/pytorch/vision)|
@@ -149,10 +149,10 @@ In some case last version fix bug or the reason I fixed the version without I kn
 
 | Tools | version | Docker image | Description |
 | -- | -- | -- | -- |
-| cuda | 10.1 | all gpu images | -- |
+| cuda | 11.1 | all gpu images | -- |
 | cudnn | 7 | all gpu images | -- |
-| opencv | 4.1.2 | opencv | -- |
-| pytorch | 1.3 | pytorch | -- |
+| opencv | 4.5.4 | opencv | -- |
+| pytorch | 1.9.1 | pytorch | -- |
 
 ## Script
 

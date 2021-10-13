@@ -8,7 +8,7 @@ RUN pip3 --no-cache-dir install -U \
     h5py \
     onnx protobuf
 
-# tensorflow 2.0 does not support cuda 10.1 but only cuda 10.0 : https://www.tensorflow.org/install/source#linux
+# tensorflow 2.6 support cuda 11.2 and cudnn 8.1 : https://www.tensorflow.org/install/source#linux
 RUN pip3 --no-cache-dir install tensorflow-gpu
 
 CMD ["/bin/bash"]
