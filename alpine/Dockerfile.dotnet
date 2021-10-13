@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/runtime:3.0-alpine
+FROM mcr.microsoft.com/dotnet/runtime:3.1-alpine
 LABEL maintainer="Erwan BERNARD https://github.com/edmBernard/DockerFiles"
 
 # configuration
