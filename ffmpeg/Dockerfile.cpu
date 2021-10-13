@@ -45,10 +45,10 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
 
 # install nasm
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
-    wget https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.bz2 && \
-    tar xjvf nasm-2.14.02.tar.bz2 && \
-    rm nasm-2.14.02.tar.bz2 && \
-    cd nasm-2.14.02 && \
+    wget https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/nasm-2.15.05.tar.bz2 && \
+    tar xjvf nasm-2.15.05.tar.bz2 && \
+    rm nasm-2.15.05.tar.bz2 && \
+    cd nasm-2.15.05 && \
     ./autogen.sh && \
     PATH="$FFMPEG_DIR/bin:$PATH" ./configure --prefix="$FFMPEG_DIR/ffmpeg_build" --bindir="$FFMPEG_DIR/bin" && \
     make -j"$(nproc)" && \
