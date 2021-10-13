@@ -72,10 +72,10 @@ RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
 
 # install ffmpeg
 RUN cd "$FFMPEG_DIR/ffmpeg_sources" && \
-    wget -O ffmpeg-snapshot.tar.bz2 https://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2  && \
-    tar xjvf ffmpeg-snapshot.tar.bz2 && \
-    rm ffmpeg-snapshot.tar.bz2 && \
-    cd ffmpeg && \
+    wget -O ffmpeg-4.3.2.tar.bz2 http://ffmpeg.org/releases/ffmpeg-4.3.2.tar.bz2  && \
+    tar xjvf ffmpeg-4.3.2.tar.bz2 && \
+    rm ffmpeg-4.3.2.tar.bz2 && \
+    cd ffmpeg-4.3.2 && \
     PATH="$FFMPEG_DIR/bin:$PATH" PKG_CONFIG_PATH="$FFMPEG_DIR/ffmpeg_build/lib/pkgconfig" ./configure \
         --prefix="$FFMPEG_DIR/ffmpeg_build" \
         --pkg-config-flags="--static" \

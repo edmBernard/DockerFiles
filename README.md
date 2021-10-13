@@ -152,6 +152,7 @@ In some case last version fix bug or the reason I fixed the version without I kn
 | cuda | 11.1 | all gpu images | -- |
 | cudnn | 7 | all gpu images | -- |
 | opencv | 4.5.4 | opencv | -- |
+| ffmpeg | 4.3.2 | ffmpeg | api break should be fix in opencv soon |
 | pytorch | 1.9.1 | pytorch | -- |
 
 ## Script
@@ -167,3 +168,5 @@ The `generate.py` script available in script folder allow three things.
 ./generate.py concatenate --filename ../super/jupyter/Dockerfile.opencv --base opencv_cpu -- jupyter_cpu
 ./generate.py concatenate --filename ../super/jupyter/Dockerfile.pythonlib --base pythonlib_cpu -- jupyter_cpu
 ```
+
+tester
