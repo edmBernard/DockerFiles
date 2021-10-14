@@ -150,7 +150,7 @@ In some case last version fix bug or the reason I fixed the version without I kn
 | Tools | version | Docker image | Description |
 | -- | -- | -- | -- |
 | cuda | 11.1 | all gpu images | -- |
-| cudnn | 7 | all gpu images | -- |
+| cudnn | 8 | all gpu images | -- |
 | opencv | 4.5.4 | opencv | -- |
 | ffmpeg | 4.3.2 | ffmpeg | api break should be fix in opencv soon |
 | pytorch | 1.9.1 | pytorch | -- |
